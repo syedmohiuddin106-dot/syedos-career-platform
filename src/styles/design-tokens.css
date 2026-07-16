@@ -43,9 +43,20 @@
   --brand-accent: var(--color-cyan-400);
 
   /* Typography */
-  --font-heading: "Space Grotesk", "Inter", sans-serif;
-  --font-body: "Inter", Arial, sans-serif;
-  --font-code: "JetBrains Mono", Consolas, monospace;
+ --font-heading:
+  var(--font-space-grotesk),
+  var(--font-inter),
+  sans-serif;
+
+--font-body:
+  var(--font-inter),
+  Arial,
+  sans-serif;
+
+--font-code:
+  var(--font-jetbrains-mono),
+  Consolas,
+  monospace;
 
   --font-size-caption: 0.75rem;
   --font-size-small: 0.875rem;
