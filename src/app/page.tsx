@@ -1,58 +1,154 @@
 import {
   ArrowRight,
   Download,
+  ExternalLink,
+  GitBranch,
   Trash2,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { LinkButton } from "@/components/ui/link-button";
 
 export default function HomePage() {
   return (
     <main className="syedos-container syedos-section">
-      <section className="syedos-glass-card mx-auto max-w-4xl p-8 md:p-12">
-        <p className="syedos-code-text mb-3 text-sm text-cyan-400">
-          SyedOS Design System
-        </p>
+      <section className="syedos-glass-card mx-auto max-w-5xl p-8 md:p-12">
+        <div className="max-w-3xl">
+          <p className="syedos-code-text mb-3 text-sm text-cyan-400">
+            SyedOS Design System
+          </p>
 
-        <h1 className="max-w-3xl">
-          Professional Button Component
-        </h1>
+          <h1>Professional Button and Link System</h1>
 
-        <p className="mt-5 max-w-2xl text-lg">
-          Reusable, accessible, responsive buttons for the complete
-          SyedOS platform.
-        </p>
+          <p className="mt-5 text-lg">
+            Reusable, accessible, responsive action and navigation
+            components for the complete SyedOS platform.
+          </p>
+        </div>
 
-        <div className="mt-10 flex flex-wrap gap-4">
-          <Button rightIcon={<ArrowRight size={18} />}>
-            Explore Projects
-          </Button>
+        <div className="mt-10">
+          <h2 className="text-2xl">
+            Action Buttons
+          </h2>
 
-          <Button
-            variant="secondary"
-            leftIcon={<Download size={18} />}
-          >
-            Download Resume
-          </Button>
+          <p className="mt-2">
+            Use these buttons for actions such as saving, deleting,
+            submitting, and loading.
+          </p>
 
-          <Button variant="ghost">
-            View Profile
-          </Button>
+          <div className="mt-6 flex flex-wrap gap-4">
+            <Button rightIcon={<ArrowRight size={18} />}>
+              Explore Projects
+            </Button>
 
-          <Button
-            variant="danger"
-            leftIcon={<Trash2 size={18} />}
-          >
-            Delete
-          </Button>
+            <Button
+              variant="secondary"
+              leftIcon={<Download size={18} />}
+            >
+              Download Resume
+            </Button>
 
-          <Button loading>
-            Loading
-          </Button>
+            <Button variant="ghost">
+              View Profile
+            </Button>
 
-          <Button disabled>
-            Disabled
-          </Button>
+            <Button
+              variant="danger"
+              leftIcon={<Trash2 size={18} />}
+            >
+              Delete
+            </Button>
+
+            <Button loading>
+              Loading
+            </Button>
+
+            <Button disabled>
+              Disabled
+            </Button>
+          </div>
+        </div>
+
+        <div className="mt-12 border-t border-slate-800 pt-10">
+          <h2 className="text-2xl">
+            Navigation Link Buttons
+          </h2>
+
+          <p className="mt-2">
+            Use these links for internal pages, external websites,
+            GitHub, resume downloads, and project navigation.
+          </p>
+
+          <div className="mt-6 flex flex-wrap gap-4">
+            <LinkButton
+              href="/projects"
+              rightIcon={<ArrowRight size={18} />}
+            >
+              View Projects
+            </LinkButton>
+
+            <LinkButton
+              href="https://github.com/syedmohiuddin106-dot"
+              variant="secondary"
+              external
+              leftIcon={<GitBranch size={18} />}
+              rightIcon={<ExternalLink size={16} />}
+              ariaLabel="Open Syed Mohiuddin's GitHub profile"
+            >
+              Open GitHub
+            </LinkButton>
+
+            <LinkButton
+              href="/resume/syed-mohiuddin-resume.pdf"
+              variant="ghost"
+              download
+              leftIcon={<Download size={18} />}
+              ariaLabel="Download Syed Mohiuddin's resume"
+            >
+              Download Resume
+            </LinkButton>
+          </div>
+        </div>
+
+        <div className="mt-12 grid gap-4 md:grid-cols-2">
+          <div className="syedos-card p-6">
+            <h3 className="text-xl">
+              Full-width Button
+            </h3>
+
+            <p className="mt-2">
+              Suitable for forms, login pages, contact forms, and
+              mobile layouts.
+            </p>
+
+            <div className="mt-5">
+              <Button fullWidth>
+                Submit Form
+              </Button>
+            </div>
+          </div>
+
+          <div className="syedos-card p-6">
+            <h3 className="text-xl">
+              Full-width Link
+            </h3>
+
+            <p className="mt-2">
+              Suitable for recruiter views, project pages, and
+              resume calls to action.
+            </p>
+
+            <div className="mt-5">
+              <LinkButton
+                href="/recruiter"
+                variant="secondary"
+                fullWidth
+                rightIcon={<ArrowRight size={18} />}
+              >
+                Recruiter View
+              </LinkButton>
+            </div>
+          </div>
         </div>
       </section>
     </main>
