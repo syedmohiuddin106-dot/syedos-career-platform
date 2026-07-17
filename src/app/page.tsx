@@ -32,6 +32,7 @@ import { IconContainer } from "@/components/ui/icon-container";
 import { LinkButton } from "@/components/ui/link-button";
 import { Progress } from "@/components/ui/progress";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { Skeleton } from "@/components/ui/skeleton";
 import { StatCard } from "@/components/ui/stat-card";
 import { Tooltip } from "@/components/ui/tooltip";
 
@@ -971,6 +972,156 @@ export default function HomePage() {
           View deployment plan
         </Button>
       }
+    />
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Loading Components"
+    title="Professional Skeleton Loading System"
+    description="Reusable loading placeholders for profile data, project cards, analytics, CMS content, and dashboard modules."
+  />
+
+  <div className="mt-8 grid gap-6 lg:grid-cols-2">
+    <Card>
+      <p className="text-sm font-medium text-slate-300">
+        Profile loading state
+      </p>
+
+      <div className="mt-6 flex items-start gap-4">
+        <Skeleton
+          variant="circle"
+          width="64px"
+          height="64px"
+          className="shrink-0"
+        />
+
+        <div className="flex-1 space-y-3">
+          <Skeleton
+            variant="text"
+            width="45%"
+          />
+
+          <Skeleton
+            variant="text"
+            width="70%"
+          />
+
+          <Skeleton
+            variant="text"
+            width="55%"
+          />
+
+          <div className="flex gap-2 pt-2">
+            <Skeleton
+              width="72px"
+              height="26px"
+              className="rounded-full"
+            />
+
+            <Skeleton
+              width="88px"
+              height="26px"
+              className="rounded-full"
+            />
+
+            <Skeleton
+              width="60px"
+              height="26px"
+              className="rounded-full"
+            />
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <Card variant="glass">
+      <p className="text-sm font-medium text-slate-300">
+        Project card loading state
+      </p>
+
+      <Skeleton
+        height="180px"
+        className="mt-6 w-full"
+      />
+
+      <div className="mt-5 space-y-3">
+        <Skeleton
+          variant="text"
+          width="50%"
+          height="22px"
+        />
+
+        <Skeleton
+          variant="text"
+          width="100%"
+        />
+
+        <Skeleton
+          variant="text"
+          width="85%"
+        />
+
+        <div className="flex gap-2 pt-2">
+          <Skeleton
+            width="70px"
+            height="25px"
+            className="rounded-full"
+          />
+
+          <Skeleton
+            width="90px"
+            height="25px"
+            className="rounded-full"
+          />
+        </div>
+      </div>
+    </Card>
+  </div>
+
+  <div className="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+    {Array.from({ length: 4 }).map((_, index) => (
+      <Card key={index}>
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex-1">
+            <Skeleton
+              variant="text"
+              width="55%"
+            />
+
+            <Skeleton
+              variant="text"
+              width="35%"
+              height="28px"
+              className="mt-4"
+            />
+
+            <Skeleton
+              variant="text"
+              width="75%"
+              className="mt-4"
+            />
+          </div>
+
+          <Skeleton
+            width="44px"
+            height="44px"
+            className="shrink-0 rounded-xl"
+          />
+        </div>
+      </Card>
+    ))}
+  </div>
+
+  <div className="mt-6 rounded-2xl border border-slate-800 bg-slate-950/50 p-6">
+    <p className="mb-5 text-sm font-medium text-slate-300">
+      Static skeleton example
+    </p>
+
+    <Skeleton
+      animated={false}
+      height="12px"
+      className="w-full"
     />
   </div>
 </div>
