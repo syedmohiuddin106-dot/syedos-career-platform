@@ -60,14 +60,15 @@ export function RadioGroup({
 
   return (
     <fieldset
-      className={cn(
-        "w-full",
-        containerClassName,
-      )}
-      aria-describedby={
-        describedBy || undefined
-      }
-    >
+  className={cn(
+    "w-full",
+    containerClassName,
+  )}
+  aria-describedby={
+    describedBy || undefined
+  }
+  aria-invalid={Boolean(error)}
+>
       {label && (
         <legend className="text-sm font-medium text-slate-200">
           {label}
@@ -128,7 +129,6 @@ export function RadioGroup({
                   disabled={
                     disabled || option.disabled
                   }
-                  aria-invalid={Boolean(error)}
                   className={cn(
                     "peer h-5 w-5 appearance-none rounded-full border",
                     "border-slate-600 bg-slate-950/70",

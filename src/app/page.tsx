@@ -49,6 +49,7 @@ import { Select } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import { StatCard } from "@/components/ui/stat-card";
+import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Tooltip } from "@/components/ui/tooltip";
 
@@ -2004,6 +2005,118 @@ export default function HomePage() {
         />
       </div>
     </Card>
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Form Components"
+    title="Professional Switch System"
+    description="Reusable toggle controls for public visibility, notifications, analytics, AI features, themes, and administrator settings."
+  />
+
+  <div className="mt-8 grid gap-6 lg:grid-cols-2">
+    <Card>
+      <h3 className="text-xl">
+        Portfolio preferences
+      </h3>
+
+      <p className="mt-2">
+        Switches are suitable for settings that can be turned on or
+        off immediately.
+      </p>
+
+      <div className="mt-8 space-y-7">
+        <Switch
+          label="Public portfolio"
+          name="publicPortfolio"
+          description="Allow visitors and recruiters to view the published portfolio."
+          defaultChecked
+        />
+
+        <Switch
+          label="Recruiter notifications"
+          name="recruiterNotificationsSwitch"
+          description="Receive notifications when recruiters interact with your portfolio."
+          defaultChecked
+        />
+
+        <Switch
+          label="Show availability status"
+          name="availabilityStatus"
+          description="Display an availability badge on your public profile."
+        />
+
+        <Switch
+          label="Enable contact form"
+          name="contactFormEnabled"
+          description="Allow visitors to submit professional enquiries."
+          defaultChecked
+        />
+      </div>
+    </Card>
+
+    <Card variant="glass">
+      <h3 className="text-xl">
+        Platform and administrator settings
+      </h3>
+
+      <p className="mt-2">
+        Validation and disabled states are ready for protected
+        platform controls.
+      </p>
+
+      <div className="mt-8 space-y-7">
+        <Switch
+          label="Privacy-friendly analytics"
+          name="privacyAnalytics"
+          description="Collect anonymous portfolio usage statistics."
+          defaultChecked
+        />
+
+        <Switch
+          label="AI portfolio assistant"
+          name="aiPortfolioAssistant"
+          description="Allow visitors to ask approved questions about your projects and skills."
+        />
+
+        <Switch
+          label="Production deployment"
+          name="productionDeployment"
+          description="This setting requires deployment configuration."
+          error="Complete the deployment configuration before enabling production mode."
+        />
+
+        <Switch
+          label="Database backups"
+          name="databaseBackups"
+          description="Managed automatically by the platform administrator."
+          checked
+          readOnly
+          disabled
+        />
+      </div>
+    </Card>
+  </div>
+
+  <div className="mt-6 rounded-2xl border border-slate-800 bg-slate-950/50 p-6">
+    <p className="text-sm font-medium text-slate-300">
+      Career-mode visibility controls
+    </p>
+
+    <div className="mt-6 grid gap-6 md:grid-cols-2">
+      <Switch
+        label="Recruiter mode"
+        name="recruiterModeVisibility"
+        description="Show recruiter-focused projects and achievements."
+        defaultChecked
+      />
+
+      <Switch
+        label="Master&apos;s admissions mode"
+        name="admissionsModeVisibility"
+        description="Show academic projects, research, and education details."
+      />
+    </div>
   </div>
 </div>
 
