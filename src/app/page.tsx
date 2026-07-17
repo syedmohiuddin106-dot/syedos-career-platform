@@ -9,23 +9,26 @@ import {
   Download,
   ExternalLink,
   Eye,
-EyeOff,
-LockKeyhole,
-Mail,
-Search,
-User,
+  EyeOff,
+  Filter,
   FolderSearch,
   GitBranch,
   GraduationCap,
   HelpCircle,
-  Info,
   Inbox,
+  Info,
+  Layers3,
+  LockKeyhole,
+  Mail,
   Plus,
   Rocket,
+  Search,
   Settings,
   ShieldCheck,
   Sparkles,
   Trash2,
+  User,
+  UserRoundCog,
 } from "lucide-react";
 
 import { Alert } from "@/components/ui/alert";
@@ -40,6 +43,7 @@ import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
 import { Progress } from "@/components/ui/progress";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { Select } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import { StatCard } from "@/components/ui/stat-card";
@@ -1555,6 +1559,190 @@ export default function HomePage() {
           name="systemNotes"
           value="This field is currently locked."
           disabled
+        />
+      </div>
+    </Card>
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Form Components"
+    title="Professional Select System"
+    description="Reusable dropdown fields for project categories, technologies, career modes, audience modes, status updates, and CMS workflows."
+  />
+
+  <div className="mt-8 grid gap-6 lg:grid-cols-2">
+    <Card>
+      <h3 className="text-xl">
+        Portfolio filters
+      </h3>
+
+      <p className="mt-2">
+        Select fields can organize projects, skills, technologies,
+        and career content.
+      </p>
+
+      <div className="mt-8 space-y-6">
+        <Select
+          label="Project category"
+          name="projectCategory"
+          placeholder="Choose a project category"
+          leftIcon={<Layers3 size={18} />}
+          options={[
+            {
+              label: "Full-Stack Web Development",
+              value: "full-stack",
+            },
+            {
+              label: "Artificial Intelligence",
+              value: "artificial-intelligence",
+            },
+            {
+              label: "Cloud and DevOps",
+              value: "cloud-devops",
+            },
+            {
+              label: "Data and Analytics",
+              value: "data-analytics",
+            },
+          ]}
+          required
+          defaultValue=""
+        />
+
+        <Select
+          label="Technology filter"
+          name="technologyFilter"
+          leftIcon={<Filter size={18} />}
+          defaultValue="nextjs"
+          options={[
+            {
+              label: "All technologies",
+              value: "all",
+            },
+            {
+              label: "Next.js",
+              value: "nextjs",
+            },
+            {
+              label: "TypeScript",
+              value: "typescript",
+            },
+            {
+              label: "PHP",
+              value: "php",
+            },
+            {
+              label: "MySQL",
+              value: "mysql",
+            },
+          ]}
+        />
+
+        <Select
+          label="Career mode"
+          name="careerMode"
+          description="The selected mode can change the content shown to visitors."
+          defaultValue="software-engineer"
+          options={[
+            {
+              label: "Software Engineer",
+              value: "software-engineer",
+            },
+            {
+              label: "Full-Stack Developer",
+              value: "full-stack-developer",
+            },
+            {
+              label: "AI and ML Engineer",
+              value: "ai-ml-engineer",
+            },
+            {
+              label: "Cloud and DevOps Engineer",
+              value: "cloud-devops-engineer",
+            },
+          ]}
+        />
+      </div>
+    </Card>
+
+    <Card variant="glass">
+      <h3 className="text-xl">
+        Administration states
+      </h3>
+
+      <p className="mt-2">
+        Validation and disabled states are ready for protected
+        administrator forms.
+      </p>
+
+      <div className="mt-8 space-y-6">
+        <Select
+          label="Audience mode"
+          name="audienceMode"
+          leftIcon={<UserRoundCog size={18} />}
+          defaultValue="recruiter"
+          options={[
+            {
+              label: "Recruiter",
+              value: "recruiter",
+            },
+            {
+              label: "Hiring Manager",
+              value: "hiring-manager",
+            },
+            {
+              label: "Master's Admissions",
+              value: "masters-admissions",
+            },
+            {
+              label: "General Visitor",
+              value: "general-visitor",
+            },
+          ]}
+        />
+
+       <Select
+          label="Project status"
+          name="projectStatus"
+          defaultValue=""
+          error="Select a valid project status."
+          options={[
+            {
+              label: "Draft",
+              value: "draft",
+            },
+            {
+              label: "In Development",
+              value: "in-development",
+            },
+            {
+              label: "Published",
+              value: "published",
+            },
+            {
+              label: "Archived",
+              value: "archived",
+            },
+          ]}
+          placeholder="Select status"
+        />
+
+        <Select
+          label="System-managed visibility"
+          name="systemVisibility"
+          value="private"
+          disabled
+          options={[
+            {
+              label: "Private",
+              value: "private",
+            },
+            {
+              label: "Public",
+              value: "public",
+            },
+          ]}
         />
       </div>
     </Card>
