@@ -1,5 +1,9 @@
 import {
   ArrowRight,
+  BarChart3,
+  Bot,
+  BriefcaseBusiness,
+  Code2,
   Download,
   ExternalLink,
   GitBranch,
@@ -11,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { LinkButton } from "@/components/ui/link-button";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { StatCard } from "@/components/ui/stat-card";
 
 export default function HomePage() {
   return (
@@ -289,6 +294,56 @@ export default function HomePage() {
     />
   </div>
 </div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Dashboard Components"
+    title="Professional Statistics System"
+    description="Reusable metric cards for portfolio analytics, projects, recruiter activity, and AI features."
+  />
+
+  <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+    <StatCard
+      label="Major Projects"
+      value="2"
+      description="Published portfolio projects"
+      icon={<Code2 size={21} />}
+      trend={{
+        value: "Active development",
+        direction: "up",
+      }}
+    />
+
+    <StatCard
+      label="AI Agent Modes"
+      value="17"
+      description="Available in SyedAI Assistant"
+      icon={<Bot size={21} />}
+      trend={{
+        value: "Verified",
+        direction: "neutral",
+      }}
+    />
+
+    <StatCard
+      label="Career Modes"
+      value="13"
+      description="Future-ready profile stages"
+      icon={<BriefcaseBusiness size={21} />}
+    />
+
+    <StatCard
+      label="Portfolio Analytics"
+      value="Ready"
+      description="Dashboard integration planned"
+      icon={<BarChart3 size={21} />}
+      trend={{
+        value: "Foundation complete",
+        direction: "up",
+      }}
+    />
+  </div>
+</div>
+
       </section>
     </main>
   );
