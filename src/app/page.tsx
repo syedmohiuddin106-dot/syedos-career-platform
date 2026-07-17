@@ -16,6 +16,7 @@ import {
   Trash2,
 } from "lucide-react";
 
+import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -650,6 +651,151 @@ export default function HomePage() {
         showValue={false}
       />
     </div>
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Identity Components"
+    title="Professional Avatar System"
+    description="Reusable profile images and intelligent fallback initials for portfolio users, recruiters, administrators, and testimonials."
+  />
+
+  <div className="mt-8 rounded-2xl border border-slate-800 bg-slate-950/50 p-6">
+    <p className="text-sm font-medium text-slate-300">
+      Avatar sizes and availability states
+    </p>
+
+    <div className="mt-6 flex flex-wrap items-end gap-7">
+      <div className="text-center">
+        <Avatar
+          alt="Syed Mohiuddin"
+          size="small"
+          status="online"
+        />
+
+        <p className="mt-3 text-xs text-slate-500">
+          Small
+        </p>
+      </div>
+
+      <div className="text-center">
+        <Avatar
+          alt="Syed Mohiuddin"
+          size="medium"
+          status="away"
+        />
+
+        <p className="mt-3 text-xs text-slate-500">
+          Medium
+        </p>
+      </div>
+
+      <div className="text-center">
+        <Avatar
+          alt="Syed Mohiuddin"
+          size="large"
+          status="busy"
+        />
+
+        <p className="mt-3 text-xs text-slate-500">
+          Large
+        </p>
+      </div>
+
+      <div className="text-center">
+        <Avatar
+          alt="Syed Mohiuddin"
+          initials="SM"
+          size="extraLarge"
+          status="online"
+        />
+
+        <p className="mt-3 text-xs text-slate-500">
+          Extra large
+        </p>
+      </div>
+
+      <div className="text-center">
+        <Avatar
+          alt="Recruiter Account"
+          size="large"
+          status="offline"
+        />
+
+        <p className="mt-3 text-xs text-slate-500">
+          Offline
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div className="mt-8 grid gap-5 lg:grid-cols-2">
+    <Card>
+      <div className="flex items-start gap-4">
+        <Avatar
+          alt="Syed Mohiuddin"
+          initials="SM"
+          size="large"
+          status="online"
+        />
+
+        <div>
+          <div className="flex flex-wrap items-center gap-2">
+            <h3 className="text-xl">
+              Syed Mohiuddin
+            </h3>
+
+            <Badge variant="success" dot>
+              Available
+            </Badge>
+          </div>
+
+          <p className="mt-1">
+            Information Technology student and full-stack developer.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="primary">
+              Next.js
+            </Badge>
+
+            <Badge variant="info">
+              AI Integration
+            </Badge>
+
+            <Badge variant="outline">
+              PHP
+            </Badge>
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <Card variant="glass">
+      <div className="flex items-start gap-4">
+        <Avatar
+          alt="Portfolio Administrator"
+          initials="PA"
+          size="large"
+          status="away"
+        />
+
+        <div>
+          <h3 className="text-xl">
+            Portfolio Administrator
+          </h3>
+
+          <p className="mt-1">
+            Manages projects, skills, analytics, resume versions,
+            and platform content.
+          </p>
+
+          <p className="mt-4 text-sm font-medium text-amber-300">
+            Administrator session active
+          </p>
+        </div>
+      </div>
+    </Card>
   </div>
 </div>
 
