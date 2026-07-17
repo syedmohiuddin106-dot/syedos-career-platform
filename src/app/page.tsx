@@ -34,6 +34,10 @@ LogOut,
 Pencil,
 Settings2,
 UserCircle,
+CalendarDays,
+CircleCheck,
+Clock3,
+MoreHorizontal,
 } from "lucide-react";
 
 import { Accordion } from "@/components/ui/accordion";
@@ -61,6 +65,7 @@ import { Switch } from "@/components/ui/switch";
 import { Tabs } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Tooltip } from "@/components/ui/tooltip";
+import { Table } from "@/components/ui/table";
 
 export default function HomePage() {
   return (
@@ -2610,6 +2615,236 @@ export default function HomePage() {
               label: "Sign out",
               icon: <LogOut size={17} />,
               danger: true,
+            },
+          ]}
+        />
+      </div>
+    </Card>
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Data Components"
+    title="Professional Table System"
+    description="Reusable responsive tables for projects, applications, users, analytics, recruiter activity, and administrator records."
+  />
+
+  <div className="mt-8">
+    <Card>
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <h3 className="text-xl">
+            Project management table
+          </h3>
+
+          <p className="mt-2">
+            A responsive table for managing portfolio projects and
+            publication status.
+          </p>
+        </div>
+
+        <Button
+          size="small"
+          leftIcon={<Plus size={16} />}
+        >
+          Add Project
+        </Button>
+      </div>
+
+      <div className="mt-8">
+        <Table
+          caption="SyedOS project management records"
+          data={[
+            {
+              id: "syedos",
+              name: "SyedOS",
+              category: "Career Platform",
+              status: "In Development",
+              updated: "17 July 2026",
+            },
+            {
+              id: "syedai",
+              name: "SyedAI Assistant",
+              category: "Artificial Intelligence",
+              status: "Active",
+              updated: "13 July 2026",
+            },
+            {
+              id: "campushire",
+              name: "CampusHire",
+              category: "Full-Stack Web",
+              status: "Completed",
+              updated: "8 July 2026",
+            },
+          ]}
+          getRowKey={(project) => project.id}
+          columns={[
+            {
+              key: "project",
+              header: "Project",
+              cell: (project) => (
+                <div>
+                  <p className="font-medium text-white">
+                    {project.name}
+                  </p>
+
+                  <p className="mt-1 text-xs text-slate-500">
+                    {project.category}
+                  </p>
+                </div>
+              ),
+            },
+            {
+              key: "status",
+              header: "Status",
+              cell: (project) => {
+                const variant =
+                  project.status === "Completed"
+                    ? "success"
+                    : project.status === "Active"
+                      ? "primary"
+                      : "warning";
+
+                return (
+                  <Badge variant={variant} dot>
+                    {project.status}
+                  </Badge>
+                );
+              },
+            },
+            {
+              key: "updated",
+              header: "Last Updated",
+              cell: (project) => (
+                <div className="flex items-center gap-2 text-slate-400">
+                  <CalendarDays size={16} />
+
+                  <span>
+                    {project.updated}
+                  </span>
+                </div>
+              ),
+            },
+            {
+              key: "actions",
+              header: "Actions",
+              className: "text-right",
+              cell: () => (
+                <button
+                  type="button"
+                  aria-label="Open project actions"
+                  className="rounded-lg p-2 text-slate-500 transition hover:bg-slate-800 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                >
+                  <MoreHorizontal size={18} />
+                </button>
+              ),
+            },
+          ]}
+        />
+      </div>
+    </Card>
+  </div>
+
+  <div className="mt-6 grid gap-6 lg:grid-cols-2">
+    <Card variant="glass">
+      <h3 className="text-xl">
+        Recent activity
+      </h3>
+
+      <p className="mt-2">
+        A compact administrator activity table.
+      </p>
+
+      <div className="mt-8">
+        <Table
+          caption="Recent administrator activity"
+          data={[
+            {
+              id: "activity-1",
+              action: "Project updated",
+              item: "SyedOS",
+              status: "Completed",
+            },
+            {
+              id: "activity-2",
+              action: "Resume generated",
+              item: "Software Engineer Resume",
+              status: "Processing",
+            },
+          ]}
+          getRowKey={(activity) => activity.id}
+          columns={[
+            {
+              key: "activity",
+              header: "Activity",
+              cell: (activity) => (
+                <div>
+                  <p className="font-medium text-white">
+                    {activity.action}
+                  </p>
+
+                  <p className="mt-1 text-xs text-slate-500">
+                    {activity.item}
+                  </p>
+                </div>
+              ),
+            },
+            {
+              key: "state",
+              header: "State",
+              cell: (activity) => (
+                <div className="flex items-center gap-2">
+                  {activity.status === "Completed" ? (
+                    <CircleCheck
+                      size={17}
+                      className="text-green-400"
+                    />
+                  ) : (
+                    <Clock3
+                      size={17}
+                      className="text-amber-400"
+                    />
+                  )}
+
+                  <span className="text-slate-300">
+                    {activity.status}
+                  </span>
+                </div>
+              ),
+            },
+          ]}
+        />
+      </div>
+    </Card>
+
+    <Card variant="editorial">
+      <h3 className="text-xl">
+        Empty table state
+      </h3>
+
+      <p className="mt-2">
+        Tables display a clear fallback when no records exist.
+      </p>
+
+      <div className="mt-8">
+        <Table
+          caption="Empty recruiter activity table"
+          data={[] as Array<{
+            id: string;
+            recruiter: string;
+          }>}
+          getRowKey={(record) => record.id}
+          emptyMessage="No recruiter activity has been recorded yet."
+          columns={[
+            {
+              key: "recruiter",
+              header: "Recruiter",
+              cell: (record) => record.recruiter,
+            },
+            {
+              key: "activity",
+              header: "Activity",
+              cell: () => "No activity",
             },
           ]}
         />
