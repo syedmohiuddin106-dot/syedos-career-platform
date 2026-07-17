@@ -43,6 +43,7 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import { StatCard } from "@/components/ui/stat-card";
+import { Textarea } from "@/components/ui/textarea";
 import { Tooltip } from "@/components/ui/tooltip";
 
 export default function HomePage() {
@@ -1467,6 +1468,92 @@ export default function HomePage() {
           label="Disabled field"
           name="disabledField"
           value="Managed by the system"
+          disabled
+        />
+      </div>
+    </Card>
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Form Components"
+    title="Professional Textarea System"
+    description="Reusable multi-line fields for messages, project descriptions, biography content, AI prompts, administrator notes, and CMS editing."
+  />
+
+  <div className="mt-8 grid gap-6 lg:grid-cols-2">
+    <Card>
+      <h3 className="text-xl">
+        Contact and profile content
+      </h3>
+
+      <p className="mt-2">
+        Accessible fields with descriptions, validation, resizing,
+        and character limits.
+      </p>
+
+      <div className="mt-8 space-y-6">
+        <Textarea
+          label="Contact message"
+          name="contactMessage"
+          placeholder="Describe your opportunity, collaboration, or question."
+          description="Include enough detail to help prepare a useful response."
+          maxLength={500}
+          showCharacterCount
+          required
+        />
+
+        <Textarea
+          label="Professional biography"
+          name="professionalBiography"
+          defaultValue="Information Technology student focused on full-stack development, artificial intelligence, and building practical software projects."
+          maxLength={300}
+          showCharacterCount
+        />
+      </div>
+    </Card>
+
+    <Card variant="glass">
+      <h3 className="text-xl">
+        Project and AI content
+      </h3>
+
+      <p className="mt-2">
+        Longer content fields can be used in the CMS and AI-powered
+        tools.
+      </p>
+
+      <div className="mt-8 space-y-6">
+        <Textarea
+          label="Project description"
+          name="projectDescription"
+          placeholder="Explain the problem, solution, architecture, technologies, security, testing, and outcomes."
+          className="min-h-44"
+        />
+
+        <Textarea
+          label="AI prompt"
+          name="aiPrompt"
+          defaultValue="Review this project description and suggest improvements for recruiters and software engineering interviews."
+          maxLength={20000}
+          showCharacterCount
+          className="min-h-40"
+        />
+
+        <Textarea
+          label="Validation example"
+          name="validationExample"
+          value="Too short"
+          readOnly
+          error="The description must contain at least 50 characters."
+          showCharacterCount
+          maxLength={500}
+        />
+
+        <Textarea
+          label="System-managed notes"
+          name="systemNotes"
+          value="This field is currently locked."
           disabled
         />
       </div>
