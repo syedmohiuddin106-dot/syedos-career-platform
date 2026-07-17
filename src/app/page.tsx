@@ -13,6 +13,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Divider } from "@/components/ui/divider";
 import { LinkButton } from "@/components/ui/link-button";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { StatCard } from "@/components/ui/stat-card";
@@ -341,6 +342,69 @@ export default function HomePage() {
         direction: "up",
       }}
     />
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Layout Components"
+    title="Professional Divider System"
+    description="Reusable separators for page sections, grouped content, admin panels, and project case studies."
+  />
+
+  <div className="mt-8 space-y-10">
+    <div>
+      <p className="mb-4 text-sm text-slate-400">
+        Standard divider
+      </p>
+
+      <Divider />
+    </div>
+
+    <div>
+      <p className="mb-4 text-sm text-slate-400">
+        Divider with a centered label
+      </p>
+
+      <Divider label="Featured Projects" />
+    </div>
+
+    <Card variant="glass">
+      <h3 className="text-xl">
+        Grouped Content Example
+      </h3>
+
+      <p className="mt-2">
+        Dividers help organize large pages without adding heavy
+        visual elements.
+      </p>
+
+      <Divider
+        label="Technical Details"
+        className="my-8"
+      />
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <p className="text-sm text-slate-400">
+            Architecture
+          </p>
+
+          <p className="mt-1 font-semibold text-white">
+            Next.js and Payload CMS
+          </p>
+        </div>
+
+        <div>
+          <p className="text-sm text-slate-400">
+            Database
+          </p>
+
+          <p className="mt-1 font-semibold text-white">
+            PostgreSQL
+          </p>
+        </div>
+      </div>
+    </Card>
   </div>
 </div>
 
