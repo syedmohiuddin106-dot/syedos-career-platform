@@ -10,7 +10,10 @@ import {
   ExternalLink,
   GitBranch,
   GraduationCap,
+  HelpCircle,
+  Info,
   Rocket,
+  Settings,
   ShieldCheck,
   Sparkles,
   Trash2,
@@ -26,6 +29,7 @@ import { LinkButton } from "@/components/ui/link-button";
 import { Progress } from "@/components/ui/progress";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { StatCard } from "@/components/ui/stat-card";
+import { Tooltip } from "@/components/ui/tooltip";
 
 export default function HomePage() {
   return (
@@ -794,6 +798,121 @@ export default function HomePage() {
             Administrator session active
           </p>
         </div>
+      </div>
+    </Card>
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Interaction Components"
+    title="Accessible Tooltip System"
+    description="Helpful contextual explanations for navigation, dashboard controls, project actions, and technical information."
+  />
+
+  <div className="mt-8 rounded-2xl border border-slate-800 bg-slate-950/50 p-8">
+    <p className="text-sm font-medium text-slate-300">
+      Hover over or focus on each control
+    </p>
+
+    <div className="mt-8 flex flex-wrap items-center gap-8">
+      <Tooltip content="Open platform settings">
+        <button
+          type="button"
+          aria-label="Settings"
+          className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-300 transition hover:border-blue-500/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+        >
+          <Settings size={20} />
+        </button>
+      </Tooltip>
+
+      <Tooltip
+        content="View more information about this feature"
+        position="bottom"
+      >
+        <button
+          type="button"
+          aria-label="Feature information"
+          className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-300 transition hover:border-cyan-500/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
+        >
+          <Info size={20} />
+        </button>
+      </Tooltip>
+
+      <Tooltip
+        content="Get help with the current section"
+        position="right"
+      >
+        <button
+          type="button"
+          aria-label="Help"
+          className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-300 transition hover:border-green-500/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
+        >
+          <HelpCircle size={20} />
+        </button>
+      </Tooltip>
+
+      <Tooltip
+        content="This project is actively being developed"
+        position="left"
+      >
+        <span tabIndex={0}>
+          <Badge variant="warning" dot>
+            In Development
+          </Badge>
+        </span>
+      </Tooltip>
+    </div>
+  </div>
+
+  <div className="mt-8 grid gap-5 md:grid-cols-2">
+    <Card>
+      <div className="flex items-center justify-between gap-4">
+        <div>
+          <h3 className="text-xl">
+            Project Actions
+          </h3>
+
+          <p className="mt-2">
+            Tooltips make icon-only controls easier to understand.
+          </p>
+        </div>
+
+        <Tooltip content="View the full project repository">
+          <button
+            type="button"
+            aria-label="View repository"
+            className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-300 transition hover:border-blue-500/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+          >
+            <GitBranch size={20} />
+          </button>
+        </Tooltip>
+      </div>
+    </Card>
+
+    <Card variant="glass">
+      <div className="flex items-center justify-between gap-4">
+        <div>
+          <h3 className="text-xl">
+            Technical Explanation
+          </h3>
+
+          <p className="mt-2">
+            Hover for additional information without cluttering the page.
+          </p>
+        </div>
+
+        <Tooltip
+          content="The frontend is built with Next.js, TypeScript, and Tailwind CSS."
+          position="left"
+        >
+          <button
+            type="button"
+            aria-label="Technology information"
+            className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-300 transition hover:border-cyan-500/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
+          >
+            <Code2 size={20} />
+          </button>
+        </Tooltip>
       </div>
     </Card>
   </div>
