@@ -34,6 +34,7 @@ import { LinkButton } from "@/components/ui/link-button";
 import { Progress } from "@/components/ui/progress";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Spinner } from "@/components/ui/spinner";
 import { StatCard } from "@/components/ui/stat-card";
 import { Tooltip } from "@/components/ui/tooltip";
 
@@ -1188,6 +1189,170 @@ export default function HomePage() {
       description="The close button is ready for client-side state integration in interactive pages."
       dismissible
     />
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Loading Components"
+    title="Professional Spinner System"
+    description="Reusable loading indicators for forms, buttons, AI responses, data fetching, authentication, and deployment operations."
+  />
+
+  <div className="mt-8 grid gap-6 lg:grid-cols-2">
+    <Card>
+      <h3 className="text-xl">
+        Spinner sizes
+      </h3>
+
+      <p className="mt-2">
+        Loading indicators remain clear across compact controls and
+        full-page operations.
+      </p>
+
+      <div className="mt-8 flex flex-wrap items-center gap-8">
+        <div className="text-center">
+          <Spinner
+            size="small"
+            label="Loading small content"
+          />
+
+          <p className="mt-3 text-xs text-slate-500">
+            Small
+          </p>
+        </div>
+
+        <div className="text-center">
+          <Spinner
+            size="medium"
+            label="Loading content"
+          />
+
+          <p className="mt-3 text-xs text-slate-500">
+            Medium
+          </p>
+        </div>
+
+        <div className="text-center">
+          <Spinner
+            size="large"
+            label="Loading large content"
+          />
+
+          <p className="mt-3 text-xs text-slate-500">
+            Large
+          </p>
+        </div>
+      </div>
+    </Card>
+
+    <Card variant="glass">
+      <h3 className="text-xl">
+        Spinner variants
+      </h3>
+
+      <p className="mt-2">
+        Semantic variants communicate the type of operation being
+        processed.
+      </p>
+
+      <div className="mt-8 flex flex-wrap items-center gap-8">
+        <Spinner
+          variant="primary"
+          label="Processing"
+        />
+
+        <Spinner
+          variant="success"
+          label="Saving"
+        />
+
+        <Spinner
+          variant="warning"
+          label="Checking"
+        />
+
+        <Spinner
+          variant="danger"
+          label="Retrying"
+        />
+
+        <div className="rounded-xl bg-blue-600 p-3">
+          <Spinner
+            variant="light"
+            label="Submitting"
+          />
+        </div>
+      </div>
+    </Card>
+  </div>
+
+  <div className="mt-6 grid gap-5 md:grid-cols-2">
+    <Card>
+      <div className="flex items-center gap-4">
+        <Spinner
+          size="medium"
+          label="Loading AI response"
+        />
+
+        <div>
+          <p className="font-semibold text-white">
+            Generating AI response
+          </p>
+
+          <p className="mt-1 text-sm text-slate-400">
+            SyedAI is processing the request.
+          </p>
+        </div>
+      </div>
+    </Card>
+
+    <Card variant="glass">
+      <div className="flex items-center gap-4">
+        <Spinner
+          size="medium"
+          variant="success"
+          label="Saving project"
+        />
+
+        <div>
+          <p className="font-semibold text-white">
+            Saving project changes
+          </p>
+
+          <p className="mt-1 text-sm text-slate-400">
+            Updating the CMS and portfolio content.
+          </p>
+        </div>
+      </div>
+    </Card>
+  </div>
+
+  <div className="mt-6 flex flex-wrap gap-4">
+    <Button
+      disabled
+      leftIcon={
+        <Spinner
+          size="small"
+          variant="light"
+          label="Submitting form"
+        />
+      }
+    >
+      Submitting
+    </Button>
+
+    <Button
+      variant="secondary"
+      disabled
+      leftIcon={
+        <Spinner
+          size="small"
+          label="Loading projects"
+        />
+      }
+    >
+      Loading Projects
+    </Button>
   </div>
 </div>
 
