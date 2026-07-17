@@ -31,6 +31,7 @@ import {
   UserRoundCog,
 } from "lucide-react";
 
+import { Accordion } from "@/components/ui/accordion";
 import { Alert } from "@/components/ui/alert";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -2303,6 +2304,159 @@ export default function HomePage() {
                     </p>
                   </div>
                 </div>
+              ),
+            },
+          ]}
+        />
+      </div>
+    </Card>
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Content Components"
+    title="Professional Accordion System"
+    description="Reusable expandable content for frequently asked questions, project details, technical decisions, education, and administrator help."
+  />
+
+  <div className="mt-8 grid gap-6 lg:grid-cols-2">
+    <Card>
+      <h3 className="text-xl">
+        Project case study details
+      </h3>
+
+      <p className="mt-2">
+        Organize technical information without showing everything at
+        the same time.
+      </p>
+
+      <div className="mt-8">
+        <Accordion
+          defaultOpen={["problem"]}
+          items={[
+            {
+              value: "problem",
+              title: "What problem does SyedOS solve?",
+              content: (
+                <p>
+                  SyedOS combines a professional portfolio, career
+                  modes, recruiter-focused content, analytics, CMS
+                  editing, and AI-powered features into one platform.
+                </p>
+              ),
+            },
+            {
+              value: "architecture",
+              title: "What architecture does it use?",
+              content: (
+                <div className="space-y-3">
+                  <p>
+                    The frontend uses Next.js and TypeScript.
+                  </p>
+
+                  <p>
+                    Payload CMS and PostgreSQL will manage portfolio
+                    content, administrator data, and structured project
+                    information.
+                  </p>
+
+                  <div className="flex flex-wrap gap-2">
+                    <Badge variant="primary">
+                      Next.js
+                    </Badge>
+
+                    <Badge variant="info">
+                      TypeScript
+                    </Badge>
+
+                    <Badge variant="outline">
+                      PostgreSQL
+                    </Badge>
+                  </div>
+                </div>
+              ),
+            },
+            {
+              value: "security",
+              title: "How will private content be protected?",
+              content: (
+                <p>
+                  The administrator area will use protected routes,
+                  secure authentication, authorization, environment
+                  variables, validation, and restricted database access.
+                </p>
+              ),
+            },
+            {
+              value: "testing",
+              title: "Testing documentation",
+              disabled: true,
+              content: (
+                <p>
+                  Testing documentation will be added during the testing
+                  phase.
+                </p>
+              ),
+            },
+          ]}
+        />
+      </div>
+    </Card>
+
+    <Card variant="glass">
+      <h3 className="text-xl">
+        Portfolio frequently asked questions
+      </h3>
+
+      <p className="mt-2">
+        Multiple sections can remain open when required.
+      </p>
+
+      <div className="mt-8">
+        <Accordion
+          allowMultiple
+          defaultOpen={["editing", "visitors"]}
+          items={[
+            {
+              value: "editing",
+              title: "Who can edit this portfolio?",
+              content: (
+                <p>
+                  Only Syed Mohiuddin can edit the private administrator
+                  dashboard after secure authentication.
+                </p>
+              ),
+            },
+            {
+              value: "visitors",
+              title: "What can public visitors do?",
+              content: (
+                <p>
+                  Visitors can view public projects, skills, education,
+                  certificates, resume links, and approved contact
+                  options.
+                </p>
+              ),
+            },
+            {
+              value: "resume",
+              title: "Can visitors download the resume?",
+              content: (
+                <p>
+                  Yes. A public resume version can be available for
+                  download, while private versions remain protected.
+                </p>
+              ),
+            },
+            {
+              value: "cms",
+              title: "Can content be updated without editing code?",
+              content: (
+                <p>
+                  Yes. Payload CMS will later allow projects, skills,
+                  education, certificates, and profile content to be
+                  updated from the private dashboard.
+                </p>
               ),
             },
           ]}
