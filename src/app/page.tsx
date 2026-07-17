@@ -45,6 +45,7 @@ import { Alert } from "@/components/ui/alert";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Divider } from "@/components/ui/divider";
@@ -2862,6 +2863,121 @@ export default function HomePage() {
 
   <div className="mt-8">
     <PaginationDemo />
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Navigation Components"
+    title="Professional Breadcrumb System"
+    description="Reusable hierarchical navigation for project pages, administrator dashboards, profile sections, settings, and CMS content."
+  />
+
+  <div className="mt-8 grid gap-6 lg:grid-cols-2">
+    <Card>
+      <h3 className="text-xl">
+        Project navigation
+      </h3>
+
+      <p className="mt-2">
+        Breadcrumbs help visitors understand their current location
+        inside the portfolio.
+      </p>
+
+      <div className="mt-8 space-y-6">
+        <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-5">
+          <Breadcrumb
+            items={[
+              {
+                label: "Home",
+                href: "/",
+              },
+              {
+                label: "Projects",
+                href: "/projects",
+              },
+              {
+                label: "SyedOS",
+              },
+            ]}
+          />
+        </div>
+
+        <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-5">
+          <Breadcrumb
+            showHomeIcon={false}
+            items={[
+              {
+                label: "Portfolio",
+                href: "/",
+              },
+              {
+                label: "Projects",
+                href: "/projects",
+              },
+              {
+                label: "Artificial Intelligence",
+                href: "/projects/ai",
+              },
+              {
+                label: "SyedAI Assistant",
+              },
+            ]}
+          />
+        </div>
+      </div>
+    </Card>
+
+    <Card variant="glass">
+      <h3 className="text-xl">
+        Administrator navigation
+      </h3>
+
+      <p className="mt-2">
+        The final item represents the current protected page.
+      </p>
+
+      <div className="mt-8 space-y-6">
+        <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-5">
+          <Breadcrumb
+            items={[
+              {
+                label: "Dashboard",
+                href: "/admin",
+              },
+              {
+                label: "Projects",
+                href: "/admin/projects",
+              },
+              {
+                label: "Edit SyedOS",
+              },
+            ]}
+          />
+        </div>
+
+        <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-5">
+          <Breadcrumb
+            items={[
+              {
+                label: "Dashboard",
+                href: "/admin",
+              },
+              {
+                label: "Settings",
+                href: "/admin/settings",
+              },
+              {
+                label: "Security",
+                href: "/admin/settings/security",
+              },
+              {
+                label: "Session Management",
+              },
+            ]}
+          />
+        </div>
+      </div>
+    </Card>
   </div>
 </div>
 
