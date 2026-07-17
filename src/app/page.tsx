@@ -8,10 +8,13 @@ import {
   Code2,
   Download,
   ExternalLink,
+  FolderSearch,
   GitBranch,
   GraduationCap,
   HelpCircle,
   Info,
+  Inbox,
+  Plus,
   Rocket,
   Settings,
   ShieldCheck,
@@ -24,6 +27,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Divider } from "@/components/ui/divider";
+import { EmptyState } from "@/components/ui/empty-state";
 import { IconContainer } from "@/components/ui/icon-container";
 import { LinkButton } from "@/components/ui/link-button";
 import { Progress } from "@/components/ui/progress";
@@ -915,6 +919,59 @@ export default function HomePage() {
         </Tooltip>
       </div>
     </Card>
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Feedback Components"
+    title="Professional Empty State System"
+    description="Clear and helpful placeholders for missing projects, search results, analytics, notifications, and admin records."
+  />
+
+  <div className="mt-8 grid gap-6 lg:grid-cols-2">
+    <EmptyState
+      icon={<FolderSearch size={25} />}
+      title="No projects found"
+      description="No projects match the selected technologies, category, or career mode. Try changing the current filters."
+      action={
+        <Button leftIcon={<Plus size={17} />}>
+          Add Project
+        </Button>
+      }
+      secondaryAction={
+        <Button variant="secondary">
+          Clear Filters
+        </Button>
+      }
+    />
+
+    <EmptyState
+      icon={<Inbox size={25} />}
+      title="No notifications yet"
+      description="Important portfolio activity, recruiter engagement, and administrator updates will appear here."
+      action={
+        <Button variant="secondary">
+          Refresh Activity
+        </Button>
+      }
+    />
+  </div>
+
+  <div className="mt-6">
+    <EmptyState
+      compact
+      icon={<BarChart3 size={21} />}
+      title="Analytics data is not available"
+      description="Visitor and recruiter analytics will appear after the public portfolio is deployed."
+      action={
+        <Button
+          variant="ghost"
+          size="small"
+        >
+          View deployment plan
+        </Button>
+      }
+    />
   </div>
 </div>
 
