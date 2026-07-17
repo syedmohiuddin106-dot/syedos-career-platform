@@ -2,92 +2,95 @@ import type {
   Metadata,
   Viewport,
 } from "next";
+import type { ReactNode } from "react";
 
+import { Footer } from "@/components/layout/footer";
+import { Navbar } from "@/components/layout/navbar";
 import {
   bodyFont,
-  codeFont,
   headingFont,
 } from "@/config/fonts";
-import { siteConfig } from "@/config/site";
 
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ??
+      "http://localhost:3000",
+  ),
 
   title: {
     default:
-      "Syed Mohiuddin | Full-Stack and AI Developer",
+      "Syed Mohiuddin | Full-Stack Developer",
     template: "%s | Syed Mohiuddin",
   },
 
-  description: siteConfig.description,
-
-  applicationName: siteConfig.name,
-
-  authors: [
-    {
-      name: siteConfig.creator.name,
-      url: siteConfig.url,
-    },
-  ],
-
-  creator: siteConfig.creator.name,
+  description:
+    "SyedOS is an intelligent career portfolio platform presenting projects, technical skills, education, achievements, and AI-powered career experiences.",
 
   keywords: [
     "Syed Mohiuddin",
     "Full-Stack Developer",
-    "AI Developer",
     "Information Technology Student",
     "Next.js Developer",
     "TypeScript Developer",
     "PHP Developer",
-    "Python Developer",
-    "Software Engineer Portfolio",
+    "MySQL Developer",
+    "Artificial Intelligence",
     "SyedOS",
+    "SyedAI Assistant",
+    "CampusHire",
   ],
+
+  authors: [
+    {
+      name: "Syed Mohiuddin",
+    },
+  ],
+
+  creator: "Syed Mohiuddin",
+  publisher: "Syed Mohiuddin",
+
+  alternates: {
+    canonical: "/",
+  },
 
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: siteConfig.url,
-    siteName: siteConfig.name,
+    url: "/",
+    siteName: "SyedOS",
     title:
-      "Syed Mohiuddin | Full-Stack and AI Developer",
-    description: siteConfig.description,
+      "Syed Mohiuddin | Full-Stack Developer",
+    description:
+      "Explore Syed Mohiuddin's projects, skills, education, achievements, and intelligent career portfolio platform.",
   },
 
   twitter: {
     card: "summary_large_image",
     title:
-      "Syed Mohiuddin | Full-Stack and AI Developer",
-    description: siteConfig.description,
+      "Syed Mohiuddin | Full-Stack Developer",
+    description:
+      "Explore projects, skills, education, achievements, and AI-powered career experiences.",
   },
 
   robots: {
     index: true,
     follow: true,
   },
+
+  category: "technology",
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: [
-    {
-      media: "(prefers-color-scheme: light)",
-      color: "#f8fafc",
-    },
-    {
-      media: "(prefers-color-scheme: dark)",
-      color: "#020617",
-    },
-  ],
-  colorScheme: "dark light",
+  themeColor: "#020617",
+  colorScheme: "dark",
 };
 
 type RootLayoutProps = Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>;
 
 export default function RootLayout({
@@ -95,18 +98,27 @@ export default function RootLayout({
 }: RootLayoutProps) {
   return (
     <html
-      lang={siteConfig.locale}
-      data-theme="dark"
+      lang="en"
+      className="scroll-smooth"
       suppressHydrationWarning
     >
       <body
         className={[
-          bodyFont.variable,
           headingFont.variable,
-          codeFont.variable,
+          bodyFont.variable,
+          "min-h-screen bg-slate-950",
+          "text-slate-100 antialiased",
         ].join(" ")}
       >
-        {children}
+        <div className="flex min-h-screen flex-col">
+          <Navbar />
+
+          <div className="min-w-0 flex-1">
+            {children}
+          </div>
+
+          <Footer />
+        </div>
       </body>
     </html>
   );
