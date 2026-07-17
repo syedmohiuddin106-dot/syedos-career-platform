@@ -22,6 +22,7 @@ import {
   Trash2,
 } from "lucide-react";
 
+import { Alert } from "@/components/ui/alert";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -1122,6 +1123,70 @@ export default function HomePage() {
       animated={false}
       height="12px"
       className="w-full"
+    />
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Feedback Components"
+    title="Professional Alert System"
+    description="Reusable notifications for success, information, warnings, errors, forms, deployments, and administrator actions."
+  />
+
+  <div className="mt-8 space-y-5">
+    <Alert
+      variant="info"
+      title="Platform foundation is ready"
+      description="The core design system and reusable UI components are now available for building the SyedOS public portfolio and admin dashboard."
+    />
+
+    <Alert
+      variant="success"
+      title="Project saved successfully"
+      description="Your project information, technologies, status, and portfolio visibility settings were saved."
+      action={
+        <Button
+          variant="secondary"
+          size="small"
+        >
+          View Project
+        </Button>
+      }
+    />
+
+    <Alert
+      variant="warning"
+      title="Profile information is incomplete"
+      description="Add your resume, professional photo, skills, and project evidence before publishing the public portfolio."
+      action={
+        <Button
+          variant="ghost"
+          size="small"
+        >
+          Complete Profile
+        </Button>
+      }
+    />
+
+    <Alert
+      variant="danger"
+      title="Deployment failed"
+      description="The production build could not connect to the configured database. Check the environment variables and database service."
+      action={
+        <Button
+          variant="secondary"
+          size="small"
+        >
+          View Deployment Logs
+        </Button>
+      }
+    />
+
+    <Alert
+      variant="info"
+      title="Dismissible notification"
+      description="The close button is ready for client-side state integration in interactive pages."
+      dismissible
     />
   </div>
 </div>
