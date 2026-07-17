@@ -36,6 +36,7 @@ import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Divider } from "@/components/ui/divider";
 import { EmptyState } from "@/components/ui/empty-state";
 import { IconContainer } from "@/components/ui/icon-container";
@@ -1746,6 +1747,114 @@ export default function HomePage() {
         />
       </div>
     </Card>
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Form Components"
+    title="Professional Checkbox System"
+    description="Reusable checkbox controls for consent, preferences, project visibility, filters, notifications, and administrator settings."
+  />
+
+  <div className="mt-8 grid gap-6 lg:grid-cols-2">
+    <Card>
+      <h3 className="text-xl">
+        Preferences and consent
+      </h3>
+
+      <p className="mt-2">
+        Accessible checkbox controls with descriptions and required
+        states.
+      </p>
+
+      <div className="mt-8 space-y-6">
+        <Checkbox
+          label="Show my profile publicly"
+          name="publicProfile"
+          description="Allow recruiters and visitors to view the public portfolio."
+          defaultChecked
+        />
+
+        <Checkbox
+          label="Receive recruiter notifications"
+          name="recruiterNotifications"
+          description="Get notified when a recruiter views or contacts you."
+        />
+
+        <Checkbox
+          label="Accept privacy policy"
+          name="privacyConsent"
+          description="Required before submitting personal information."
+          required
+        />
+      </div>
+    </Card>
+
+    <Card variant="glass">
+      <h3 className="text-xl">
+        Validation and system states
+      </h3>
+
+      <p className="mt-2">
+        Error and disabled states are ready for forms and protected
+        administrator settings.
+      </p>
+
+      <div className="mt-8 space-y-6">
+        <Checkbox
+          label="Confirm project publication"
+          name="publishConfirmation"
+          description="Confirm that all project details are accurate."
+          error="You must confirm before publishing this project."
+        />
+
+        <Checkbox
+          label="Enable analytics"
+          name="analyticsEnabled"
+          description="Collect privacy-friendly portfolio usage data."
+          defaultChecked
+        />
+
+        <Checkbox
+          label="Managed by system administrator"
+          name="systemManaged"
+          description="This setting cannot be changed from the current account."
+          checked
+          readOnly
+          disabled
+        />
+      </div>
+    </Card>
+  </div>
+
+  <div className="mt-6 rounded-2xl border border-slate-800 bg-slate-950/50 p-6">
+    <p className="text-sm font-medium text-slate-300">
+      Project technology filters
+    </p>
+
+    <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <Checkbox
+        label="Next.js"
+        name="filterNextjs"
+        defaultChecked
+      />
+
+      <Checkbox
+        label="TypeScript"
+        name="filterTypescript"
+        defaultChecked
+      />
+
+      <Checkbox
+        label="PHP"
+        name="filterPhp"
+      />
+
+      <Checkbox
+        label="MySQL"
+        name="filterMysql"
+      />
+    </div>
   </div>
 </div>
 
