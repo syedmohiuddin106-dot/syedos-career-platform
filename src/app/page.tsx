@@ -1,12 +1,18 @@
 import {
   ArrowRight,
   BarChart3,
+  BookOpen,
   Bot,
   BriefcaseBusiness,
+  Check,
   Code2,
   Download,
   ExternalLink,
   GitBranch,
+  GraduationCap,
+  Rocket,
+  ShieldCheck,
+  Sparkles,
   Trash2,
 } from "lucide-react";
 
@@ -14,6 +20,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Divider } from "@/components/ui/divider";
+import { IconContainer } from "@/components/ui/icon-container";
 import { LinkButton } from "@/components/ui/link-button";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { StatCard } from "@/components/ui/stat-card";
@@ -404,6 +411,128 @@ export default function HomePage() {
           </p>
         </div>
       </div>
+    </Card>
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Visual Components"
+    title="Professional Icon Container System"
+    description="Reusable icon surfaces for skills, projects, security, education, AI features, and dashboard modules."
+  />
+
+  <div className="mt-8 flex flex-wrap items-center gap-5">
+    <IconContainer
+      variant="default"
+      size="small"
+      label="Development"
+    >
+      <Code2 size={17} />
+    </IconContainer>
+
+    <IconContainer
+      variant="primary"
+      label="Project launch"
+    >
+      <Rocket size={20} />
+    </IconContainer>
+
+    <IconContainer
+      variant="success"
+      label="Verified"
+    >
+      <Check size={20} />
+    </IconContainer>
+
+    <IconContainer
+      variant="warning"
+      label="Education"
+    >
+      <GraduationCap size={20} />
+    </IconContainer>
+
+    <IconContainer
+      variant="danger"
+      label="Security alert"
+    >
+      <ShieldCheck size={20} />
+    </IconContainer>
+
+    <IconContainer
+      variant="info"
+      size="large"
+      rounded="large"
+      label="AI feature"
+    >
+      <Sparkles size={25} />
+    </IconContainer>
+
+    <IconContainer
+      variant="primary"
+      size="large"
+      rounded="full"
+      label="Academic content"
+    >
+      <BookOpen size={24} />
+    </IconContainer>
+  </div>
+
+  <div className="mt-10 grid gap-5 md:grid-cols-3">
+    <Card interactive>
+      <IconContainer
+        variant="primary"
+        size="large"
+        label="Software projects"
+      >
+        <Code2 size={24} />
+      </IconContainer>
+
+      <h3 className="mt-5 text-xl">
+        Software Projects
+      </h3>
+
+      <p className="mt-2">
+        Present full-stack applications, technical decisions,
+        architecture, security, and verified outcomes.
+      </p>
+    </Card>
+
+    <Card variant="glass" interactive>
+      <IconContainer
+        variant="info"
+        size="large"
+        label="Artificial intelligence"
+      >
+        <Bot size={24} />
+      </IconContainer>
+
+      <h3 className="mt-5 text-xl">
+        AI Applications
+      </h3>
+
+      <p className="mt-2">
+        Highlight AI integrations, agent systems, prompt handling,
+        validation, limits, and responsible implementation.
+      </p>
+    </Card>
+
+    <Card variant="editorial">
+      <IconContainer
+        variant="warning"
+        size="large"
+        label="Academic profile"
+      >
+        <GraduationCap size={24} />
+      </IconContainer>
+
+      <h3 className="mt-5 text-xl">
+        Academic Profile
+      </h3>
+
+      <p className="mt-2">
+        Organize education, research interests, academic projects,
+        publications, and master&apos;s application content.
+      </p>
     </Card>
   </div>
 </div>
