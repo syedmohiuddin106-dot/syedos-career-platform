@@ -8,6 +8,12 @@ import {
   Code2,
   Download,
   ExternalLink,
+  Eye,
+EyeOff,
+LockKeyhole,
+Mail,
+Search,
+User,
   FolderSearch,
   GitBranch,
   GraduationCap,
@@ -30,6 +36,7 @@ import { Card } from "@/components/ui/card";
 import { Divider } from "@/components/ui/divider";
 import { EmptyState } from "@/components/ui/empty-state";
 import { IconContainer } from "@/components/ui/icon-container";
+import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
 import { Progress } from "@/components/ui/progress";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -1353,6 +1360,117 @@ export default function HomePage() {
     >
       Loading Projects
     </Button>
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Form Components"
+    title="Professional Input System"
+    description="Reusable text fields for authentication, contact forms, search, profile editing, project management, and CMS workflows."
+  />
+
+  <div className="mt-8 grid gap-6 lg:grid-cols-2">
+    <Card>
+      <h3 className="text-xl">
+        Standard inputs
+      </h3>
+
+      <p className="mt-2">
+        Accessible fields with labels, descriptions, icons, and
+        validation feedback.
+      </p>
+
+      <div className="mt-8 space-y-6">
+        <Input
+          label="Full name"
+          name="fullName"
+          placeholder="Enter your full name"
+          leftIcon={<User size={18} />}
+          required
+        />
+
+        <Input
+          label="Email address"
+          name="email"
+          type="email"
+          placeholder="name@example.com"
+          description="We will only use this email to respond to your message."
+          leftIcon={<Mail size={18} />}
+        />
+
+        <Input
+          label="Search projects"
+          name="projectSearch"
+          type="search"
+          placeholder="Search by technology or project name"
+          leftIcon={<Search size={18} />}
+        />
+      </div>
+    </Card>
+
+    <Card variant="glass">
+      <h3 className="text-xl">
+        Authentication and validation
+      </h3>
+
+      <p className="mt-2">
+        Error states and password controls are ready for login and
+        admin forms.
+      </p>
+
+      <div className="mt-8 space-y-6">
+        <Input
+          label="Admin email"
+          name="adminEmail"
+          type="email"
+          value="invalid-email"
+          readOnly
+          leftIcon={<Mail size={18} />}
+          error="Enter a valid email address."
+        />
+
+        <Input
+          label="Password"
+          name="password"
+          type="password"
+          placeholder="Enter your password"
+          leftIcon={<LockKeyhole size={18} />}
+          rightElement={
+            <button
+              type="button"
+              aria-label="Show password"
+              className="rounded-md p-1 text-slate-500 transition hover:text-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            >
+              <Eye size={18} />
+            </button>
+          }
+        />
+
+        <Input
+          label="Confirmed password"
+          name="confirmedPassword"
+          type="password"
+          value="password"
+          readOnly
+          leftIcon={<LockKeyhole size={18} />}
+          rightElement={
+            <span
+              aria-label="Password hidden"
+              className="text-slate-500"
+            >
+              <EyeOff size={18} />
+            </span>
+          }
+        />
+
+        <Input
+          label="Disabled field"
+          name="disabledField"
+          value="Managed by the system"
+          disabled
+        />
+      </div>
+    </Card>
   </div>
 </div>
 
