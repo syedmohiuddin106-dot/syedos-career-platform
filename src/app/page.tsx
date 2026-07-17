@@ -8,6 +8,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { LinkButton } from "@/components/ui/link-button";
+import { Card } from "@/components/ui/card";
 
 export default function HomePage() {
   return (
@@ -150,6 +151,78 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+        <div className="mt-12 border-t border-slate-800 pt-10">
+  <h2 className="text-2xl">
+    Professional Card System
+  </h2>
+
+  <p className="mt-2">
+    Reusable surfaces for projects, skills, education,
+    analytics, and administration.
+  </p>
+
+  <div className="mt-6 grid gap-5 md:grid-cols-2">
+    <Card>
+      <p className="syedos-code-text text-sm text-cyan-400">
+        Solid Card
+      </p>
+
+      <h3 className="mt-3 text-xl">
+        Standard Content
+      </h3>
+
+      <p className="mt-2">
+        Suitable for skills, education, experience, and
+        normal dashboard information.
+      </p>
+    </Card>
+
+    <Card variant="glass">
+      <p className="syedos-code-text text-sm text-cyan-400">
+        Glass Card
+      </p>
+
+      <h3 className="mt-3 text-xl">
+        Premium Interface
+      </h3>
+
+      <p className="mt-2">
+        Suitable for hero content, featured projects, and
+        AI-focused interface sections.
+      </p>
+    </Card>
+
+    <Card variant="elevated" interactive>
+      <p className="syedos-code-text text-sm text-cyan-400">
+        Interactive Card
+      </p>
+
+      <h3 className="mt-3 text-xl">
+        Featured Project
+      </h3>
+
+      <p className="mt-2">
+        Moves subtly on hover and can later contain project
+        screenshots, technology tags, and links.
+      </p>
+    </Card>
+
+    <Card variant="editorial">
+      <p className="syedos-code-text text-sm text-cyan-400">
+        Editorial Card
+      </p>
+
+      <h3 className="mt-3 text-xl">
+        Academic Content
+      </h3>
+
+      <p className="mt-2">
+        Suitable for research, publications, education, and
+        master’s application content.
+      </p>
+    </Card>
+  </div>
+</div>
       </section>
     </main>
   );
