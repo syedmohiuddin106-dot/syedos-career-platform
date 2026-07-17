@@ -1,12 +1,18 @@
+import type { ReactNode } from "react";
+
 import {
   ArrowRight,
   BarChart3,
   BookOpen,
   Bot,
   BriefcaseBusiness,
+  CalendarDays,
   Check,
+  CircleCheck,
+  Clock3,
   Code2,
   Download,
+  Ellipsis,
   ExternalLink,
   Eye,
   EyeOff,
@@ -19,33 +25,29 @@ import {
   Info,
   Layers3,
   LockKeyhole,
+  LogOut,
   Mail,
+  MoreHorizontal,
+  Pencil,
   Plus,
   Rocket,
   Search,
   Settings,
+  Settings2,
   ShieldCheck,
   Sparkles,
   Trash2,
   User,
+  UserCircle,
   UserRoundCog,
-  Ellipsis,
-LogOut,
-Pencil,
-Settings2,
-UserCircle,
-CalendarDays,
-CircleCheck,
-Clock3,
-MoreHorizontal,
 } from "lucide-react";
 
 import { Accordion } from "@/components/ui/accordion";
 import { Alert } from "@/components/ui/alert";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Divider } from "@/components/ui/divider";
@@ -56,8 +58,8 @@ import { IconContainer } from "@/components/ui/icon-container";
 import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
 import { ModalDemo } from "@/components/ui/modal-demo";
-import { Progress } from "@/components/ui/progress";
 import { PaginationDemo } from "@/components/ui/pagination-demo";
+import { Progress } from "@/components/ui/progress";
 import { RadioGroup } from "@/components/ui/radio-group";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Select } from "@/components/ui/select";
@@ -65,3083 +67,1813 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import { StatCard } from "@/components/ui/stat-card";
 import { Switch } from "@/components/ui/switch";
+import { Table } from "@/components/ui/table";
 import { Tabs } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
-import { Tooltip } from "@/components/ui/tooltip";
-import { Table } from "@/components/ui/table";
 import { ToastDemo } from "@/components/ui/toast-demo";
+import { Tooltip } from "@/components/ui/tooltip";
+
+const showcaseNavigation = [
+  {
+    href: "#foundations",
+    label: "Foundations",
+    count: "07",
+  },
+  {
+    href: "#feedback",
+    label: "Feedback",
+    count: "06",
+  },
+  {
+    href: "#forms",
+    label: "Forms",
+    count: "07",
+  },
+  {
+    href: "#navigation",
+    label: "Navigation",
+    count: "07",
+  },
+  {
+    href: "#data",
+    label: "Data & states",
+    count: "05",
+  },
+  {
+    href: "#release",
+    label: "Release readiness",
+    count: "100%",
+  },
+] as const;
+
+type ProjectRow = {
+  id: string;
+  name: string;
+  category: string;
+  status: "In Development" | "Active" | "Completed";
+  updated: string;
+};
+
+const projectRows: ProjectRow[] = [
+  {
+    id: "syedos",
+    name: "SyedOS",
+    category: "Intelligent career platform",
+    status: "In Development",
+    updated: "17 July 2026",
+  },
+  {
+    id: "syedai",
+    name: "SyedAI Assistant",
+    category: "Artificial intelligence",
+    status: "Active",
+    updated: "13 July 2026",
+  },
+  {
+    id: "campushire",
+    name: "CampusHire",
+    category: "Full-stack web application",
+    status: "Completed",
+    updated: "8 July 2026",
+  },
+];
+
+type ActivityRow = {
+  id: string;
+  action: string;
+  item: string;
+  status: "Completed" | "Ready" | "Planned";
+};
+
+const activityRows: ActivityRow[] = [
+  {
+    id: "activity-1",
+    action: "Design system completed",
+    item: "Thirty reusable UI modules",
+    status: "Completed",
+  },
+  {
+    id: "activity-2",
+    action: "Portfolio shell prepared",
+    item: "Navigation and public pages",
+    status: "Ready",
+  },
+  {
+    id: "activity-3",
+    action: "CMS integration queued",
+    item: "Payload CMS and PostgreSQL",
+    status: "Planned",
+  },
+];
+
+type ShowcaseSectionProps = {
+  id: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  children: ReactNode;
+};
+
+function ShowcaseSection({
+  id,
+  eyebrow,
+  title,
+  description,
+  children,
+}: ShowcaseSectionProps) {
+  return (
+    <section
+      id={id}
+      className="scroll-mt-28 rounded-[2rem] border border-slate-800/90 bg-slate-950/45 p-5 shadow-2xl shadow-black/10 backdrop-blur-xl sm:p-7 lg:p-9"
+    >
+      <SectionHeading
+        eyebrow={eyebrow}
+        title={title}
+        description={description}
+      />
+
+      <div className="mt-8">{children}</div>
+    </section>
+  );
+}
+
+function ShowcaseLabel({ children }: { children: ReactNode }) {
+  return (
+    <p className="syedos-code-text text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+      {children}
+    </p>
+  );
+}
 
 export default function HomePage() {
   return (
-    <main className="syedos-container syedos-section">
-      <section className="syedos-glass-card mx-auto max-w-5xl p-8 md:p-12">
-        <div className="max-w-3xl">
-          <p className="syedos-code-text mb-3 text-sm text-cyan-400">
-            SyedOS Design System
-          </p>
-
-          <h1>Professional Button and Link System</h1>
-
-          <p className="mt-5 text-lg">
-            Reusable, accessible, responsive action and navigation
-            components for the complete SyedOS platform.
-          </p>
-        </div>
-
-        <div className="mt-10">
-          <h2 className="text-2xl">
-            Action Buttons
-          </h2>
-
-          <p className="mt-2">
-            Use these buttons for actions such as saving, deleting,
-            submitting, and loading.
-          </p>
-
-          <div className="mt-6 flex flex-wrap gap-4">
-            <Button rightIcon={<ArrowRight size={18} />}>
-              Explore Projects
-            </Button>
-
-            <Button
-              variant="secondary"
-              leftIcon={<Download size={18} />}
-            >
-              Download Resume
-            </Button>
-
-            <Button variant="ghost">
-              View Profile
-            </Button>
-
-            <Button
-              variant="danger"
-              leftIcon={<Trash2 size={18} />}
-            >
-              Delete
-            </Button>
-
-            <Button loading>
-              Loading
-            </Button>
-
-            <Button disabled>
-              Disabled
-            </Button>
-          </div>
-        </div>
-
-        <div className="mt-12 border-t border-slate-800 pt-10">
-          <h2 className="text-2xl">
-            Navigation Link Buttons
-          </h2>
-
-          <p className="mt-2">
-            Use these links for internal pages, external websites,
-            GitHub, resume downloads, and project navigation.
-          </p>
-
-          <div className="mt-6 flex flex-wrap gap-4">
-            <LinkButton
-              href="/projects"
-              rightIcon={<ArrowRight size={18} />}
-            >
-              View Projects
-            </LinkButton>
-
-            <LinkButton
-              href="https://github.com/syedmohiuddin106-dot"
-              variant="secondary"
-              external
-              leftIcon={<GitBranch size={18} />}
-              rightIcon={<ExternalLink size={16} />}
-              ariaLabel="Open Syed Mohiuddin's GitHub profile"
-            >
-              Open GitHub
-            </LinkButton>
-
-            <LinkButton
-              href="/resume/syed-mohiuddin-resume.pdf"
-              variant="ghost"
-              download
-              leftIcon={<Download size={18} />}
-              ariaLabel="Download Syed Mohiuddin's resume"
-            >
-              Download Resume
-            </LinkButton>
-          </div>
-        </div>
-
-        <div className="mt-12 grid gap-4 md:grid-cols-2">
-          <div className="syedos-card p-6">
-            <h3 className="text-xl">
-              Full-width Button
-            </h3>
-
-            <p className="mt-2">
-              Suitable for forms, login pages, contact forms, and
-              mobile layouts.
-            </p>
-
-            <div className="mt-5">
-              <Button fullWidth>
-                Submit Form
-              </Button>
-            </div>
-          </div>
-
-          <div className="syedos-card p-6">
-            <h3 className="text-xl">
-              Full-width Link
-            </h3>
-
-            <p className="mt-2">
-              Suitable for recruiter views, project pages, and
-              resume calls to action.
-            </p>
-
-            <div className="mt-5">
-              <LinkButton
-                href="/recruiter"
-                variant="secondary"
-                fullWidth
-                rightIcon={<ArrowRight size={18} />}
-              >
-                Recruiter View
-              </LinkButton>
-            </div>
-          </div>
-        </div>
-        <div className="mt-12 border-t border-slate-800 pt-10">
-  <h2 className="text-2xl">
-    Professional Card System
-  </h2>
-
-  <p className="mt-2">
-    Reusable surfaces for projects, skills, education,
-    analytics, and administration.
-  </p>
-
-  <div className="mt-6 grid gap-5 md:grid-cols-2">
-    <Card>
-      <p className="syedos-code-text text-sm text-cyan-400">
-        Solid Card
-      </p>
-
-      <h3 className="mt-3 text-xl">
-        Standard Content
-      </h3>
-
-      <p className="mt-2">
-        Suitable for skills, education, experience, and
-        normal dashboard information.
-      </p>
-    </Card>
-
-    <Card variant="glass">
-      <p className="syedos-code-text text-sm text-cyan-400">
-        Glass Card
-      </p>
-
-      <h3 className="mt-3 text-xl">
-        Premium Interface
-      </h3>
-
-      <p className="mt-2">
-        Suitable for hero content, featured projects, and
-        AI-focused interface sections.
-      </p>
-    </Card>
-
-    <Card variant="elevated" interactive>
-      <p className="syedos-code-text text-sm text-cyan-400">
-        Interactive Card
-      </p>
-
-      <h3 className="mt-3 text-xl">
-        Featured Project
-      </h3>
-
-      <p className="mt-2">
-        Moves subtly on hover and can later contain project
-        screenshots, technology tags, and links.
-      </p>
-    </Card>
-
-    <Card variant="editorial">
-      <p className="syedos-code-text text-sm text-cyan-400">
-        Editorial Card
-      </p>
-
-      <h3 className="mt-3 text-xl">
-        Academic Content
-      </h3>
-
-      <p className="mt-2">
-        Suitable for research, publications, education, and
-        master’s application content.
-      </p>
-    </Card>
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <h2 className="text-2xl">
-    Badge and Status System
-  </h2>
-
-  <p className="mt-2">
-    Reusable labels for technologies, project states,
-    verification, and career modes.
-  </p>
-
-  <div className="mt-6 flex flex-wrap gap-3">
-    <Badge>
-      TypeScript
-    </Badge>
-
-    <Badge variant="primary">
-      Featured
-    </Badge>
-
-    <Badge variant="success" dot>
-      Completed
-    </Badge>
-
-    <Badge variant="warning" dot>
-      In Development
-    </Badge>
-
-    <Badge variant="danger" dot>
-      Archived
-    </Badge>
-
-    <Badge variant="info">
-      AI Project
-    </Badge>
-
-    <Badge variant="outline">
-      Final-Year Student
-    </Badge>
-
-    <Badge
-      variant="success"
-      size="medium"
-      dot
-    >
-      Verified Skill
-    </Badge>
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Reusable Typography"
-    title="Professional Section Heading System"
-    description="A consistent heading component for projects, skills, education, experience, research, and administration."
-  />
-
-  <div className="mt-10 rounded-2xl border border-slate-800 bg-slate-950/50 p-8">
-    <SectionHeading
-      eyebrow="Featured Work"
-      title="Projects Built for Real-World Use"
-      description="Detailed engineering case studies with architecture, security, testing, challenges, and verified outcomes."
-      align="center"
-    />
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Dashboard Components"
-    title="Professional Statistics System"
-    description="Reusable metric cards for portfolio analytics, projects, recruiter activity, and AI features."
-  />
-
-  <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-    <StatCard
-      label="Major Projects"
-      value="2"
-      description="Published portfolio projects"
-      icon={<Code2 size={21} />}
-      trend={{
-        value: "Active development",
-        direction: "up",
-      }}
-    />
-
-    <StatCard
-      label="AI Agent Modes"
-      value="17"
-      description="Available in SyedAI Assistant"
-      icon={<Bot size={21} />}
-      trend={{
-        value: "Verified",
-        direction: "neutral",
-      }}
-    />
-
-    <StatCard
-      label="Career Modes"
-      value="13"
-      description="Future-ready profile stages"
-      icon={<BriefcaseBusiness size={21} />}
-    />
-
-    <StatCard
-      label="Portfolio Analytics"
-      value="Ready"
-      description="Dashboard integration planned"
-      icon={<BarChart3 size={21} />}
-      trend={{
-        value: "Foundation complete",
-        direction: "up",
-      }}
-    />
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Layout Components"
-    title="Professional Divider System"
-    description="Reusable separators for page sections, grouped content, admin panels, and project case studies."
-  />
-
-  <div className="mt-8 space-y-10">
-    <div>
-      <p className="mb-4 text-sm text-slate-400">
-        Standard divider
-      </p>
-
-      <Divider />
-    </div>
-
-    <div>
-      <p className="mb-4 text-sm text-slate-400">
-        Divider with a centered label
-      </p>
-
-      <Divider label="Featured Projects" />
-    </div>
-
-    <Card variant="glass">
-      <h3 className="text-xl">
-        Grouped Content Example
-      </h3>
-
-      <p className="mt-2">
-        Dividers help organize large pages without adding heavy
-        visual elements.
-      </p>
-
-      <Divider
-        label="Technical Details"
-        className="my-8"
-      />
-
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <p className="text-sm text-slate-400">
-            Architecture
-          </p>
-
-          <p className="mt-1 font-semibold text-white">
-            Next.js and Payload CMS
-          </p>
-        </div>
-
-        <div>
-          <p className="text-sm text-slate-400">
-            Database
-          </p>
-
-          <p className="mt-1 font-semibold text-white">
-            PostgreSQL
-          </p>
-        </div>
-      </div>
-    </Card>
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Visual Components"
-    title="Professional Icon Container System"
-    description="Reusable icon surfaces for skills, projects, security, education, AI features, and dashboard modules."
-  />
-
-  <div className="mt-8 flex flex-wrap items-center gap-5">
-    <IconContainer
-      variant="default"
-      size="small"
-      label="Development"
-    >
-      <Code2 size={17} />
-    </IconContainer>
-
-    <IconContainer
-      variant="primary"
-      label="Project launch"
-    >
-      <Rocket size={20} />
-    </IconContainer>
-
-    <IconContainer
-      variant="success"
-      label="Verified"
-    >
-      <Check size={20} />
-    </IconContainer>
-
-    <IconContainer
-      variant="warning"
-      label="Education"
-    >
-      <GraduationCap size={20} />
-    </IconContainer>
-
-    <IconContainer
-      variant="danger"
-      label="Security alert"
-    >
-      <ShieldCheck size={20} />
-    </IconContainer>
-
-    <IconContainer
-      variant="info"
-      size="large"
-      rounded="large"
-      label="AI feature"
-    >
-      <Sparkles size={25} />
-    </IconContainer>
-
-    <IconContainer
-      variant="primary"
-      size="large"
-      rounded="full"
-      label="Academic content"
-    >
-      <BookOpen size={24} />
-    </IconContainer>
-  </div>
-
-  <div className="mt-10 grid gap-5 md:grid-cols-3">
-    <Card interactive>
-      <IconContainer
-        variant="primary"
-        size="large"
-        label="Software projects"
+    <main className="relative min-h-screen overflow-hidden bg-slate-950">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 opacity-70"
       >
-        <Code2 size={24} />
-      </IconContainer>
-
-      <h3 className="mt-5 text-xl">
-        Software Projects
-      </h3>
-
-      <p className="mt-2">
-        Present full-stack applications, technical decisions,
-        architecture, security, and verified outcomes.
-      </p>
-    </Card>
-
-    <Card variant="glass" interactive>
-      <IconContainer
-        variant="info"
-        size="large"
-        label="Artificial intelligence"
-      >
-        <Bot size={24} />
-      </IconContainer>
-
-      <h3 className="mt-5 text-xl">
-        AI Applications
-      </h3>
-
-      <p className="mt-2">
-        Highlight AI integrations, agent systems, prompt handling,
-        validation, limits, and responsible implementation.
-      </p>
-    </Card>
-
-    <Card variant="editorial">
-      <IconContainer
-        variant="warning"
-        size="large"
-        label="Academic profile"
-      >
-        <GraduationCap size={24} />
-      </IconContainer>
-
-      <h3 className="mt-5 text-xl">
-        Academic Profile
-      </h3>
-
-      <p className="mt-2">
-        Organize education, research interests, academic projects,
-        publications, and master&apos;s application content.
-      </p>
-    </Card>
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Data Visualization"
-    title="Professional Progress System"
-    description="Reusable progress indicators for skills, projects, courses, profile completion, and dashboard analytics."
-  />
-
-  <div className="mt-8 grid gap-6 lg:grid-cols-2">
-    <Card>
-      <h3 className="text-xl">
-        Technical Skills
-      </h3>
-
-      <p className="mt-2">
-        Skill levels can later be managed directly from the admin
-        dashboard.
-      </p>
-
-      <div className="mt-8 space-y-6">
-        <Progress
-          label="Full-Stack Web Development"
-          value={82}
-          variant="primary"
-        />
-
-        <Progress
-          label="PHP and MySQL"
-          value={78}
-          variant="success"
-        />
-
-        <Progress
-          label="Artificial Intelligence"
-          value={64}
-          variant="info"
-        />
-
-        <Progress
-          label="Cloud and DevOps"
-          value={35}
-          variant="warning"
-        />
-      </div>
-    </Card>
-
-    <Card variant="glass">
-      <h3 className="text-xl">
-        Career Platform Progress
-      </h3>
-
-      <p className="mt-2">
-        Track development stages and portfolio completeness.
-      </p>
-
-      <div className="mt-8 space-y-6">
-        <Progress
-          label="Design System Foundation"
-          value={90}
-          variant="success"
-          size="large"
-        />
-
-        <Progress
-          label="Portfolio Content"
-          value={45}
-          variant="primary"
-          size="large"
-        />
-
-        <Progress
-          label="CMS Integration"
-          value={10}
-          variant="info"
-          size="large"
-        />
-
-        <Progress
-          label="Production Deployment"
-          value={0}
-          variant="danger"
-          size="large"
-        />
-      </div>
-    </Card>
-  </div>
-
-  <div className="mt-8 rounded-2xl border border-slate-800 bg-slate-950/50 p-6">
-    <p className="mb-4 text-sm font-medium text-slate-300">
-      Compact progress indicators
-    </p>
-
-    <div className="grid gap-5 md:grid-cols-3">
-      <Progress
-        value={25}
-        variant="warning"
-        size="small"
-        showValue={false}
-      />
-
-      <Progress
-        value={60}
-        variant="info"
-        size="small"
-        showValue={false}
-      />
-
-      <Progress
-        value={100}
-        variant="success"
-        size="small"
-        showValue={false}
-      />
-    </div>
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Identity Components"
-    title="Professional Avatar System"
-    description="Reusable profile images and intelligent fallback initials for portfolio users, recruiters, administrators, and testimonials."
-  />
-
-  <div className="mt-8 rounded-2xl border border-slate-800 bg-slate-950/50 p-6">
-    <p className="text-sm font-medium text-slate-300">
-      Avatar sizes and availability states
-    </p>
-
-    <div className="mt-6 flex flex-wrap items-end gap-7">
-      <div className="text-center">
-        <Avatar
-          alt="Syed Mohiuddin"
-          size="small"
-          status="online"
-        />
-
-        <p className="mt-3 text-xs text-slate-500">
-          Small
-        </p>
+        <div className="absolute -left-40 -top-40 h-[34rem] w-[34rem] rounded-full bg-blue-600/15 blur-3xl" />
+        <div className="absolute right-[-12rem] top-[18rem] h-[30rem] w-[30rem] rounded-full bg-cyan-500/10 blur-3xl" />
+        <div className="absolute bottom-[-15rem] left-1/3 h-[34rem] w-[34rem] rounded-full bg-violet-600/10 blur-3xl" />
       </div>
 
-      <div className="text-center">
-        <Avatar
-          alt="Syed Mohiuddin"
-          size="medium"
-          status="away"
-        />
-
-        <p className="mt-3 text-xs text-slate-500">
-          Medium
-        </p>
-      </div>
-
-      <div className="text-center">
-        <Avatar
-          alt="Syed Mohiuddin"
-          size="large"
-          status="busy"
-        />
-
-        <p className="mt-3 text-xs text-slate-500">
-          Large
-        </p>
-      </div>
-
-      <div className="text-center">
-        <Avatar
-          alt="Syed Mohiuddin"
-          initials="SM"
-          size="extraLarge"
-          status="online"
-        />
-
-        <p className="mt-3 text-xs text-slate-500">
-          Extra large
-        </p>
-      </div>
-
-      <div className="text-center">
-        <Avatar
-          alt="Recruiter Account"
-          size="large"
-          status="offline"
-        />
-
-        <p className="mt-3 text-xs text-slate-500">
-          Offline
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <div className="mt-8 grid gap-5 lg:grid-cols-2">
-    <Card>
-      <div className="flex items-start gap-4">
-        <Avatar
-          alt="Syed Mohiuddin"
-          initials="SM"
-          size="large"
-          status="online"
-        />
-
-        <div>
-          <div className="flex flex-wrap items-center gap-2">
-            <h3 className="text-xl">
-              Syed Mohiuddin
-            </h3>
-
-            <Badge variant="success" dot>
-              Available
-            </Badge>
-          </div>
-
-          <p className="mt-1">
-            Information Technology student and full-stack developer.
-          </p>
-
-          <div className="mt-4 flex flex-wrap gap-2">
-            <Badge variant="primary">
-              Next.js
-            </Badge>
-
-            <Badge variant="info">
-              AI Integration
-            </Badge>
-
-            <Badge variant="outline">
-              PHP
-            </Badge>
-          </div>
-        </div>
-      </div>
-    </Card>
-
-    <Card variant="glass">
-      <div className="flex items-start gap-4">
-        <Avatar
-          alt="Portfolio Administrator"
-          initials="PA"
-          size="large"
-          status="away"
-        />
-
-        <div>
-          <h3 className="text-xl">
-            Portfolio Administrator
-          </h3>
-
-          <p className="mt-1">
-            Manages projects, skills, analytics, resume versions,
-            and platform content.
-          </p>
-
-          <p className="mt-4 text-sm font-medium text-amber-300">
-            Administrator session active
-          </p>
-        </div>
-      </div>
-    </Card>
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Interaction Components"
-    title="Accessible Tooltip System"
-    description="Helpful contextual explanations for navigation, dashboard controls, project actions, and technical information."
-  />
-
-  <div className="mt-8 rounded-2xl border border-slate-800 bg-slate-950/50 p-8">
-    <p className="text-sm font-medium text-slate-300">
-      Hover over or focus on each control
-    </p>
-
-    <div className="mt-8 flex flex-wrap items-center gap-8">
-      <Tooltip content="Open platform settings">
-        <button
-          type="button"
-          aria-label="Settings"
-          className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-300 transition hover:border-blue-500/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-        >
-          <Settings size={20} />
-        </button>
-      </Tooltip>
-
-      <Tooltip
-        content="View more information about this feature"
-        position="bottom"
-      >
-        <button
-          type="button"
-          aria-label="Feature information"
-          className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-300 transition hover:border-cyan-500/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
-        >
-          <Info size={20} />
-        </button>
-      </Tooltip>
-
-      <Tooltip
-        content="Get help with the current section"
-        position="right"
-      >
-        <button
-          type="button"
-          aria-label="Help"
-          className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-300 transition hover:border-green-500/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
-        >
-          <HelpCircle size={20} />
-        </button>
-      </Tooltip>
-
-      <Tooltip
-        content="This project is actively being developed"
-        position="left"
-      >
-        <span tabIndex={0}>
-          <Badge variant="warning" dot>
-            In Development
-          </Badge>
-        </span>
-      </Tooltip>
-    </div>
-  </div>
-
-  <div className="mt-8 grid gap-5 md:grid-cols-2">
-    <Card>
-      <div className="flex items-center justify-between gap-4">
-        <div>
-          <h3 className="text-xl">
-            Project Actions
-          </h3>
-
-          <p className="mt-2">
-            Tooltips make icon-only controls easier to understand.
-          </p>
-        </div>
-
-        <Tooltip content="View the full project repository">
-          <button
-            type="button"
-            aria-label="View repository"
-            className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-300 transition hover:border-blue-500/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-          >
-            <GitBranch size={20} />
-          </button>
-        </Tooltip>
-      </div>
-    </Card>
-
-    <Card variant="glass">
-      <div className="flex items-center justify-between gap-4">
-        <div>
-          <h3 className="text-xl">
-            Technical Explanation
-          </h3>
-
-          <p className="mt-2">
-            Hover for additional information without cluttering the page.
-          </p>
-        </div>
-
-        <Tooltip
-          content="The frontend is built with Next.js, TypeScript, and Tailwind CSS."
-          position="left"
-        >
-          <button
-            type="button"
-            aria-label="Technology information"
-            className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-300 transition hover:border-cyan-500/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
-          >
-            <Code2 size={20} />
-          </button>
-        </Tooltip>
-      </div>
-    </Card>
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Feedback Components"
-    title="Professional Empty State System"
-    description="Clear and helpful placeholders for missing projects, search results, analytics, notifications, and admin records."
-  />
-
-  <div className="mt-8 grid gap-6 lg:grid-cols-2">
-    <EmptyState
-      icon={<FolderSearch size={25} />}
-      title="No projects found"
-      description="No projects match the selected technologies, category, or career mode. Try changing the current filters."
-      action={
-        <Button leftIcon={<Plus size={17} />}>
-          Add Project
-        </Button>
-      }
-      secondaryAction={
-        <Button variant="secondary">
-          Clear Filters
-        </Button>
-      }
-    />
-
-    <EmptyState
-      icon={<Inbox size={25} />}
-      title="No notifications yet"
-      description="Important portfolio activity, recruiter engagement, and administrator updates will appear here."
-      action={
-        <Button variant="secondary">
-          Refresh Activity
-        </Button>
-      }
-    />
-  </div>
-
-  <div className="mt-6">
-    <EmptyState
-      compact
-      icon={<BarChart3 size={21} />}
-      title="Analytics data is not available"
-      description="Visitor and recruiter analytics will appear after the public portfolio is deployed."
-      action={
-        <Button
-          variant="ghost"
-          size="small"
-        >
-          View deployment plan
-        </Button>
-      }
-    />
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Loading Components"
-    title="Professional Skeleton Loading System"
-    description="Reusable loading placeholders for profile data, project cards, analytics, CMS content, and dashboard modules."
-  />
-
-  <div className="mt-8 grid gap-6 lg:grid-cols-2">
-    <Card>
-      <p className="text-sm font-medium text-slate-300">
-        Profile loading state
-      </p>
-
-      <div className="mt-6 flex items-start gap-4">
-        <Skeleton
-          variant="circle"
-          width="64px"
-          height="64px"
-          className="shrink-0"
-        />
-
-        <div className="flex-1 space-y-3">
-          <Skeleton
-            variant="text"
-            width="45%"
-          />
-
-          <Skeleton
-            variant="text"
-            width="70%"
-          />
-
-          <Skeleton
-            variant="text"
-            width="55%"
-          />
-
-          <div className="flex gap-2 pt-2">
-            <Skeleton
-              width="72px"
-              height="26px"
-              className="rounded-full"
-            />
-
-            <Skeleton
-              width="88px"
-              height="26px"
-              className="rounded-full"
-            />
-
-            <Skeleton
-              width="60px"
-              height="26px"
-              className="rounded-full"
-            />
-          </div>
-        </div>
-      </div>
-    </Card>
-
-    <Card variant="glass">
-      <p className="text-sm font-medium text-slate-300">
-        Project card loading state
-      </p>
-
-      <Skeleton
-        height="180px"
-        className="mt-6 w-full"
-      />
-
-      <div className="mt-5 space-y-3">
-        <Skeleton
-          variant="text"
-          width="50%"
-          height="22px"
-        />
-
-        <Skeleton
-          variant="text"
-          width="100%"
-        />
-
-        <Skeleton
-          variant="text"
-          width="85%"
-        />
-
-        <div className="flex gap-2 pt-2">
-          <Skeleton
-            width="70px"
-            height="25px"
-            className="rounded-full"
-          />
-
-          <Skeleton
-            width="90px"
-            height="25px"
-            className="rounded-full"
-          />
-        </div>
-      </div>
-    </Card>
-  </div>
-
-  <div className="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-    {Array.from({ length: 4 }).map((_, index) => (
-      <Card key={index}>
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex-1">
-            <Skeleton
-              variant="text"
-              width="55%"
-            />
-
-            <Skeleton
-              variant="text"
-              width="35%"
-              height="28px"
-              className="mt-4"
-            />
-
-            <Skeleton
-              variant="text"
-              width="75%"
-              className="mt-4"
-            />
-          </div>
-
-          <Skeleton
-            width="44px"
-            height="44px"
-            className="shrink-0 rounded-xl"
-          />
-        </div>
-      </Card>
-    ))}
-  </div>
-
-  <div className="mt-6 rounded-2xl border border-slate-800 bg-slate-950/50 p-6">
-    <p className="mb-5 text-sm font-medium text-slate-300">
-      Static skeleton example
-    </p>
-
-    <Skeleton
-      animated={false}
-      height="12px"
-      className="w-full"
-    />
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Feedback Components"
-    title="Professional Alert System"
-    description="Reusable notifications for success, information, warnings, errors, forms, deployments, and administrator actions."
-  />
-
-  <div className="mt-8 space-y-5">
-    <Alert
-      variant="info"
-      title="Platform foundation is ready"
-      description="The core design system and reusable UI components are now available for building the SyedOS public portfolio and admin dashboard."
-    />
-
-    <Alert
-      variant="success"
-      title="Project saved successfully"
-      description="Your project information, technologies, status, and portfolio visibility settings were saved."
-      action={
-        <Button
-          variant="secondary"
-          size="small"
-        >
-          View Project
-        </Button>
-      }
-    />
-
-    <Alert
-      variant="warning"
-      title="Profile information is incomplete"
-      description="Add your resume, professional photo, skills, and project evidence before publishing the public portfolio."
-      action={
-        <Button
-          variant="ghost"
-          size="small"
-        >
-          Complete Profile
-        </Button>
-      }
-    />
-
-    <Alert
-      variant="danger"
-      title="Deployment failed"
-      description="The production build could not connect to the configured database. Check the environment variables and database service."
-      action={
-        <Button
-          variant="secondary"
-          size="small"
-        >
-          View Deployment Logs
-        </Button>
-      }
-    />
-
-    <Alert
-      variant="info"
-      title="Dismissible notification"
-      description="The close button is ready for client-side state integration in interactive pages."
-      dismissible
-    />
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Loading Components"
-    title="Professional Spinner System"
-    description="Reusable loading indicators for forms, buttons, AI responses, data fetching, authentication, and deployment operations."
-  />
-
-  <div className="mt-8 grid gap-6 lg:grid-cols-2">
-    <Card>
-      <h3 className="text-xl">
-        Spinner sizes
-      </h3>
-
-      <p className="mt-2">
-        Loading indicators remain clear across compact controls and
-        full-page operations.
-      </p>
-
-      <div className="mt-8 flex flex-wrap items-center gap-8">
-        <div className="text-center">
-          <Spinner
-            size="small"
-            label="Loading small content"
-          />
-
-          <p className="mt-3 text-xs text-slate-500">
-            Small
-          </p>
-        </div>
-
-        <div className="text-center">
-          <Spinner
-            size="medium"
-            label="Loading content"
-          />
-
-          <p className="mt-3 text-xs text-slate-500">
-            Medium
-          </p>
-        </div>
-
-        <div className="text-center">
-          <Spinner
-            size="large"
-            label="Loading large content"
-          />
-
-          <p className="mt-3 text-xs text-slate-500">
-            Large
-          </p>
-        </div>
-      </div>
-    </Card>
-
-    <Card variant="glass">
-      <h3 className="text-xl">
-        Spinner variants
-      </h3>
-
-      <p className="mt-2">
-        Semantic variants communicate the type of operation being
-        processed.
-      </p>
-
-      <div className="mt-8 flex flex-wrap items-center gap-8">
-        <Spinner
-          variant="primary"
-          label="Processing"
-        />
-
-        <Spinner
-          variant="success"
-          label="Saving"
-        />
-
-        <Spinner
-          variant="warning"
-          label="Checking"
-        />
-
-        <Spinner
-          variant="danger"
-          label="Retrying"
-        />
-
-        <div className="rounded-xl bg-blue-600 p-3">
-          <Spinner
-            variant="light"
-            label="Submitting"
-          />
-        </div>
-      </div>
-    </Card>
-  </div>
-
-  <div className="mt-6 grid gap-5 md:grid-cols-2">
-    <Card>
-      <div className="flex items-center gap-4">
-        <Spinner
-          size="medium"
-          label="Loading AI response"
-        />
-
-        <div>
-          <p className="font-semibold text-white">
-            Generating AI response
-          </p>
-
-          <p className="mt-1 text-sm text-slate-400">
-            SyedAI is processing the request.
-          </p>
-        </div>
-      </div>
-    </Card>
-
-    <Card variant="glass">
-      <div className="flex items-center gap-4">
-        <Spinner
-          size="medium"
-          variant="success"
-          label="Saving project"
-        />
-
-        <div>
-          <p className="font-semibold text-white">
-            Saving project changes
-          </p>
-
-          <p className="mt-1 text-sm text-slate-400">
-            Updating the CMS and portfolio content.
-          </p>
-        </div>
-      </div>
-    </Card>
-  </div>
-
-  <div className="mt-6 flex flex-wrap gap-4">
-    <Button
-      disabled
-      leftIcon={
-        <Spinner
-          size="small"
-          variant="light"
-          label="Submitting form"
-        />
-      }
-    >
-      Submitting
-    </Button>
-
-    <Button
-      variant="secondary"
-      disabled
-      leftIcon={
-        <Spinner
-          size="small"
-          label="Loading projects"
-        />
-      }
-    >
-      Loading Projects
-    </Button>
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Form Components"
-    title="Professional Input System"
-    description="Reusable text fields for authentication, contact forms, search, profile editing, project management, and CMS workflows."
-  />
-
-  <div className="mt-8 grid gap-6 lg:grid-cols-2">
-    <Card>
-      <h3 className="text-xl">
-        Standard inputs
-      </h3>
-
-      <p className="mt-2">
-        Accessible fields with labels, descriptions, icons, and
-        validation feedback.
-      </p>
-
-      <div className="mt-8 space-y-6">
-        <Input
-          label="Full name"
-          name="fullName"
-          placeholder="Enter your full name"
-          leftIcon={<User size={18} />}
-          required
-        />
-
-        <Input
-          label="Email address"
-          name="email"
-          type="email"
-          placeholder="name@example.com"
-          description="We will only use this email to respond to your message."
-          leftIcon={<Mail size={18} />}
-        />
-
-        <Input
-          label="Search projects"
-          name="projectSearch"
-          type="search"
-          placeholder="Search by technology or project name"
-          leftIcon={<Search size={18} />}
-        />
-      </div>
-    </Card>
-
-    <Card variant="glass">
-      <h3 className="text-xl">
-        Authentication and validation
-      </h3>
-
-      <p className="mt-2">
-        Error states and password controls are ready for login and
-        admin forms.
-      </p>
-
-      <div className="mt-8 space-y-6">
-        <Input
-          label="Admin email"
-          name="adminEmail"
-          type="email"
-          value="invalid-email"
-          readOnly
-          leftIcon={<Mail size={18} />}
-          error="Enter a valid email address."
-        />
-
-        <Input
-          label="Password"
-          name="password"
-          type="password"
-          placeholder="Enter your password"
-          leftIcon={<LockKeyhole size={18} />}
-          rightElement={
-            <button
-              type="button"
-              aria-label="Show password"
-              className="rounded-md p-1 text-slate-500 transition hover:text-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+      <div className="syedos-container relative py-5 sm:py-8 lg:py-10">
+        <header className="sticky top-4 z-40 rounded-2xl border border-slate-800/90 bg-slate-950/80 px-4 py-3 shadow-2xl shadow-black/25 backdrop-blur-xl sm:px-5">
+          <div className="flex items-center justify-between gap-4">
+            <a
+              href="#top"
+              className="group inline-flex items-center gap-3 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
             >
-              <Eye size={18} />
-            </button>
-          }
-        />
-
-        <Input
-          label="Confirmed password"
-          name="confirmedPassword"
-          type="password"
-          value="password"
-          readOnly
-          leftIcon={<LockKeyhole size={18} />}
-          rightElement={
-            <span
-              aria-label="Password hidden"
-              className="text-slate-500"
-            >
-              <EyeOff size={18} />
-            </span>
-          }
-        />
-
-        <Input
-          label="Disabled field"
-          name="disabledField"
-          value="Managed by the system"
-          disabled
-        />
-      </div>
-    </Card>
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Form Components"
-    title="Professional Textarea System"
-    description="Reusable multi-line fields for messages, project descriptions, biography content, AI prompts, administrator notes, and CMS editing."
-  />
-
-  <div className="mt-8 grid gap-6 lg:grid-cols-2">
-    <Card>
-      <h3 className="text-xl">
-        Contact and profile content
-      </h3>
-
-      <p className="mt-2">
-        Accessible fields with descriptions, validation, resizing,
-        and character limits.
-      </p>
-
-      <div className="mt-8 space-y-6">
-        <Textarea
-          label="Contact message"
-          name="contactMessage"
-          placeholder="Describe your opportunity, collaboration, or question."
-          description="Include enough detail to help prepare a useful response."
-          maxLength={500}
-          showCharacterCount
-          required
-        />
-
-        <Textarea
-          label="Professional biography"
-          name="professionalBiography"
-          defaultValue="Information Technology student focused on full-stack development, artificial intelligence, and building practical software projects."
-          maxLength={300}
-          showCharacterCount
-        />
-      </div>
-    </Card>
-
-    <Card variant="glass">
-      <h3 className="text-xl">
-        Project and AI content
-      </h3>
-
-      <p className="mt-2">
-        Longer content fields can be used in the CMS and AI-powered
-        tools.
-      </p>
-
-      <div className="mt-8 space-y-6">
-        <Textarea
-          label="Project description"
-          name="projectDescription"
-          placeholder="Explain the problem, solution, architecture, technologies, security, testing, and outcomes."
-          className="min-h-44"
-        />
-
-        <Textarea
-          label="AI prompt"
-          name="aiPrompt"
-          defaultValue="Review this project description and suggest improvements for recruiters and software engineering interviews."
-          maxLength={20000}
-          showCharacterCount
-          className="min-h-40"
-        />
-
-        <Textarea
-          label="Validation example"
-          name="validationExample"
-          value="Too short"
-          readOnly
-          error="The description must contain at least 50 characters."
-          showCharacterCount
-          maxLength={500}
-        />
-
-        <Textarea
-          label="System-managed notes"
-          name="systemNotes"
-          value="This field is currently locked."
-          disabled
-        />
-      </div>
-    </Card>
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Form Components"
-    title="Professional Select System"
-    description="Reusable dropdown fields for project categories, technologies, career modes, audience modes, status updates, and CMS workflows."
-  />
-
-  <div className="mt-8 grid gap-6 lg:grid-cols-2">
-    <Card>
-      <h3 className="text-xl">
-        Portfolio filters
-      </h3>
-
-      <p className="mt-2">
-        Select fields can organize projects, skills, technologies,
-        and career content.
-      </p>
-
-      <div className="mt-8 space-y-6">
-        <Select
-          label="Project category"
-          name="projectCategory"
-          placeholder="Choose a project category"
-          leftIcon={<Layers3 size={18} />}
-          options={[
-            {
-              label: "Full-Stack Web Development",
-              value: "full-stack",
-            },
-            {
-              label: "Artificial Intelligence",
-              value: "artificial-intelligence",
-            },
-            {
-              label: "Cloud and DevOps",
-              value: "cloud-devops",
-            },
-            {
-              label: "Data and Analytics",
-              value: "data-analytics",
-            },
-          ]}
-          required
-          defaultValue=""
-        />
-
-        <Select
-          label="Technology filter"
-          name="technologyFilter"
-          leftIcon={<Filter size={18} />}
-          defaultValue="nextjs"
-          options={[
-            {
-              label: "All technologies",
-              value: "all",
-            },
-            {
-              label: "Next.js",
-              value: "nextjs",
-            },
-            {
-              label: "TypeScript",
-              value: "typescript",
-            },
-            {
-              label: "PHP",
-              value: "php",
-            },
-            {
-              label: "MySQL",
-              value: "mysql",
-            },
-          ]}
-        />
-
-        <Select
-          label="Career mode"
-          name="careerMode"
-          description="The selected mode can change the content shown to visitors."
-          defaultValue="software-engineer"
-          options={[
-            {
-              label: "Software Engineer",
-              value: "software-engineer",
-            },
-            {
-              label: "Full-Stack Developer",
-              value: "full-stack-developer",
-            },
-            {
-              label: "AI and ML Engineer",
-              value: "ai-ml-engineer",
-            },
-            {
-              label: "Cloud and DevOps Engineer",
-              value: "cloud-devops-engineer",
-            },
-          ]}
-        />
-      </div>
-    </Card>
-
-    <Card variant="glass">
-      <h3 className="text-xl">
-        Administration states
-      </h3>
-
-      <p className="mt-2">
-        Validation and disabled states are ready for protected
-        administrator forms.
-      </p>
-
-      <div className="mt-8 space-y-6">
-        <Select
-          label="Audience mode"
-          name="audienceMode"
-          leftIcon={<UserRoundCog size={18} />}
-          defaultValue="recruiter"
-          options={[
-            {
-              label: "Recruiter",
-              value: "recruiter",
-            },
-            {
-              label: "Hiring Manager",
-              value: "hiring-manager",
-            },
-            {
-              label: "Master's Admissions",
-              value: "masters-admissions",
-            },
-            {
-              label: "General Visitor",
-              value: "general-visitor",
-            },
-          ]}
-        />
-
-       <Select
-          label="Project status"
-          name="projectStatus"
-          defaultValue=""
-          error="Select a valid project status."
-          options={[
-            {
-              label: "Draft",
-              value: "draft",
-            },
-            {
-              label: "In Development",
-              value: "in-development",
-            },
-            {
-              label: "Published",
-              value: "published",
-            },
-            {
-              label: "Archived",
-              value: "archived",
-            },
-          ]}
-          placeholder="Select status"
-        />
-
-        <Select
-          label="System-managed visibility"
-          name="systemVisibility"
-          value="private"
-          disabled
-          options={[
-            {
-              label: "Private",
-              value: "private",
-            },
-            {
-              label: "Public",
-              value: "public",
-            },
-          ]}
-        />
-      </div>
-    </Card>
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Form Components"
-    title="Professional Checkbox System"
-    description="Reusable checkbox controls for consent, preferences, project visibility, filters, notifications, and administrator settings."
-  />
-
-  <div className="mt-8 grid gap-6 lg:grid-cols-2">
-    <Card>
-      <h3 className="text-xl">
-        Preferences and consent
-      </h3>
-
-      <p className="mt-2">
-        Accessible checkbox controls with descriptions and required
-        states.
-      </p>
-
-      <div className="mt-8 space-y-6">
-        <Checkbox
-          label="Show my profile publicly"
-          name="publicProfile"
-          description="Allow recruiters and visitors to view the public portfolio."
-          defaultChecked
-        />
-
-        <Checkbox
-          label="Receive recruiter notifications"
-          name="recruiterNotifications"
-          description="Get notified when a recruiter views or contacts you."
-        />
-
-        <Checkbox
-          label="Accept privacy policy"
-          name="privacyConsent"
-          description="Required before submitting personal information."
-          required
-        />
-      </div>
-    </Card>
-
-    <Card variant="glass">
-      <h3 className="text-xl">
-        Validation and system states
-      </h3>
-
-      <p className="mt-2">
-        Error and disabled states are ready for forms and protected
-        administrator settings.
-      </p>
-
-      <div className="mt-8 space-y-6">
-        <Checkbox
-          label="Confirm project publication"
-          name="publishConfirmation"
-          description="Confirm that all project details are accurate."
-          error="You must confirm before publishing this project."
-        />
-
-        <Checkbox
-          label="Enable analytics"
-          name="analyticsEnabled"
-          description="Collect privacy-friendly portfolio usage data."
-          defaultChecked
-        />
-
-        <Checkbox
-          label="Managed by system administrator"
-          name="systemManaged"
-          description="This setting cannot be changed from the current account."
-          checked
-          readOnly
-          disabled
-        />
-      </div>
-    </Card>
-  </div>
-
-  <div className="mt-6 rounded-2xl border border-slate-800 bg-slate-950/50 p-6">
-    <p className="text-sm font-medium text-slate-300">
-      Project technology filters
-    </p>
-
-    <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      <Checkbox
-        label="Next.js"
-        name="filterNextjs"
-        defaultChecked
-      />
-
-      <Checkbox
-        label="TypeScript"
-        name="filterTypescript"
-        defaultChecked
-      />
-
-      <Checkbox
-        label="PHP"
-        name="filterPhp"
-      />
-
-      <Checkbox
-        label="MySQL"
-        name="filterMysql"
-      />
-    </div>
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Form Components"
-    title="Professional Radio Group System"
-    description="Reusable single-choice controls for career modes, audience types, project visibility, themes, and administrator workflows."
-  />
-
-  <div className="mt-8 grid gap-6 lg:grid-cols-2">
-    <Card>
-      <h3 className="text-xl">
-        Career and audience selection
-      </h3>
-
-      <p className="mt-2">
-        Choose one option from a clearly grouped and accessible set.
-      </p>
-
-      <div className="mt-8 space-y-8">
-        <RadioGroup
-          label="Primary career mode"
-          name="primaryCareerMode"
-          description="This mode can control which projects and skills are shown first."
-          defaultValue="full-stack"
-          required
-          options={[
-            {
-              label: "Full-Stack Developer",
-              value: "full-stack",
-              description:
-                "Highlight frontend, backend, database, and deployment experience.",
-            },
-            {
-              label: "AI and ML Engineer",
-              value: "ai-ml",
-              description:
-                "Focus on AI integrations, agents, automation, and data workflows.",
-            },
-            {
-              label: "Cloud and DevOps Engineer",
-              value: "cloud-devops",
-              description:
-                "Emphasize cloud platforms, containers, deployment, and automation.",
-            },
-          ]}
-        />
-
-        <RadioGroup
-          label="Audience type"
-          name="audienceType"
-          defaultValue="recruiter"
-          orientation="horizontal"
-          options={[
-            {
-              label: "Recruiter",
-              value: "recruiter",
-            },
-            {
-              label: "Hiring Manager",
-              value: "hiring-manager",
-            },
-            {
-              label: "Admissions",
-              value: "admissions",
-            },
-          ]}
-        />
-      </div>
-    </Card>
-
-    <Card variant="glass">
-      <h3 className="text-xl">
-        Validation and system states
-      </h3>
-
-      <p className="mt-2">
-        Error and disabled options are ready for protected settings
-        and publishing workflows.
-      </p>
-
-      <div className="mt-8 space-y-8">
-        <RadioGroup
-          label="Project visibility"
-          name="projectVisibility"
-          error="Select a project visibility option."
-          options={[
-            {
-              label: "Public",
-              value: "public",
-              description:
-                "Visible to all portfolio visitors.",
-            },
-            {
-              label: "Recruiters only",
-              value: "recruiters-only",
-              description:
-                "Visible only in recruiter-focused mode.",
-            },
-            {
-              label: "Private",
-              value: "private",
-              description:
-                "Only visible from the administrator dashboard.",
-            },
-          ]}
-        />
-
-        <RadioGroup
-          label="Platform theme"
-          name="platformTheme"
-          defaultValue="dark"
-          orientation="horizontal"
-          options={[
-            {
-              label: "Dark",
-              value: "dark",
-            },
-            {
-              label: "Light",
-              value: "light",
-            },
-            {
-              label: "System",
-              value: "system",
-              disabled: true,
-            },
-          ]}
-        />
-
-        <RadioGroup
-          label="System-managed environment"
-          name="deploymentEnvironment"
-          defaultValue="production"
-          disabled
-          options={[
-            {
-              label: "Development",
-              value: "development",
-            },
-            {
-              label: "Production",
-              value: "production",
-            },
-          ]}
-        />
-      </div>
-    </Card>
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Form Components"
-    title="Professional Switch System"
-    description="Reusable toggle controls for public visibility, notifications, analytics, AI features, themes, and administrator settings."
-  />
-
-  <div className="mt-8 grid gap-6 lg:grid-cols-2">
-    <Card>
-      <h3 className="text-xl">
-        Portfolio preferences
-      </h3>
-
-      <p className="mt-2">
-        Switches are suitable for settings that can be turned on or
-        off immediately.
-      </p>
-
-      <div className="mt-8 space-y-7">
-        <Switch
-          label="Public portfolio"
-          name="publicPortfolio"
-          description="Allow visitors and recruiters to view the published portfolio."
-          defaultChecked
-        />
-
-        <Switch
-          label="Recruiter notifications"
-          name="recruiterNotificationsSwitch"
-          description="Receive notifications when recruiters interact with your portfolio."
-          defaultChecked
-        />
-
-        <Switch
-          label="Show availability status"
-          name="availabilityStatus"
-          description="Display an availability badge on your public profile."
-        />
-
-        <Switch
-          label="Enable contact form"
-          name="contactFormEnabled"
-          description="Allow visitors to submit professional enquiries."
-          defaultChecked
-        />
-      </div>
-    </Card>
-
-    <Card variant="glass">
-      <h3 className="text-xl">
-        Platform and administrator settings
-      </h3>
-
-      <p className="mt-2">
-        Validation and disabled states are ready for protected
-        platform controls.
-      </p>
-
-      <div className="mt-8 space-y-7">
-        <Switch
-          label="Privacy-friendly analytics"
-          name="privacyAnalytics"
-          description="Collect anonymous portfolio usage statistics."
-          defaultChecked
-        />
-
-        <Switch
-          label="AI portfolio assistant"
-          name="aiPortfolioAssistant"
-          description="Allow visitors to ask approved questions about your projects and skills."
-        />
-
-        <Switch
-          label="Production deployment"
-          name="productionDeployment"
-          description="This setting requires deployment configuration."
-          error="Complete the deployment configuration before enabling production mode."
-        />
-
-        <Switch
-          label="Database backups"
-          name="databaseBackups"
-          description="Managed automatically by the platform administrator."
-          checked
-          readOnly
-          disabled
-        />
-      </div>
-    </Card>
-  </div>
-
-  <div className="mt-6 rounded-2xl border border-slate-800 bg-slate-950/50 p-6">
-    <p className="text-sm font-medium text-slate-300">
-      Career-mode visibility controls
-    </p>
-
-    <div className="mt-6 grid gap-6 md:grid-cols-2">
-      <Switch
-        label="Recruiter mode"
-        name="recruiterModeVisibility"
-        description="Show recruiter-focused projects and achievements."
-        defaultChecked
-      />
-
-      <Switch
-        label="Master&apos;s admissions mode"
-        name="admissionsModeVisibility"
-        description="Show academic projects, research, and education details."
-      />
-    </div>
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Navigation Components"
-    title="Professional Tabs System"
-    description="Reusable tab navigation for projects, skills, career modes, analytics, profile sections, and administrator dashboards."
-  />
-
-  <div className="mt-8 grid gap-6 lg:grid-cols-2">
-    <Card>
-      <h3 className="text-xl">
-        Project case study tabs
-      </h3>
-
-      <p className="mt-2">
-        Organize detailed project information without making the page
-        difficult to scan.
-      </p>
-
-      <div className="mt-8">
-        <Tabs
-          defaultValue="overview"
-          items={[
-            {
-              value: "overview",
-              label: "Overview",
-              content: (
-                <div>
-                  <h4 className="font-semibold text-white">
-                    Project overview
-                  </h4>
-
-                  <p className="mt-2 text-sm text-slate-400">
-                    SyedOS is an intelligent, audience-adaptive,
-                    CMS-driven personal career platform.
-                  </p>
-
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    <Badge variant="primary">
-                      Next.js
-                    </Badge>
-
-                    <Badge variant="info">
-                      TypeScript
-                    </Badge>
-
-                    <Badge variant="outline">
-                      Payload CMS
-                    </Badge>
-                  </div>
-                </div>
-              ),
-            },
-            {
-              value: "architecture",
-              label: "Architecture",
-              content: (
-                <div>
-                  <h4 className="font-semibold text-white">
-                    System architecture
-                  </h4>
-
-                  <p className="mt-2 text-sm text-slate-400">
-                    The platform uses a Next.js frontend, Payload CMS,
-                    PostgreSQL, secure authentication, and modular
-                    feature services.
-                  </p>
-                </div>
-              ),
-            },
-            {
-              value: "security",
-              label: "Security",
-              content: (
-                <div>
-                  <h4 className="font-semibold text-white">
-                    Security foundation
-                  </h4>
-
-                  <p className="mt-2 text-sm text-slate-400">
-                    The private administrator area will use protected
-                    routes, secure sessions, environment variables, and
-                    role-based authorization.
-                  </p>
-                </div>
-              ),
-            },
-            {
-              value: "testing",
-              label: "Testing",
-              disabled: true,
-              content: (
-                <p className="text-sm text-slate-400">
-                  Testing documentation will be added later.
-                </p>
-              ),
-            },
-          ]}
-        />
-      </div>
-    </Card>
-
-    <Card variant="glass">
-      <h3 className="text-xl">
-        Career profile tabs
-      </h3>
-
-      <p className="mt-2">
-        Visitors can explore different professional areas from one
-        focused interface.
-      </p>
-
-      <div className="mt-8">
-        <Tabs
-          defaultValue="skills"
-          items={[
-            {
-              value: "skills",
-              label: "Skills",
-              content: (
-                <div className="space-y-5">
-                  <Progress
-                    label="Full-Stack Development"
-                    value={82}
-                    variant="primary"
-                  />
-
-                  <Progress
-                    label="Artificial Intelligence"
-                    value={64}
-                    variant="info"
-                  />
-
-                  <Progress
-                    label="Database Development"
-                    value={78}
-                    variant="success"
-                  />
-                </div>
-              ),
-            },
-            {
-              value: "education",
-              label: "Education",
-              content: (
-                <div>
-                  <h4 className="font-semibold text-white">
-                    B.Tech in Information Technology
-                  </h4>
-
-                  <p className="mt-2 text-sm text-slate-400">
-                    Kakatiya Institute of Technology and Science,
-                    expected graduation in 2027.
-                  </p>
-                </div>
-              ),
-            },
-            {
-              value: "projects",
-              label: "Projects",
-              content: (
-                <div className="space-y-3">
-                  <div className="rounded-xl border border-slate-800 p-4">
-                    <p className="font-medium text-white">
-                      SyedAI Assistant
-                    </p>
-
-                    <p className="mt-1 text-sm text-slate-400">
-                      Multi-skill AI assistant for development,
-                      projects, and career support.
-                    </p>
-                  </div>
-
-                  <div className="rounded-xl border border-slate-800 p-4">
-                    <p className="font-medium text-white">
-                      CampusHire
-                    </p>
-
-                    <p className="mt-1 text-sm text-slate-400">
-                      Campus placement management system with student,
-                      recruiter, and administrator roles.
-                    </p>
-                  </div>
-                </div>
-              ),
-            },
-          ]}
-        />
-      </div>
-    </Card>
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Content Components"
-    title="Professional Accordion System"
-    description="Reusable expandable content for frequently asked questions, project details, technical decisions, education, and administrator help."
-  />
-
-  <div className="mt-8 grid gap-6 lg:grid-cols-2">
-    <Card>
-      <h3 className="text-xl">
-        Project case study details
-      </h3>
-
-      <p className="mt-2">
-        Organize technical information without showing everything at
-        the same time.
-      </p>
-
-      <div className="mt-8">
-        <Accordion
-          defaultOpen={["problem"]}
-          items={[
-            {
-              value: "problem",
-              title: "What problem does SyedOS solve?",
-              content: (
-                <p>
-                  SyedOS combines a professional portfolio, career
-                  modes, recruiter-focused content, analytics, CMS
-                  editing, and AI-powered features into one platform.
-                </p>
-              ),
-            },
-            {
-              value: "architecture",
-              title: "What architecture does it use?",
-              content: (
-                <div className="space-y-3">
-                  <p>
-                    The frontend uses Next.js and TypeScript.
-                  </p>
-
-                  <p>
-                    Payload CMS and PostgreSQL will manage portfolio
-                    content, administrator data, and structured project
-                    information.
-                  </p>
-
-                  <div className="flex flex-wrap gap-2">
-                    <Badge variant="primary">
-                      Next.js
-                    </Badge>
-
-                    <Badge variant="info">
-                      TypeScript
-                    </Badge>
-
-                    <Badge variant="outline">
-                      PostgreSQL
-                    </Badge>
-                  </div>
-                </div>
-              ),
-            },
-            {
-              value: "security",
-              title: "How will private content be protected?",
-              content: (
-                <p>
-                  The administrator area will use protected routes,
-                  secure authentication, authorization, environment
-                  variables, validation, and restricted database access.
-                </p>
-              ),
-            },
-            {
-              value: "testing",
-              title: "Testing documentation",
-              disabled: true,
-              content: (
-                <p>
-                  Testing documentation will be added during the testing
-                  phase.
-                </p>
-              ),
-            },
-          ]}
-        />
-      </div>
-    </Card>
-
-    <Card variant="glass">
-      <h3 className="text-xl">
-        Portfolio frequently asked questions
-      </h3>
-
-      <p className="mt-2">
-        Multiple sections can remain open when required.
-      </p>
-
-      <div className="mt-8">
-        <Accordion
-          allowMultiple
-          defaultOpen={["editing", "visitors"]}
-          items={[
-            {
-              value: "editing",
-              title: "Who can edit this portfolio?",
-              content: (
-                <p>
-                  Only Syed Mohiuddin can edit the private administrator
-                  dashboard after secure authentication.
-                </p>
-              ),
-            },
-            {
-              value: "visitors",
-              title: "What can public visitors do?",
-              content: (
-                <p>
-                  Visitors can view public projects, skills, education,
-                  certificates, resume links, and approved contact
-                  options.
-                </p>
-              ),
-            },
-            {
-              value: "resume",
-              title: "Can visitors download the resume?",
-              content: (
-                <p>
-                  Yes. A public resume version can be available for
-                  download, while private versions remain protected.
-                </p>
-              ),
-            },
-            {
-              value: "cms",
-              title: "Can content be updated without editing code?",
-              content: (
-                <p>
-                  Yes. Payload CMS will later allow projects, skills,
-                  education, certificates, and profile content to be
-                  updated from the private dashboard.
-                </p>
-              ),
-            },
-          ]}
-        />
-      </div>
-    </Card>
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Overlay Components"
-    title="Professional Modal System"
-    description="Reusable dialog windows for forms, confirmations, project management, authentication, and administrator actions."
-  />
-
-  <div className="mt-8">
-    <Card>
-      <h3 className="text-xl">
-        Interactive modal examples
-      </h3>
-
-      <p className="mt-2">
-        Open a project form or a destructive-action confirmation
-        dialog.
-      </p>
-
-      <div className="mt-8">
-        <ModalDemo />
-      </div>
-    </Card>
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Navigation Components"
-    title="Professional Dropdown Menu System"
-    description="Reusable action menus for projects, profiles, administrator controls, settings, and contextual navigation."
-  />
-
-  <div className="mt-8 grid gap-6 lg:grid-cols-2">
-    <Card>
-      <h3 className="text-xl">
-        Project actions menu
-      </h3>
-
-      <p className="mt-2">
-        Contextual actions can remain hidden until the user needs them.
-      </p>
-
-      <div className="mt-8 flex items-center justify-between rounded-xl border border-slate-800 p-4">
-        <div>
-          <p className="font-medium text-white">
-            SyedOS Career Platform
-          </p>
-
-          <p className="mt-1 text-sm text-slate-400">
-            Full-stack portfolio platform
-          </p>
-        </div>
-
-        <DropdownMenu
-          align="right"
-          trigger={
-            <span className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-300 transition hover:border-blue-500/50 hover:text-white">
-              <Ellipsis size={20} />
-            </span>
-          }
-          items={[
-            {
-              label: "Edit project",
-              icon: <Pencil size={17} />,
-            },
-            {
-              label: "Project settings",
-              icon: <Settings2 size={17} />,
-            },
-            {
-              label: "Duplicate project…",
-              icon: <Plus size={17} />,
-            },
-            {
-              label: "Delete project",
-              icon: <Trash2 size={17} />,
-              danger: true,
-            },
-          ]}
-        />
-      </div>
-    </Card>
-
-    <Card variant="glass">
-      <h3 className="text-xl">
-        Profile menu
-      </h3>
-
-      <p className="mt-2">
-        A compact account menu for administrator and profile actions.
-      </p>
-
-      <div className="mt-8 flex justify-end">
-        <DropdownMenu
-          align="right"
-          width="large"
-          trigger={
-            <span className="flex items-center gap-3 rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-left transition hover:border-blue-500/50">
-              <Avatar
-                alt="Syed Mohiuddin"
-                initials="SM"
-                size="small"
-                status="online"
-              />
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-blue-500/30 bg-blue-500/10 text-blue-300 transition group-hover:border-cyan-400/50 group-hover:text-cyan-300">
+                <Sparkles size={19} />
+              </span>
 
               <span>
-                <span className="block text-sm font-medium text-white">
-                  Syed Mohiuddin
+                <span className="block text-sm font-semibold text-white">
+                  SyedOS UI Lab
                 </span>
-
                 <span className="block text-xs text-slate-500">
-                  Administrator
+                  Production-ready design system
                 </span>
               </span>
-            </span>
-          }
-          items={[
-            {
-              label: "View profile",
-              icon: <UserCircle size={17} />,
-              shortcut: "P",
-            },
-            {
-              label: "Account settings",
-              icon: <Settings size={17} />,
-              shortcut: "S",
-            },
-            {
-              label: "Dark theme",
-              selected: true,
-            },
-            {
-              label: "System theme",
-              disabled: true,
-            },
-            {
-              label: "Sign out",
-              icon: <LogOut size={17} />,
-              danger: true,
-            },
-          ]}
-        />
-      </div>
-    </Card>
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Data Components"
-    title="Professional Table System"
-    description="Reusable responsive tables for projects, applications, users, analytics, recruiter activity, and administrator records."
-  />
+            </a>
 
-  <div className="mt-8">
-    <Card>
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <h3 className="text-xl">
-            Project management table
-          </h3>
+            <nav
+              aria-label="Design system navigation"
+              className="hidden items-center gap-1 xl:flex"
+            >
+              {showcaseNavigation.slice(0, 5).map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="rounded-lg px-3 py-2 text-sm font-medium text-slate-400 transition hover:bg-slate-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </nav>
 
-          <p className="mt-2">
-            A responsive table for managing portfolio projects and
-            publication status.
-          </p>
-        </div>
+            <div className="flex items-center gap-2">
+              <Badge variant="success" dot>
+                UI complete
+              </Badge>
 
-        <Button
-          size="small"
-          leftIcon={<Plus size={16} />}
-        >
-          Add Project
-        </Button>
-      </div>
-
-      <div className="mt-8">
-        <Table
-          caption="SyedOS project management records"
-          data={[
-            {
-              id: "syedos",
-              name: "SyedOS",
-              category: "Career Platform",
-              status: "In Development",
-              updated: "17 July 2026",
-            },
-            {
-              id: "syedai",
-              name: "SyedAI Assistant",
-              category: "Artificial Intelligence",
-              status: "Active",
-              updated: "13 July 2026",
-            },
-            {
-              id: "campushire",
-              name: "CampusHire",
-              category: "Full-Stack Web",
-              status: "Completed",
-              updated: "8 July 2026",
-            },
-          ]}
-          getRowKey={(project) => project.id}
-          columns={[
-            {
-              key: "project",
-              header: "Project",
-              cell: (project) => (
-                <div>
-                  <p className="font-medium text-white">
-                    {project.name}
-                  </p>
-
-                  <p className="mt-1 text-xs text-slate-500">
-                    {project.category}
-                  </p>
-                </div>
-              ),
-            },
-            {
-              key: "status",
-              header: "Status",
-              cell: (project) => {
-                const variant =
-                  project.status === "Completed"
-                    ? "success"
-                    : project.status === "Active"
-                      ? "primary"
-                      : "warning";
-
-                return (
-                  <Badge variant={variant} dot>
-                    {project.status}
-                  </Badge>
-                );
-              },
-            },
-            {
-              key: "updated",
-              header: "Last Updated",
-              cell: (project) => (
-                <div className="flex items-center gap-2 text-slate-400">
-                  <CalendarDays size={16} />
-
-                  <span>
-                    {project.updated}
-                  </span>
-                </div>
-              ),
-            },
-            {
-              key: "actions",
-              header: "Actions",
-              className: "text-right",
-              cell: () => (
+              <Tooltip content="Open component documentation">
                 <button
                   type="button"
-                  aria-label="Open project actions"
-                  className="rounded-lg p-2 text-slate-500 transition hover:bg-slate-800 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                  aria-label="Open component documentation"
+                  className="hidden rounded-xl border border-slate-700 bg-slate-900 p-2.5 text-slate-400 transition hover:border-blue-500/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 sm:inline-flex"
                 >
-                  <MoreHorizontal size={18} />
+                  <BookOpen size={18} />
                 </button>
-              ),
-            },
-          ]}
-        />
-      </div>
-    </Card>
-  </div>
+              </Tooltip>
+            </div>
+          </div>
+        </header>
 
-  <div className="mt-6 grid gap-6 lg:grid-cols-2">
-    <Card variant="glass">
-      <h3 className="text-xl">
-        Recent activity
-      </h3>
+        <section
+          id="top"
+          className="relative mt-6 overflow-hidden rounded-[2.25rem] border border-slate-800 bg-slate-950/65 px-6 py-10 shadow-2xl shadow-black/30 backdrop-blur-xl sm:px-9 lg:px-12 lg:py-14"
+        >
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.18),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(34,211,238,0.1),transparent_38%)]"
+          />
 
-      <p className="mt-2">
-        A compact administrator activity table.
-      </p>
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(rgba(255,255,255,0.2)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.2)_1px,transparent_1px)] [background-size:36px_36px]"
+          />
 
-      <div className="mt-8">
-        <Table
-          caption="Recent administrator activity"
-          data={[
-            {
-              id: "activity-1",
-              action: "Project updated",
-              item: "SyedOS",
-              status: "Completed",
-            },
-            {
-              id: "activity-2",
-              action: "Resume generated",
-              item: "Software Engineer Resume",
-              status: "Processing",
-            },
-          ]}
-          getRowKey={(activity) => activity.id}
-          columns={[
-            {
-              key: "activity",
-              header: "Activity",
-              cell: (activity) => (
+          <div className="relative grid items-center gap-10 xl:grid-cols-[minmax(0,1.2fr)_minmax(23rem,0.8fr)]">
+            <div>
+              <div className="flex flex-wrap items-center gap-3">
+                <Badge variant="primary" size="medium">
+                  SyedOS Design System 1.0
+                </Badge>
+
+                <Badge variant="success" dot size="medium">
+                  30 UI modules verified
+                </Badge>
+              </div>
+
+              <p className="syedos-code-text mt-7 text-sm font-semibold uppercase tracking-[0.22em] text-cyan-400">
+                Accessible · Adaptive · CMS-ready
+              </p>
+
+              <h1 className="mt-4 max-w-5xl text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+                A production-grade interface foundation for an intelligent
+                career platform.
+              </h1>
+
+              <p className="mt-6 max-w-3xl text-base leading-8 text-slate-400 sm:text-lg">
+                This advanced component laboratory validates SyedOS before the
+                public portfolio, private dashboard, Payload CMS, PostgreSQL,
+                analytics, and AI features are assembled.
+              </p>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <LinkButton
+                  href="#foundations"
+                  rightIcon={<ArrowRight size={18} />}
+                >
+                  Explore components
+                </LinkButton>
+
+                <LinkButton
+                  href="https://github.com/syedmohiuddin106-dot"
+                  variant="secondary"
+                  external
+                  leftIcon={<GitBranch size={18} />}
+                  rightIcon={<ExternalLink size={16} />}
+                  ariaLabel="Open Syed Mohiuddin's GitHub profile"
+                >
+                  Open GitHub
+                </LinkButton>
+
+                <LinkButton
+                  href="/resume/syed-mohiuddin-resume.pdf"
+                  variant="ghost"
+                  download
+                  leftIcon={<Download size={18} />}
+                  ariaLabel="Download Syed Mohiuddin's resume"
+                >
+                  Resume
+                </LinkButton>
+              </div>
+
+              <div className="mt-9 flex flex-wrap gap-x-7 gap-y-3 text-sm text-slate-500">
+                <span className="inline-flex items-center gap-2">
+                  <CircleCheck size={16} className="text-green-400" />
+                  Responsive layouts
+                </span>
+
+                <span className="inline-flex items-center gap-2">
+                  <CircleCheck size={16} className="text-green-400" />
+                  Keyboard accessible
+                </span>
+
+                <span className="inline-flex items-center gap-2">
+                  <CircleCheck size={16} className="text-green-400" />
+                  Dark-interface optimized
+                </span>
+              </div>
+            </div>
+
+            <Card variant="glass" className="relative overflow-hidden p-0">
+              <div className="border-b border-slate-800 px-6 py-5">
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <ShowcaseLabel>System overview</ShowcaseLabel>
+                    <h2 className="mt-2 text-2xl">Foundation status</h2>
+                  </div>
+
+                  <IconContainer
+                    variant="success"
+                    size="large"
+                    rounded="large"
+                    label="Design system complete"
+                  >
+                    <Check size={24} />
+                  </IconContainer>
+                </div>
+              </div>
+
+              <div className="space-y-6 p-6">
+                <Progress
+                  label="Reusable UI foundation"
+                  value={100}
+                  variant="success"
+                  size="large"
+                />
+
+                <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2">
+                  {[
+                    {
+                      icon: <Code2 size={18} />,
+                      label: "Frontend",
+                      value: "Next.js + TypeScript",
+                    },
+                    {
+                      icon: <ShieldCheck size={18} />,
+                      label: "Accessibility",
+                      value: "Semantic + keyboard",
+                    },
+                    {
+                      icon: <Layers3 size={18} />,
+                      label: "Architecture",
+                      value: "Composable modules",
+                    },
+                    {
+                      icon: <Rocket size={18} />,
+                      label: "Next phase",
+                      value: "Portfolio shell",
+                    },
+                  ].map((item) => (
+                    <div
+                      key={item.label}
+                      className="rounded-xl border border-slate-800 bg-slate-950/45 p-4"
+                    >
+                      <div className="text-cyan-400">{item.icon}</div>
+                      <p className="mt-3 text-xs uppercase tracking-[0.16em] text-slate-600">
+                        {item.label}
+                      </p>
+                      <p className="mt-1 text-sm font-medium text-slate-200">
+                        {item.value}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                <Alert
+                  variant="success"
+                  title="Ready for application architecture"
+                  description="The UI layer is stable enough to begin the real public and private SyedOS experience."
+                />
+              </div>
+            </Card>
+          </div>
+        </section>
+
+        <section className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <StatCard
+            label="Reusable Modules"
+            value="30"
+            description="Core UI and helper demos"
+            icon={<Layers3 size={21} />}
+            trend={{
+              value: "Foundation complete",
+              direction: "up",
+            }}
+          />
+
+          <StatCard
+            label="Interaction Patterns"
+            value="12"
+            description="Forms, overlays, and navigation"
+            icon={<Sparkles size={21} />}
+            trend={{
+              value: "Keyboard ready",
+              direction: "up",
+            }}
+          />
+
+          <StatCard
+            label="Career Modes"
+            value="13"
+            description="Planned adaptive experiences"
+            icon={<BriefcaseBusiness size={21} />}
+          />
+
+          <StatCard
+            label="Platform Readiness"
+            value="100%"
+            description="UI design-system milestone"
+            icon={<BarChart3 size={21} />}
+            trend={{
+              value: "Next: portfolio shell",
+              direction: "neutral",
+            }}
+          />
+        </section>
+
+        <div className="mt-10 grid gap-8 lg:grid-cols-[15rem_minmax(0,1fr)] xl:grid-cols-[17rem_minmax(0,1fr)]">
+          <aside className="lg:sticky lg:top-28 lg:self-start">
+            <Card variant="glass" className="p-4">
+              <div className="flex items-center justify-between gap-3 px-2 py-2">
                 <div>
-                  <p className="font-medium text-white">
-                    {activity.action}
-                  </p>
-
-                  <p className="mt-1 text-xs text-slate-500">
-                    {activity.item}
+                  <ShowcaseLabel>Directory</ShowcaseLabel>
+                  <p className="mt-1 font-semibold text-white">
+                    Component groups
                   </p>
                 </div>
-              ),
-            },
-            {
-              key: "state",
-              header: "State",
-              cell: (activity) => (
-                <div className="flex items-center gap-2">
-                  {activity.status === "Completed" ? (
-                    <CircleCheck
-                      size={17}
-                      className="text-green-400"
-                    />
-                  ) : (
-                    <Clock3
-                      size={17}
-                      className="text-amber-400"
-                    />
-                  )}
 
-                  <span className="text-slate-300">
-                    {activity.status}
-                  </span>
+                <Badge variant="outline">v1.0</Badge>
+              </div>
+
+              <Divider className="my-3" />
+
+              <nav aria-label="Component group directory">
+                <ul className="space-y-1">
+                  {showcaseNavigation.map((item) => (
+                    <li key={item.href}>
+                      <a
+                        href={item.href}
+                        className="group flex items-center justify-between gap-3 rounded-xl px-3 py-3 text-sm text-slate-400 transition hover:bg-slate-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                      >
+                        <span>{item.label}</span>
+                        <span className="syedos-code-text rounded-md border border-slate-800 px-2 py-0.5 text-[10px] text-slate-600 transition group-hover:border-slate-700 group-hover:text-slate-400">
+                          {item.count}
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+
+              <Divider className="my-4" />
+
+              <div className="rounded-xl border border-blue-500/20 bg-blue-500/5 p-4">
+                <p className="text-sm font-medium text-blue-200">
+                  Private by design
+                </p>
+                <p className="mt-2 text-xs leading-5 text-slate-500">
+                  Public visitors can view approved content. Only the
+                  authenticated owner will edit SyedOS.
+                </p>
+              </div>
+            </Card>
+          </aside>
+
+          <div className="space-y-8">
+            <ShowcaseSection
+              id="foundations"
+              eyebrow="01 · Visual foundations"
+              title="Actions, surfaces, identity, and hierarchy"
+              description="The core visual language combines clear actions, structured surfaces, reusable status patterns, and professional identity components."
+            >
+              <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
+                <Card interactive>
+                  <div className="flex flex-wrap items-start justify-between gap-4">
+                    <div>
+                      <ShowcaseLabel>Action system</ShowcaseLabel>
+                      <h3 className="mt-2 text-xl">Buttons and links</h3>
+                      <p className="mt-2 max-w-xl text-sm text-slate-400">
+                        Consistent actions for navigation, forms, downloads,
+                        project controls, and destructive operations.
+                      </p>
+                    </div>
+
+                    <IconContainer variant="primary" label="Action system">
+                      <ArrowRight size={20} />
+                    </IconContainer>
+                  </div>
+
+                  <div className="mt-7 flex flex-wrap gap-3">
+                    <Button rightIcon={<ArrowRight size={17} />}>
+                      Primary action
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      leftIcon={<Download size={17} />}
+                    >
+                      Download
+                    </Button>
+                    <Button variant="ghost">Ghost action</Button>
+                    <Button variant="danger" leftIcon={<Trash2 size={17} />}>
+                      Delete
+                    </Button>
+                    <Button loading>Processing</Button>
+                  </div>
+
+                  <Divider label="Navigation actions" className="my-7" />
+
+                  <div className="flex flex-wrap gap-3">
+                    <LinkButton
+                      href="/projects"
+                      rightIcon={<ArrowRight size={17} />}
+                    >
+                      View projects
+                    </LinkButton>
+                    <LinkButton
+                      href="https://github.com/syedmohiuddin106-dot"
+                      external
+                      variant="secondary"
+                      leftIcon={<GitBranch size={17} />}
+                      rightIcon={<ExternalLink size={15} />}
+                      ariaLabel="Open GitHub"
+                    >
+                      GitHub
+                    </LinkButton>
+                  </div>
+                </Card>
+
+                <Card variant="glass">
+                  <ShowcaseLabel>Status language</ShowcaseLabel>
+                  <h3 className="mt-2 text-xl">Badges and icon surfaces</h3>
+
+                  <div className="mt-6 flex flex-wrap gap-2.5">
+                    <Badge variant="primary">Featured</Badge>
+                    <Badge variant="success" dot>
+                      Completed
+                    </Badge>
+                    <Badge variant="warning" dot>
+                      In development
+                    </Badge>
+                    <Badge variant="danger" dot>
+                      Archived
+                    </Badge>
+                    <Badge variant="info">AI project</Badge>
+                    <Badge variant="outline">Final-year student</Badge>
+                  </div>
+
+                  <div className="mt-7 flex flex-wrap items-center gap-4">
+                    <IconContainer variant="default" size="small">
+                      <Code2 size={17} />
+                    </IconContainer>
+                    <IconContainer variant="primary">
+                      <Rocket size={20} />
+                    </IconContainer>
+                    <IconContainer variant="success">
+                      <Check size={20} />
+                    </IconContainer>
+                    <IconContainer variant="warning">
+                      <GraduationCap size={20} />
+                    </IconContainer>
+                    <IconContainer variant="info" size="large" rounded="full">
+                      <Sparkles size={24} />
+                    </IconContainer>
+                  </div>
+                </Card>
+              </div>
+
+              <div className="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+                <Card variant="elevated" interactive>
+                  <IconContainer variant="primary" size="large">
+                    <Code2 size={24} />
+                  </IconContainer>
+                  <h3 className="mt-5 text-xl">Software engineering</h3>
+                  <p className="mt-2 text-sm text-slate-400">
+                    Present architecture, implementation, testing, security,
+                    deployment, and measurable outcomes.
+                  </p>
+                </Card>
+
+                <Card variant="glass" interactive>
+                  <IconContainer variant="info" size="large">
+                    <Bot size={24} />
+                  </IconContainer>
+                  <h3 className="mt-5 text-xl">AI applications</h3>
+                  <p className="mt-2 text-sm text-slate-400">
+                    Explain agent workflows, APIs, limits, validation, safety,
+                    and responsible implementation.
+                  </p>
+                </Card>
+
+                <Card variant="editorial">
+                  <IconContainer variant="warning" size="large">
+                    <GraduationCap size={24} />
+                  </IconContainer>
+                  <h3 className="mt-5 text-xl">Academic profile</h3>
+                  <p className="mt-2 text-sm text-slate-400">
+                    Organize education, research direction, academic work,
+                    certificates, and master&apos;s preparation.
+                  </p>
+                </Card>
+              </div>
+
+              <div className="mt-6 grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
+                <Card>
+                  <ShowcaseLabel>Identity system</ShowcaseLabel>
+                  <div className="mt-5 flex items-start gap-4">
+                    <Avatar
+                      alt="Syed Mohiuddin"
+                      initials="SM"
+                      size="extraLarge"
+                      status="online"
+                    />
+
+                    <div className="min-w-0">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h3 className="text-xl">Syed Mohiuddin</h3>
+                        <Badge variant="success" dot>
+                          Available
+                        </Badge>
+                      </div>
+                      <p className="mt-2 text-sm text-slate-400">
+                        Information Technology student building full-stack,
+                        AI-assisted, and career-focused software products.
+                      </p>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        <Badge variant="primary">Next.js</Badge>
+                        <Badge variant="info">AI integration</Badge>
+                        <Badge variant="outline">PHP + MySQL</Badge>
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card variant="glass">
+                  <ShowcaseLabel>Context assistance</ShowcaseLabel>
+                  <div className="mt-5 flex flex-wrap items-center gap-5">
+                    <Tooltip content="Open platform settings">
+                      <button
+                        type="button"
+                        aria-label="Settings"
+                        className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-400 transition hover:border-blue-500/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                      >
+                        <Settings size={20} />
+                      </button>
+                    </Tooltip>
+
+                    <Tooltip
+                      content="View technical information"
+                      position="bottom"
+                    >
+                      <button
+                        type="button"
+                        aria-label="Technical information"
+                        className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-400 transition hover:border-cyan-500/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
+                      >
+                        <Info size={20} />
+                      </button>
+                    </Tooltip>
+
+                    <Tooltip
+                      content="Get help with this section"
+                      position="right"
+                    >
+                      <button
+                        type="button"
+                        aria-label="Help"
+                        className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-400 transition hover:border-green-500/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
+                      >
+                        <HelpCircle size={20} />
+                      </button>
+                    </Tooltip>
+
+                    <Tooltip
+                      content="This project is being actively developed"
+                      position="left"
+                    >
+                      <span tabIndex={0}>
+                        <Badge variant="warning" dot>
+                          Active build
+                        </Badge>
+                      </span>
+                    </Tooltip>
+                  </div>
+                </Card>
+              </div>
+            </ShowcaseSection>
+
+            <ShowcaseSection
+              id="feedback"
+              eyebrow="02 · Feedback and loading"
+              title="Clear system communication at every state"
+              description="Alerts, notifications, empty states, loading indicators, and placeholders keep visitors and administrators informed without visual noise."
+            >
+              <div className="space-y-4">
+                <Alert
+                  variant="info"
+                  title="Design-system documentation available"
+                  description="Every reusable component is represented in this laboratory before it is used inside production pages."
+                />
+                <Alert
+                  variant="success"
+                  title="UI foundation completed"
+                  description="The component milestone is verified and ready for the actual SyedOS portfolio architecture."
+                  action={
+                    <Button variant="secondary" size="small">
+                      View roadmap
+                    </Button>
+                  }
+                />
+                <Alert
+                  variant="warning"
+                  title="Content integration remains"
+                  description="Portfolio copy, media, CMS collections, authentication, and deployment are the next implementation phases."
+                />
+              </div>
+
+              <div className="mt-6 grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
+                <Card>
+                  <ShowcaseLabel>Temporary notifications</ShowcaseLabel>
+                  <h3 className="mt-2 text-xl">Interactive toast system</h3>
+                  <p className="mt-2 text-sm text-slate-400">
+                    Trigger semantic notifications for saves, validation,
+                    publishing, and deployment activity.
+                  </p>
+                  <div className="mt-6">
+                    <ToastDemo />
+                  </div>
+                </Card>
+
+                <Card variant="glass">
+                  <ShowcaseLabel>Loading indicators</ShowcaseLabel>
+                  <h3 className="mt-2 text-xl">Progress in motion</h3>
+                  <div className="mt-6 flex flex-wrap items-center gap-7">
+                    <Spinner size="small" label="Loading compact content" />
+                    <Spinner size="medium" variant="success" label="Saving" />
+                    <Spinner size="large" variant="warning" label="Checking" />
+                    <div className="rounded-xl bg-blue-600 p-3">
+                      <Spinner variant="light" label="Submitting" />
+                    </div>
+                  </div>
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <Button
+                      disabled
+                      leftIcon={
+                        <Spinner
+                          size="small"
+                          variant="light"
+                          label="Submitting"
+                        />
+                      }
+                    >
+                      Submitting
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      disabled
+                      leftIcon={<Spinner size="small" label="Loading" />}
+                    >
+                      Loading projects
+                    </Button>
+                  </div>
+                </Card>
+              </div>
+
+              <div className="mt-6 grid gap-6 lg:grid-cols-2">
+                <EmptyState
+                  icon={<FolderSearch size={25} />}
+                  title="No projects match these filters"
+                  description="Change the selected career mode, technology, or project category to restore matching case studies."
+                  action={
+                    <Button leftIcon={<Plus size={17} />}>Add project</Button>
+                  }
+                  secondaryAction={
+                    <Button variant="secondary">Clear filters</Button>
+                  }
+                />
+
+                <EmptyState
+                  icon={<Inbox size={25} />}
+                  title="No recruiter activity yet"
+                  description="Approved engagement events will appear after the public portfolio and privacy-friendly analytics are deployed."
+                  action={<Button variant="secondary">Refresh activity</Button>}
+                />
+              </div>
+
+              <div className="mt-6 grid gap-6 lg:grid-cols-2">
+                <Card>
+                  <ShowcaseLabel>Profile skeleton</ShowcaseLabel>
+                  <div className="mt-6 flex items-start gap-4">
+                    <Skeleton
+                      variant="circle"
+                      width="64px"
+                      height="64px"
+                      className="shrink-0"
+                    />
+                    <div className="flex-1 space-y-3">
+                      <Skeleton variant="text" width="42%" />
+                      <Skeleton variant="text" width="72%" />
+                      <Skeleton variant="text" width="58%" />
+                      <div className="flex gap-2 pt-2">
+                        <Skeleton
+                          width="76px"
+                          height="26px"
+                          className="rounded-full"
+                        />
+                        <Skeleton
+                          width="92px"
+                          height="26px"
+                          className="rounded-full"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card variant="glass">
+                  <ShowcaseLabel>Project skeleton</ShowcaseLabel>
+                  <Skeleton height="130px" className="mt-6 w-full" />
+                  <div className="mt-5 space-y-3">
+                    <Skeleton variant="text" width="45%" height="22px" />
+                    <Skeleton variant="text" width="100%" />
+                    <Skeleton variant="text" width="82%" />
+                  </div>
+                </Card>
+              </div>
+            </ShowcaseSection>
+
+            <ShowcaseSection
+              id="forms"
+              eyebrow="03 · Forms and controls"
+              title="Accessible input architecture for public and private workflows"
+              description="The form system supports contact messages, authentication, profile editing, CMS content, search, filtering, visibility, consent, and administrator settings."
+            >
+              <div className="grid gap-6 xl:grid-cols-2">
+                <Card>
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <ShowcaseLabel>Text entry</ShowcaseLabel>
+                      <h3 className="mt-2 text-xl">Identity and search</h3>
+                    </div>
+                    <IconContainer variant="primary" label="Form inputs">
+                      <User size={20} />
+                    </IconContainer>
+                  </div>
+
+                  <div className="mt-7 space-y-6">
+                    <Input
+                      label="Full name"
+                      name="advancedFullName"
+                      placeholder="Enter your full name"
+                      leftIcon={<User size={18} />}
+                      required
+                    />
+                    <Input
+                      label="Email address"
+                      name="advancedEmail"
+                      type="email"
+                      placeholder="name@example.com"
+                      description="Used only for professional communication."
+                      leftIcon={<Mail size={18} />}
+                    />
+                    <Input
+                      label="Search projects"
+                      name="advancedProjectSearch"
+                      type="search"
+                      placeholder="Search technology, category, or project"
+                      leftIcon={<Search size={18} />}
+                    />
+                  </div>
+                </Card>
+
+                <Card variant="glass">
+                  <ShowcaseLabel>Authentication states</ShowcaseLabel>
+                  <h3 className="mt-2 text-xl">Secure field patterns</h3>
+                  <div className="mt-7 space-y-6">
+                    <Input
+                      label="Administrator email"
+                      name="advancedAdminEmail"
+                      type="email"
+                      value="invalid-email"
+                      readOnly
+                      leftIcon={<Mail size={18} />}
+                      error="Enter a valid administrator email address."
+                    />
+                    <Input
+                      label="Password"
+                      name="advancedPassword"
+                      type="password"
+                      placeholder="Enter your password"
+                      leftIcon={<LockKeyhole size={18} />}
+                      rightElement={
+                        <button
+                          type="button"
+                          aria-label="Show password"
+                          className="rounded-md p-1 text-slate-500 transition hover:text-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                        >
+                          <Eye size={18} />
+                        </button>
+                      }
+                    />
+                    <Input
+                      label="Confirmed password"
+                      name="advancedConfirmedPassword"
+                      type="password"
+                      value="password"
+                      readOnly
+                      leftIcon={<LockKeyhole size={18} />}
+                      rightElement={
+                        <span
+                          aria-label="Password hidden"
+                          className="text-slate-500"
+                        >
+                          <EyeOff size={18} />
+                        </span>
+                      }
+                    />
+                  </div>
+                </Card>
+              </div>
+
+              <div className="mt-6 grid gap-6 xl:grid-cols-2">
+                <Card>
+                  <ShowcaseLabel>Long-form content</ShowcaseLabel>
+                  <h3 className="mt-2 text-xl">Textarea workflows</h3>
+                  <div className="mt-7 space-y-6">
+                    <Textarea
+                      label="Professional biography"
+                      name="advancedBiography"
+                      defaultValue="Information Technology student focused on full-stack engineering, artificial intelligence, and practical software products."
+                      maxLength={300}
+                      showCharacterCount
+                    />
+                    <Textarea
+                      label="Project description"
+                      name="advancedProjectDescription"
+                      placeholder="Explain the problem, architecture, implementation, security, testing, and outcomes."
+                      className="min-h-40"
+                      maxLength={1200}
+                      showCharacterCount
+                    />
+                  </div>
+                </Card>
+
+                <Card variant="glass">
+                  <ShowcaseLabel>Structured selection</ShowcaseLabel>
+                  <h3 className="mt-2 text-xl">Filters and modes</h3>
+                  <div className="mt-7 space-y-6">
+                    <Select
+                      label="Project category"
+                      name="advancedProjectCategory"
+                      placeholder="Choose a category"
+                      leftIcon={<Layers3 size={18} />}
+                      defaultValue=""
+                      required
+                      options={[
+                        {
+                          label: "Full-Stack Web Development",
+                          value: "full-stack",
+                        },
+                        {
+                          label: "Artificial Intelligence",
+                          value: "artificial-intelligence",
+                        },
+                        {
+                          label: "Cloud and DevOps",
+                          value: "cloud-devops",
+                        },
+                      ]}
+                    />
+                    <Select
+                      label="Technology filter"
+                      name="advancedTechnologyFilter"
+                      leftIcon={<Filter size={18} />}
+                      defaultValue="nextjs"
+                      options={[
+                        { label: "All technologies", value: "all" },
+                        { label: "Next.js", value: "nextjs" },
+                        { label: "TypeScript", value: "typescript" },
+                        { label: "PHP", value: "php" },
+                        { label: "MySQL", value: "mysql" },
+                      ]}
+                    />
+                    <Select
+                      label="Audience mode"
+                      name="advancedAudienceMode"
+                      leftIcon={<UserRoundCog size={18} />}
+                      defaultValue="recruiter"
+                      options={[
+                        { label: "Recruiter", value: "recruiter" },
+                        {
+                          label: "Hiring Manager",
+                          value: "hiring-manager",
+                        },
+                        {
+                          label: "Master's Admissions",
+                          value: "masters-admissions",
+                        },
+                        {
+                          label: "General Visitor",
+                          value: "general-visitor",
+                        },
+                      ]}
+                    />
+                  </div>
+                </Card>
+              </div>
+
+              <div className="mt-6 grid gap-6 xl:grid-cols-3">
+                <Card>
+                  <ShowcaseLabel>Multi-select controls</ShowcaseLabel>
+                  <div className="mt-6 space-y-6">
+                    <Checkbox
+                      label="Show public profile"
+                      name="advancedPublicProfile"
+                      description="Allow approved portfolio content to be viewed publicly."
+                      defaultChecked
+                    />
+                    <Checkbox
+                      label="Recruiter notifications"
+                      name="advancedRecruiterNotifications"
+                      description="Receive alerts when recruiter activity is recorded."
+                    />
+                    <Checkbox
+                      label="Accept privacy policy"
+                      name="advancedPrivacyConsent"
+                      description="Required before submitting personal information."
+                      required
+                    />
+                  </div>
+                </Card>
+
+                <Card variant="glass">
+                  <ShowcaseLabel>Single-choice controls</ShowcaseLabel>
+                  <div className="mt-6">
+                    <RadioGroup
+                      label="Primary career mode"
+                      name="advancedPrimaryCareerMode"
+                      defaultValue="full-stack"
+                      required
+                      options={[
+                        {
+                          label: "Full-Stack Developer",
+                          value: "full-stack",
+                          description:
+                            "Frontend, backend, database, and deployment.",
+                        },
+                        {
+                          label: "AI and ML Engineer",
+                          value: "ai-ml",
+                          description:
+                            "AI integrations, agents, and automation.",
+                        },
+                        {
+                          label: "Cloud and DevOps Engineer",
+                          value: "cloud-devops",
+                          description:
+                            "Cloud, containers, CI/CD, and operations.",
+                        },
+                      ]}
+                    />
+                  </div>
+                </Card>
+
+                <Card variant="editorial">
+                  <ShowcaseLabel>Immediate settings</ShowcaseLabel>
+                  <div className="mt-6 space-y-7">
+                    <Switch
+                      label="Public portfolio"
+                      name="advancedPublicPortfolio"
+                      description="Expose approved content to visitors."
+                      defaultChecked
+                    />
+                    <Switch
+                      label="Privacy-friendly analytics"
+                      name="advancedPrivacyAnalytics"
+                      description="Collect anonymous engagement signals."
+                      defaultChecked
+                    />
+                    <Switch
+                      label="AI portfolio assistant"
+                      name="advancedAiAssistant"
+                      description="Answer approved questions about public work."
+                    />
+                  </div>
+                </Card>
+              </div>
+
+              <div className="mt-6 grid gap-6 xl:grid-cols-2">
+                <Card>
+                  <ShowcaseLabel>Field composition</ShowcaseLabel>
+                  <div className="mt-6 space-y-7">
+                    <FormField
+                      label="Portfolio URL"
+                      htmlFor="advanced-portfolio-url"
+                      description="Use the final production URL after deployment."
+                      required
+                      actions={
+                        <button
+                          type="button"
+                          className="text-xs font-medium text-cyan-400 transition hover:text-cyan-300"
+                        >
+                          Generate slug
+                        </button>
+                      }
+                    >
+                      <input
+                        id="advanced-portfolio-url"
+                        name="advancedPortfolioUrl"
+                        type="url"
+                        placeholder="https://your-domain.com"
+                        className="h-11 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3.5 text-sm text-slate-100 placeholder:text-slate-600 transition hover:border-slate-600 focus-visible:border-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/25"
+                      />
+                    </FormField>
+
+                    <FormField
+                      label="GitHub repository"
+                      htmlFor="advanced-github-repository"
+                      error="Enter a valid GitHub repository URL."
+                      actions={
+                        <button
+                          type="button"
+                          className="text-xs font-medium text-cyan-400 transition hover:text-cyan-300"
+                        >
+                          Verify repository
+                        </button>
+                      }
+                    >
+                      <input
+                        id="advanced-github-repository"
+                        name="advancedGithubRepository"
+                        value="invalid-repository"
+                        readOnly
+                        aria-invalid="true"
+                        className="h-11 w-full rounded-xl border border-red-500/60 bg-slate-950/70 px-3.5 text-sm text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/25"
+                      />
+                    </FormField>
+                  </div>
+                </Card>
+
+                <Card variant="glass">
+                  <ShowcaseLabel>Completion overview</ShowcaseLabel>
+                  <h3 className="mt-2 text-xl">Form-system readiness</h3>
+                  <div className="mt-7 space-y-6">
+                    <Progress
+                      label="Public contact workflows"
+                      value={100}
+                      variant="success"
+                    />
+                    <Progress
+                      label="Administrator forms"
+                      value={100}
+                      variant="success"
+                    />
+                    <Progress
+                      label="CMS field patterns"
+                      value={100}
+                      variant="success"
+                    />
+                    <Progress
+                      label="Database integration"
+                      value={10}
+                      variant="info"
+                    />
+                  </div>
+                </Card>
+              </div>
+            </ShowcaseSection>
+
+            <ShowcaseSection
+              id="navigation"
+              eyebrow="04 · Navigation and overlays"
+              title="Structured movement through complex career content"
+              description="Breadcrumbs, tabs, accordions, contextual menus, pagination, and modals organize dense portfolio and administrator experiences."
+            >
+              <Card>
+                <div className="flex flex-wrap items-start justify-between gap-4">
+                  <div>
+                    <ShowcaseLabel>Hierarchy</ShowcaseLabel>
+                    <h3 className="mt-2 text-xl">Breadcrumb navigation</h3>
+                  </div>
+                  <Badge variant="outline">Semantic nav</Badge>
                 </div>
-              ),
-            },
-          ]}
-        />
-      </div>
-    </Card>
 
-    <Card variant="editorial">
-      <h3 className="text-xl">
-        Empty table state
-      </h3>
+                <div className="mt-6 grid gap-4 lg:grid-cols-2">
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/45 p-5">
+                    <Breadcrumb
+                      items={[
+                        { label: "Home", href: "/" },
+                        { label: "Projects", href: "/projects" },
+                        { label: "SyedOS" },
+                      ]}
+                    />
+                  </div>
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/45 p-5">
+                    <Breadcrumb
+                      items={[
+                        { label: "Dashboard", href: "/admin" },
+                        { label: "Projects", href: "/admin/projects" },
+                        { label: "Edit SyedOS" },
+                      ]}
+                    />
+                  </div>
+                </div>
+              </Card>
 
-      <p className="mt-2">
-        Tables display a clear fallback when no records exist.
-      </p>
+              <div className="mt-6 grid gap-6 xl:grid-cols-2">
+                <Card variant="glass">
+                  <ShowcaseLabel>Tabbed content</ShowcaseLabel>
+                  <div className="mt-6">
+                    <Tabs
+                      defaultValue="overview"
+                      items={[
+                        {
+                          value: "overview",
+                          label: "Overview",
+                          content: (
+                            <div>
+                              <h4 className="font-semibold text-white">
+                                Intelligent career platform
+                              </h4>
+                              <p className="mt-2 text-sm text-slate-400">
+                                SyedOS adapts public content for recruiters,
+                                hiring managers, admissions teams, and general
+                                visitors.
+                              </p>
+                              <div className="mt-4 flex flex-wrap gap-2">
+                                <Badge variant="primary">Next.js</Badge>
+                                <Badge variant="info">TypeScript</Badge>
+                                <Badge variant="outline">Payload CMS</Badge>
+                              </div>
+                            </div>
+                          ),
+                        },
+                        {
+                          value: "architecture",
+                          label: "Architecture",
+                          content: (
+                            <p className="text-sm text-slate-400">
+                              Modular Next.js frontend, Payload CMS, PostgreSQL,
+                              secure authentication, analytics, and AI feature
+                              services.
+                            </p>
+                          ),
+                        },
+                        {
+                          value: "security",
+                          label: "Security",
+                          content: (
+                            <p className="text-sm text-slate-400">
+                              Protected routes, secure sessions, role-based
+                              authorization, validated inputs, and restricted
+                              data access.
+                            </p>
+                          ),
+                        },
+                        {
+                          value: "testing",
+                          label: "Testing",
+                          disabled: true,
+                          content: <p>Testing phase queued.</p>,
+                        },
+                      ]}
+                    />
+                  </div>
+                </Card>
 
-      <div className="mt-8">
-        <Table
-          caption="Empty recruiter activity table"
-          data={[] as Array<{
-            id: string;
-            recruiter: string;
-          }>}
-          getRowKey={(record) => record.id}
-          emptyMessage="No recruiter activity has been recorded yet."
-          columns={[
-            {
-              key: "recruiter",
-              header: "Recruiter",
-              cell: (record) => record.recruiter,
-            },
-            {
-              key: "activity",
-              header: "Activity",
-              cell: () => "No activity",
-            },
-          ]}
-        />
-      </div>
-    </Card>
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Navigation Components"
-    title="Professional Pagination System"
-    description="Reusable page navigation for projects, applications, analytics, recruiter activity, administrator records, and search results."
-  />
+                <Card>
+                  <ShowcaseLabel>Expandable content</ShowcaseLabel>
+                  <div className="mt-6">
+                    <Accordion
+                      allowMultiple
+                      defaultOpen={["editing"]}
+                      items={[
+                        {
+                          value: "editing",
+                          title: "Who can edit SyedOS?",
+                          content: (
+                            <p>
+                              Only the authenticated owner can access the
+                              private administrator and CMS workflows.
+                            </p>
+                          ),
+                        },
+                        {
+                          value: "visitors",
+                          title: "What can visitors access?",
+                          content: (
+                            <p>
+                              Visitors can view approved public projects,
+                              skills, education, certificates, resume links, and
+                              contact options.
+                            </p>
+                          ),
+                        },
+                        {
+                          value: "cms",
+                          title: "Can content change without editing code?",
+                          content: (
+                            <p>
+                              Yes. Payload CMS will manage structured content
+                              from the protected dashboard.
+                            </p>
+                          ),
+                        },
+                      ]}
+                    />
+                  </div>
+                </Card>
+              </div>
 
-  <div className="mt-8">
-    <PaginationDemo />
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Navigation Components"
-    title="Professional Breadcrumb System"
-    description="Reusable hierarchical navigation for project pages, administrator dashboards, profile sections, settings, and CMS content."
-  />
+              <div className="mt-6 grid gap-6 xl:grid-cols-2">
+                <Card>
+                  <ShowcaseLabel>Contextual project actions</ShowcaseLabel>
+                  <div className="mt-6 flex items-center justify-between rounded-xl border border-slate-800 bg-slate-950/40 p-4">
+                    <div>
+                      <p className="font-medium text-white">SyedOS</p>
+                      <p className="mt-1 text-sm text-slate-500">
+                        Intelligent career portfolio platform
+                      </p>
+                    </div>
+                    <DropdownMenu
+                      align="right"
+                      trigger={
+                        <span className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-400 transition hover:border-blue-500/50 hover:text-white">
+                          <Ellipsis size={20} />
+                        </span>
+                      }
+                      items={[
+                        {
+                          label: "Edit project",
+                          icon: <Pencil size={17} />,
+                        },
+                        {
+                          label: "Project settings",
+                          icon: <Settings2 size={17} />,
+                        },
+                        {
+                          label: "Duplicate project…",
+                          icon: <Plus size={17} />,
+                        },
+                        {
+                          label: "Delete project",
+                          icon: <Trash2 size={17} />,
+                          danger: true,
+                        },
+                      ]}
+                    />
+                  </div>
+                </Card>
 
-  <div className="mt-8 grid gap-6 lg:grid-cols-2">
-    <Card>
-      <h3 className="text-xl">
-        Project navigation
-      </h3>
+                <Card variant="glass">
+                  <ShowcaseLabel>Administrator account menu</ShowcaseLabel>
+                  <div className="mt-6 flex justify-end">
+                    <DropdownMenu
+                      align="right"
+                      width="large"
+                      trigger={
+                        <span className="flex items-center gap-3 rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-left transition hover:border-blue-500/50">
+                          <Avatar
+                            alt="Syed Mohiuddin"
+                            initials="SM"
+                            size="small"
+                            status="online"
+                          />
+                          <span>
+                            <span className="block text-sm font-medium text-white">
+                              Syed Mohiuddin
+                            </span>
+                            <span className="block text-xs text-slate-500">
+                              Administrator
+                            </span>
+                          </span>
+                        </span>
+                      }
+                      items={[
+                        {
+                          label: "View profile",
+                          icon: <UserCircle size={17} />,
+                          shortcut: "P",
+                        },
+                        {
+                          label: "Account settings",
+                          icon: <Settings size={17} />,
+                          shortcut: "S",
+                        },
+                        { label: "Dark theme", selected: true },
+                        { label: "System theme", disabled: true },
+                        {
+                          label: "Sign out",
+                          icon: <LogOut size={17} />,
+                          danger: true,
+                        },
+                      ]}
+                    />
+                  </div>
+                </Card>
+              </div>
 
-      <p className="mt-2">
-        Breadcrumbs help visitors understand their current location
-        inside the portfolio.
-      </p>
+              <div className="mt-6 grid gap-6 xl:grid-cols-2">
+                <Card>
+                  <ShowcaseLabel>Overlay workflows</ShowcaseLabel>
+                  <h3 className="mt-2 text-xl">Modal demonstrations</h3>
+                  <p className="mt-2 text-sm text-slate-400">
+                    Test project creation and destructive confirmation dialogs.
+                  </p>
+                  <div className="mt-6">
+                    <ModalDemo />
+                  </div>
+                </Card>
 
-      <div className="mt-8 space-y-6">
-        <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-5">
-          <Breadcrumb
-            items={[
-              {
-                label: "Home",
-                href: "/",
-              },
-              {
-                label: "Projects",
-                href: "/projects",
-              },
-              {
-                label: "SyedOS",
-              },
-            ]}
-          />
-        </div>
+                <Card variant="glass">
+                  <ShowcaseLabel>Record navigation</ShowcaseLabel>
+                  <h3 className="mt-2 text-xl">Pagination demonstrations</h3>
+                  <div className="mt-6">
+                    <PaginationDemo />
+                  </div>
+                </Card>
+              </div>
+            </ShowcaseSection>
 
-        <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-5">
-          <Breadcrumb
-            showHomeIcon={false}
-            items={[
-              {
-                label: "Portfolio",
-                href: "/",
-              },
-              {
-                label: "Projects",
-                href: "/projects",
-              },
-              {
-                label: "Artificial Intelligence",
-                href: "/projects/ai",
-              },
-              {
-                label: "SyedAI Assistant",
-              },
-            ]}
-          />
-        </div>
-      </div>
-    </Card>
-
-    <Card variant="glass">
-      <h3 className="text-xl">
-        Administrator navigation
-      </h3>
-
-      <p className="mt-2">
-        The final item represents the current protected page.
-      </p>
-
-      <div className="mt-8 space-y-6">
-        <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-5">
-          <Breadcrumb
-            items={[
-              {
-                label: "Dashboard",
-                href: "/admin",
-              },
-              {
-                label: "Projects",
-                href: "/admin/projects",
-              },
-              {
-                label: "Edit SyedOS",
-              },
-            ]}
-          />
-        </div>
-
-        <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-5">
-          <Breadcrumb
-            items={[
-              {
-                label: "Dashboard",
-                href: "/admin",
-              },
-              {
-                label: "Settings",
-                href: "/admin/settings",
-              },
-              {
-                label: "Security",
-                href: "/admin/settings/security",
-              },
-              {
-                label: "Session Management",
-              },
-            ]}
-          />
-        </div>
-      </div>
-    </Card>
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Feedback Components"
-    title="Professional Toast Notification System"
-    description="Reusable temporary notifications for saving, publishing, validation, authentication, deployment, and administrator actions."
-  />
-
-  <div className="mt-8">
-    <Card>
-      <h3 className="text-xl">
-        Interactive toast examples
-      </h3>
-
-      <p className="mt-2">
-        Trigger semantic notifications from the buttons below.
-      </p>
-
-      <div className="mt-8">
-        <ToastDemo />
-      </div>
-    </Card>
-  </div>
-</div>
-<div className="mt-12 border-t border-slate-800 pt-10">
-  <SectionHeading
-    eyebrow="Form Components"
-    title="Professional Form Field System"
-    description="A reusable wrapper for custom controls, labels, descriptions, actions, and validation feedback."
-  />
-
-  <div className="mt-8 grid gap-6 lg:grid-cols-2">
-    <Card>
-      <h3 className="text-xl">
-        Custom field layouts
-      </h3>
-
-      <p className="mt-2">
-        Form Field is useful when a component needs a custom label,
-        description, action, or validation layout.
-      </p>
-
-      <div className="mt-8 space-y-7">
-        <FormField
-          label="Portfolio URL"
-          htmlFor="portfolio-url"
-          description="Use the final public URL after deployment."
-          required
-          actions={
-            <button
-              type="button"
-              className="text-xs font-medium text-cyan-400 transition hover:text-cyan-300"
+            <ShowcaseSection
+              id="data"
+              eyebrow="05 · Data and system states"
+              title="Metrics, progress, tables, and operational visibility"
+              description="Structured data components translate project, visitor, recruiter, CMS, and administrator activity into readable interfaces."
             >
-              Generate slug
-            </button>
-          }
-        >
-          <input
-            id="portfolio-url"
-            name="portfolioUrl"
-            type="url"
-            placeholder="https://your-domain.com"
-            className="h-11 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3.5 text-sm text-slate-100 placeholder:text-slate-600 transition hover:border-slate-600 focus-visible:border-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/25"
-          />
-        </FormField>
+              <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+                <StatCard
+                  label="Major Projects"
+                  value="3"
+                  description="Portfolio case studies"
+                  icon={<Code2 size={21} />}
+                  trend={{ value: "Active development", direction: "up" }}
+                />
+                <StatCard
+                  label="AI Agent Modes"
+                  value="17"
+                  description="SyedAI capabilities"
+                  icon={<Bot size={21} />}
+                  trend={{ value: "Verified", direction: "neutral" }}
+                />
+                <StatCard
+                  label="Career Modes"
+                  value="13"
+                  description="Adaptive profile states"
+                  icon={<BriefcaseBusiness size={21} />}
+                />
+                <StatCard
+                  label="Analytics"
+                  value="Ready"
+                  description="Integration prepared"
+                  icon={<BarChart3 size={21} />}
+                  trend={{ value: "Privacy-first", direction: "up" }}
+                />
+              </div>
 
-        <FormField
-          label="Featured technology"
-          htmlFor="featured-technology"
-          description="This technology will be emphasized on the homepage."
-        >
-          <select
-            id="featured-technology"
-            name="featuredTechnology"
-            defaultValue="nextjs"
-            className="h-11 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3.5 text-sm text-slate-100 transition hover:border-slate-600 focus-visible:border-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/25"
-          >
-            <option value="nextjs">
-              Next.js
-            </option>
+              <div className="mt-6 grid gap-6 xl:grid-cols-2">
+                <Card>
+                  <ShowcaseLabel>Technical profile</ShowcaseLabel>
+                  <div className="mt-6 space-y-6">
+                    <Progress
+                      label="Full-Stack Web Development"
+                      value={82}
+                      variant="primary"
+                    />
+                    <Progress
+                      label="PHP and MySQL"
+                      value={78}
+                      variant="success"
+                    />
+                    <Progress
+                      label="Artificial Intelligence"
+                      value={64}
+                      variant="info"
+                    />
+                    <Progress
+                      label="Cloud and DevOps"
+                      value={35}
+                      variant="warning"
+                    />
+                  </div>
+                </Card>
 
-            <option value="typescript">
-              TypeScript
-            </option>
+                <Card variant="glass">
+                  <ShowcaseLabel>Platform roadmap</ShowcaseLabel>
+                  <div className="mt-6 space-y-6">
+                    <Progress
+                      label="Design-system foundation"
+                      value={100}
+                      variant="success"
+                      size="large"
+                    />
+                    <Progress
+                      label="Public portfolio shell"
+                      value={15}
+                      variant="primary"
+                      size="large"
+                    />
+                    <Progress
+                      label="Payload CMS integration"
+                      value={5}
+                      variant="info"
+                      size="large"
+                    />
+                    <Progress
+                      label="Production deployment"
+                      value={0}
+                      variant="danger"
+                      size="large"
+                    />
+                  </div>
+                </Card>
+              </div>
 
-            <option value="php">
-              PHP
-            </option>
+              <div className="mt-6">
+                <Card>
+                  <div className="flex flex-wrap items-start justify-between gap-4">
+                    <div>
+                      <ShowcaseLabel>Administrator data</ShowcaseLabel>
+                      <h3 className="mt-2 text-xl">Project management</h3>
+                      <p className="mt-2 text-sm text-slate-400">
+                        Responsive records for publication state, updates, and
+                        contextual actions.
+                      </p>
+                    </div>
+                    <Button size="small" leftIcon={<Plus size={16} />}>
+                      Add project
+                    </Button>
+                  </div>
 
-            <option value="mysql">
-              MySQL
-            </option>
-          </select>
-        </FormField>
-      </div>
-    </Card>
+                  <div className="mt-7">
+                    <Table
+                      caption="SyedOS project management records"
+                      data={projectRows}
+                      getRowKey={(project) => project.id}
+                      columns={[
+                        {
+                          key: "project",
+                          header: "Project",
+                          cell: (project) => (
+                            <div>
+                              <p className="font-medium text-white">
+                                {project.name}
+                              </p>
+                              <p className="mt-1 text-xs text-slate-500">
+                                {project.category}
+                              </p>
+                            </div>
+                          ),
+                        },
+                        {
+                          key: "status",
+                          header: "Status",
+                          cell: (project) => {
+                            const variant: "success" | "primary" | "warning" =
+                              project.status === "Completed"
+                                ? "success"
+                                : project.status === "Active"
+                                  ? "primary"
+                                  : "warning";
 
-    <Card variant="glass">
-      <h3 className="text-xl">
-        Validation and actions
-      </h3>
+                            return (
+                              <Badge variant={variant} dot>
+                                {project.status}
+                              </Badge>
+                            );
+                          },
+                        },
+                        {
+                          key: "updated",
+                          header: "Last updated",
+                          cell: (project) => (
+                            <div className="flex items-center gap-2 text-slate-400">
+                              <CalendarDays size={16} />
+                              <span>{project.updated}</span>
+                            </div>
+                          ),
+                        },
+                        {
+                          key: "actions",
+                          header: "Actions",
+                          className: "text-right",
+                          cell: () => (
+                            <button
+                              type="button"
+                              aria-label="Open project actions"
+                              className="rounded-lg p-2 text-slate-500 transition hover:bg-slate-800 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                            >
+                              <MoreHorizontal size={18} />
+                            </button>
+                          ),
+                        },
+                      ]}
+                    />
+                  </div>
+                </Card>
+              </div>
 
-      <p className="mt-2">
-        Error messages and field-level actions can be added without
-        changing the child control.
-      </p>
+              <div className="mt-6 grid gap-6 xl:grid-cols-2">
+                <Card variant="glass">
+                  <ShowcaseLabel>Recent activity</ShowcaseLabel>
+                  <div className="mt-6">
+                    <Table
+                      caption="Recent administrator activity"
+                      data={activityRows}
+                      getRowKey={(activity) => activity.id}
+                      columns={[
+                        {
+                          key: "activity",
+                          header: "Activity",
+                          cell: (activity) => (
+                            <div>
+                              <p className="font-medium text-white">
+                                {activity.action}
+                              </p>
+                              <p className="mt-1 text-xs text-slate-500">
+                                {activity.item}
+                              </p>
+                            </div>
+                          ),
+                        },
+                        {
+                          key: "state",
+                          header: "State",
+                          cell: (activity) => (
+                            <div className="flex items-center gap-2">
+                              {activity.status === "Completed" ? (
+                                <CircleCheck
+                                  size={17}
+                                  className="text-green-400"
+                                />
+                              ) : (
+                                <Clock3 size={17} className="text-amber-400" />
+                              )}
+                              <span>{activity.status}</span>
+                            </div>
+                          ),
+                        },
+                      ]}
+                    />
+                  </div>
+                </Card>
 
-      <div className="mt-8 space-y-7">
-        <FormField
-          label="GitHub repository"
-          htmlFor="github-repository"
-          error="Enter a valid GitHub repository URL."
-          actions={
-            <button
-              type="button"
-              className="text-xs font-medium text-cyan-400 transition hover:text-cyan-300"
+                <Card variant="editorial">
+                  <ShowcaseLabel>Empty records</ShowcaseLabel>
+                  <div className="mt-6">
+                    <Table
+                      caption="Empty recruiter activity table"
+                      data={[] as Array<{ id: string; recruiter: string }>}
+                      getRowKey={(record) => record.id}
+                      emptyMessage="No recruiter activity has been recorded yet."
+                      columns={[
+                        {
+                          key: "recruiter",
+                          header: "Recruiter",
+                          cell: (record) => record.recruiter,
+                        },
+                        {
+                          key: "activity",
+                          header: "Activity",
+                          cell: () => "No activity",
+                        },
+                      ]}
+                    />
+                  </div>
+                </Card>
+              </div>
+            </ShowcaseSection>
+
+            <ShowcaseSection
+              id="release"
+              eyebrow="06 · Release readiness"
+              title="The UI foundation is complete and ready to become SyedOS"
+              description="The next phase replaces this laboratory with the real public portfolio, private administrator shell, content architecture, data layer, authentication, AI, testing, and deployment."
             >
-              Verify repository
-            </button>
-          }
-        >
-          <input
-            id="github-repository"
-            name="githubRepository"
-            value="invalid-repository"
-            readOnly
-            aria-invalid="true"
-            className="h-11 w-full rounded-xl border border-red-500/60 bg-slate-950/70 px-3.5 text-sm text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/25"
-          />
-        </FormField>
+              <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
+                <Card variant="glass" className="relative overflow-hidden">
+                  <div
+                    aria-hidden="true"
+                    className="absolute right-[-5rem] top-[-5rem] h-48 w-48 rounded-full bg-blue-500/15 blur-3xl"
+                  />
 
-        <FormField
-          label="Project visibility"
-          htmlFor="project-visibility"
-          description="Control who can view this project."
-        >
-          <select
-            id="project-visibility"
-            name="projectVisibility"
-            defaultValue="public"
-            className="h-11 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3.5 text-sm text-slate-100 transition hover:border-slate-600 focus-visible:border-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/25"
-          >
-            <option value="public">
-              Public
-            </option>
+                  <div className="relative">
+                    <div className="flex flex-wrap items-start justify-between gap-5">
+                      <div>
+                        <Badge variant="success" dot size="medium">
+                          Milestone verified
+                        </Badge>
+                        <h3 className="mt-5 max-w-2xl text-2xl sm:text-3xl">
+                          SyedOS UI component files are fully completed.
+                        </h3>
+                        <p className="mt-4 max-w-2xl leading-7 text-slate-400">
+                          The component layer now supports professional public
+                          pages, protected administrator workflows, structured
+                          content, responsive data displays, and advanced
+                          interactions.
+                        </p>
+                      </div>
 
-            <option value="recruiters">
-              Recruiters only
-            </option>
+                      <IconContainer
+                        variant="success"
+                        size="large"
+                        rounded="full"
+                        label="UI complete"
+                      >
+                        <Check size={26} />
+                      </IconContainer>
+                    </div>
 
-            <option value="private">
-              Private
-            </option>
-          </select>
-        </FormField>
+                    <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                      {[
+                        "Build reusable Navbar and Footer",
+                        "Create the advanced public homepage",
+                        "Add About, Skills, Projects, and Education",
+                        "Build the private administrator shell",
+                        "Integrate Payload CMS and PostgreSQL",
+                        "Add authentication, analytics, AI, and deployment",
+                      ].map((item) => (
+                        <div
+                          key={item}
+                          className="flex items-start gap-3 rounded-xl border border-slate-800 bg-slate-950/45 p-4"
+                        >
+                          <CircleCheck
+                            size={17}
+                            className="mt-0.5 shrink-0 text-cyan-400"
+                          />
+                          <span className="text-sm text-slate-300">{item}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="mt-8 flex flex-wrap gap-3">
+                      <Button rightIcon={<ArrowRight size={18} />}>
+                        Begin portfolio shell
+                      </Button>
+                      <Button
+                        variant="secondary"
+                        leftIcon={<BookOpen size={18} />}
+                      >
+                        Review architecture
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card>
+                  <ShowcaseLabel>Quality gate</ShowcaseLabel>
+                  <h3 className="mt-2 text-xl">Before the next phase</h3>
+                  <div className="mt-6 space-y-5">
+                    <Progress
+                      label="Component creation"
+                      value={100}
+                      variant="success"
+                    />
+                    <Progress
+                      label="Visual verification"
+                      value={100}
+                      variant="success"
+                    />
+                    <Progress
+                      label="Lint verification"
+                      value={100}
+                      variant="success"
+                    />
+                    <Progress
+                      label="Production build verification"
+                      value={100}
+                      variant="success"
+                    />
+                  </div>
+
+                  <Divider label="Next command" className="my-7" />
+
+                  <div className="rounded-xl border border-slate-800 bg-slate-950 p-4">
+                    <code className="syedos-code-text text-sm text-cyan-300">
+                      npm.cmd run lint && npm.cmd run build
+                    </code>
+                  </div>
+                </Card>
+              </div>
+            </ShowcaseSection>
+          </div>
+        </div>
+
+        <footer className="mt-10 rounded-2xl border border-slate-800/90 bg-slate-950/70 px-5 py-5 backdrop-blur-xl sm:px-7">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-3">
+              <IconContainer variant="primary" size="small" label="SyedOS">
+                <Sparkles size={16} />
+              </IconContainer>
+              <div>
+                <p className="text-sm font-medium text-white">
+                  SyedOS Design System
+                </p>
+                <p className="text-xs text-slate-500">
+                  Built for an intelligent personal career platform.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500">
+              <span>Next.js</span>
+              <span aria-hidden="true">·</span>
+              <span>TypeScript</span>
+              <span aria-hidden="true">·</span>
+              <span>Tailwind CSS</span>
+              <span aria-hidden="true">·</span>
+              <Badge variant="success" dot>
+                UI v1 complete
+              </Badge>
+            </div>
+          </div>
+        </footer>
       </div>
-    </Card>
-  </div>
-</div>
-
-      </section>
     </main>
   );
 }
