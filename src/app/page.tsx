@@ -22,7 +22,6 @@ import {
   GraduationCap,
   HelpCircle,
   Inbox,
-  Info,
   Layers3,
   LockKeyhole,
   LogOut,
@@ -73,38 +72,39 @@ import { Textarea } from "@/components/ui/textarea";
 import { ToastDemo } from "@/components/ui/toast-demo";
 import { Tooltip } from "@/components/ui/tooltip";
 
-const showcaseNavigation = [
+const sectionNavigation = [
+  { href: "#overview", label: "Overview", count: "01" },
+  { href: "#foundations", label: "Foundations", count: "02" },
+  { href: "#forms", label: "Forms", count: "03" },
+  { href: "#navigation", label: "Navigation", count: "04" },
+  { href: "#feedback", label: "Feedback", count: "05" },
+  { href: "#data", label: "Data", count: "06" },
+  { href: "#release", label: "Release", count: "07" },
+];
+
+const capabilityCards = [
   {
-    href: "#foundations",
-    label: "Foundations",
-    count: "07",
+    title: "Public portfolio",
+    description:
+      "Audience-adaptive pages for recruiters, hiring managers, admissions teams, and general visitors.",
+    icon: <BriefcaseBusiness size={23} />,
+    variant: "primary" as const,
   },
   {
-    href: "#feedback",
-    label: "Feedback",
-    count: "06",
+    title: "Private administration",
+    description:
+      "Protected content editing, analytics, resume versions, project management, and platform settings.",
+    icon: <ShieldCheck size={23} />,
+    variant: "success" as const,
   },
   {
-    href: "#forms",
-    label: "Forms",
-    count: "07",
+    title: "AI career intelligence",
+    description:
+      "Approved portfolio Q&A, project analysis, resume guidance, and career-mode personalization.",
+    icon: <Bot size={23} />,
+    variant: "info" as const,
   },
-  {
-    href: "#navigation",
-    label: "Navigation",
-    count: "07",
-  },
-  {
-    href: "#data",
-    label: "Data & states",
-    count: "05",
-  },
-  {
-    href: "#release",
-    label: "Release readiness",
-    count: "100%",
-  },
-] as const;
+];
 
 type ProjectRow = {
   id: string;
@@ -148,19 +148,19 @@ type ActivityRow = {
 const activityRows: ActivityRow[] = [
   {
     id: "activity-1",
-    action: "Design system completed",
-    item: "Thirty reusable UI modules",
+    action: "Advanced UI foundation",
+    item: "Reusable component library",
     status: "Completed",
   },
   {
     id: "activity-2",
-    action: "Portfolio shell prepared",
-    item: "Navigation and public pages",
+    action: "Portfolio structure",
+    item: "Public and protected routes",
     status: "Ready",
   },
   {
     id: "activity-3",
-    action: "CMS integration queued",
+    action: "CMS integration",
     item: "Payload CMS and PostgreSQL",
     status: "Planned",
   },
@@ -184,7 +184,7 @@ function ShowcaseSection({
   return (
     <section
       id={id}
-      className="scroll-mt-28 rounded-[2rem] border border-slate-800/90 bg-slate-950/45 p-5 shadow-2xl shadow-black/10 backdrop-blur-xl sm:p-7 lg:p-9"
+      className="scroll-mt-28 overflow-hidden rounded-[2rem] border border-slate-800/90 bg-slate-950/[0.55] p-5 shadow-2xl shadow-black/20 backdrop-blur-xl sm:p-7 lg:p-9"
     >
       <SectionHeading
         eyebrow={eyebrow}
@@ -197,7 +197,7 @@ function ShowcaseSection({
   );
 }
 
-function ShowcaseLabel({ children }: { children: ReactNode }) {
+function PanelLabel({ children }: { children: ReactNode }) {
   return (
     <p className="syedos-code-text text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
       {children}
@@ -210,18 +210,19 @@ export default function HomePage() {
     <main className="relative min-h-screen overflow-hidden bg-slate-950">
       <div
         aria-hidden="true"
-        className="pointer-events-none fixed inset-0 opacity-70"
+        className="pointer-events-none fixed inset-0 overflow-hidden"
       >
-        <div className="absolute -left-40 -top-40 h-[34rem] w-[34rem] rounded-full bg-blue-600/15 blur-3xl" />
-        <div className="absolute right-[-12rem] top-[18rem] h-[30rem] w-[30rem] rounded-full bg-cyan-500/10 blur-3xl" />
-        <div className="absolute bottom-[-15rem] left-1/3 h-[34rem] w-[34rem] rounded-full bg-violet-600/10 blur-3xl" />
+        <div className="absolute -left-52 -top-52 h-[38rem] w-[38rem] rounded-full bg-blue-600/20 blur-3xl" />
+        <div className="absolute right-[-14rem] top-[12rem] h-[34rem] w-[34rem] rounded-full bg-cyan-500/[0.12] blur-3xl" />
+        <div className="absolute bottom-[-18rem] left-[28%] h-[40rem] w-[40rem] rounded-full bg-violet-600/[0.12] blur-3xl" />
+        <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(148,163,184,0.2)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.2)_1px,transparent_1px)] [background-size:48px_48px]" />
       </div>
 
-      <div className="syedos-container relative py-5 sm:py-8 lg:py-10">
-        <header className="sticky top-4 z-40 rounded-2xl border border-slate-800/90 bg-slate-950/80 px-4 py-3 shadow-2xl shadow-black/25 backdrop-blur-xl sm:px-5">
+      <div className="syedos-container relative py-4 sm:py-7 lg:py-9">
+        <header className="sticky top-4 z-40 rounded-2xl border border-slate-800/90 bg-slate-950/[0.82] px-4 py-3 shadow-2xl shadow-black/30 backdrop-blur-xl sm:px-5">
           <div className="flex items-center justify-between gap-4">
             <a
-              href="#top"
+              href="#overview"
               className="group inline-flex items-center gap-3 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
             >
               <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-blue-500/30 bg-blue-500/10 text-blue-300 transition group-hover:border-cyan-400/50 group-hover:text-cyan-300">
@@ -230,19 +231,19 @@ export default function HomePage() {
 
               <span>
                 <span className="block text-sm font-semibold text-white">
-                  SyedOS UI Lab
+                  SyedOS Interface Lab
                 </span>
                 <span className="block text-xs text-slate-500">
-                  Production-ready design system
+                  Advanced production foundation
                 </span>
               </span>
             </a>
 
             <nav
-              aria-label="Design system navigation"
+              aria-label="Primary showcase navigation"
               className="hidden items-center gap-1 xl:flex"
             >
-              {showcaseNavigation.slice(0, 5).map((item) => (
+              {sectionNavigation.slice(0, 6).map((item) => (
                 <a
                   key={item.href}
                   href={item.href}
@@ -255,7 +256,7 @@ export default function HomePage() {
 
             <div className="flex items-center gap-2">
               <Badge variant="success" dot>
-                UI complete
+                UI v1 complete
               </Badge>
 
               <Tooltip content="Open component documentation">
@@ -272,52 +273,52 @@ export default function HomePage() {
         </header>
 
         <section
-          id="top"
-          className="relative mt-6 overflow-hidden rounded-[2.25rem] border border-slate-800 bg-slate-950/65 px-6 py-10 shadow-2xl shadow-black/30 backdrop-blur-xl sm:px-9 lg:px-12 lg:py-14"
+          id="overview"
+          className="relative mt-6 overflow-hidden rounded-[2.35rem] border border-slate-800 bg-slate-950/[0.68] px-6 py-9 shadow-2xl shadow-black/35 backdrop-blur-xl sm:px-9 lg:px-12 lg:py-14"
         >
           <div
             aria-hidden="true"
-            className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.18),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(34,211,238,0.1),transparent_38%)]"
+            className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.22),transparent_35%),radial-gradient(circle_at_bottom_left,rgba(34,211,238,0.12),transparent_40%)]"
           />
 
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(rgba(255,255,255,0.2)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.2)_1px,transparent_1px)] [background-size:36px_36px]"
-          />
-
-          <div className="relative grid items-center gap-10 xl:grid-cols-[minmax(0,1.2fr)_minmax(23rem,0.8fr)]">
+          <div className="relative grid items-center gap-10 xl:grid-cols-[1.12fr_0.88fr]">
             <div>
               <div className="flex flex-wrap items-center gap-3">
-                <Badge variant="primary" size="medium">
-                  SyedOS Design System 1.0
+                <Badge variant="primary" dot>
+                  SyedOS Design Language
                 </Badge>
 
-                <Badge variant="success" dot size="medium">
-                  30 UI modules verified
+                <Badge variant="outline">
+                  Next.js + TypeScript
+                </Badge>
+
+                <Badge variant="info">
+                  Accessible by default
                 </Badge>
               </div>
 
-              <p className="syedos-code-text mt-7 text-sm font-semibold uppercase tracking-[0.22em] text-cyan-400">
-                Accessible · Adaptive · CMS-ready
+              <p className="syedos-code-text mt-7 text-sm font-medium uppercase tracking-[0.2em] text-cyan-400">
+                Intelligent Career Portfolio Platform
               </p>
 
-              <h1 className="mt-4 max-w-5xl text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
-                A production-grade interface foundation for an intelligent
-                career platform.
+              <h1 className="mt-4 max-w-4xl text-4xl leading-[1.02] sm:text-5xl lg:text-6xl xl:text-7xl">
+                A premium interface system built for a serious technical
+                career.
               </h1>
 
               <p className="mt-6 max-w-3xl text-base leading-8 text-slate-400 sm:text-lg">
-                This advanced component laboratory validates SyedOS before the
-                public portfolio, private dashboard, Payload CMS, PostgreSQL,
-                analytics, and AI features are assembled.
+                SyedOS combines portfolio storytelling, recruiter-focused
+                presentation, private administration, structured content,
+                analytics, and AI-assisted career intelligence in one
+                scalable product foundation.
               </p>
 
-              <div className="mt-8 flex flex-wrap gap-3">
+              <div className="mt-8 flex flex-wrap gap-4">
                 <LinkButton
                   href="#foundations"
                   rightIcon={<ArrowRight size={18} />}
                 >
-                  Explore components
+                  Explore the system
                 </LinkButton>
 
                 <LinkButton
@@ -328,7 +329,7 @@ export default function HomePage() {
                   rightIcon={<ExternalLink size={16} />}
                   ariaLabel="Open Syed Mohiuddin's GitHub profile"
                 >
-                  Open GitHub
+                  View GitHub
                 </LinkButton>
 
                 <LinkButton
@@ -342,118 +343,140 @@ export default function HomePage() {
                 </LinkButton>
               </div>
 
-              <div className="mt-9 flex flex-wrap gap-x-7 gap-y-3 text-sm text-slate-500">
-                <span className="inline-flex items-center gap-2">
-                  <CircleCheck size={16} className="text-green-400" />
-                  Responsive layouts
-                </span>
+              <div className="mt-10 grid max-w-3xl gap-4 sm:grid-cols-3">
+                <div className="rounded-2xl border border-slate-800 bg-slate-950/[0.55] p-4">
+                  <p className="text-2xl font-bold text-white">30+</p>
+                  <p className="mt-1 text-sm text-slate-500">
+                    reusable UI modules
+                  </p>
+                </div>
 
-                <span className="inline-flex items-center gap-2">
-                  <CircleCheck size={16} className="text-green-400" />
-                  Keyboard accessible
-                </span>
+                <div className="rounded-2xl border border-slate-800 bg-slate-950/[0.55] p-4">
+                  <p className="text-2xl font-bold text-white">7</p>
+                  <p className="mt-1 text-sm text-slate-500">
+                    interface domains
+                  </p>
+                </div>
 
-                <span className="inline-flex items-center gap-2">
-                  <CircleCheck size={16} className="text-green-400" />
-                  Dark-interface optimized
-                </span>
+                <div className="rounded-2xl border border-slate-800 bg-slate-950/[0.55] p-4">
+                  <p className="text-2xl font-bold text-white">100%</p>
+                  <p className="mt-1 text-sm text-slate-500">
+                    type-safe foundation
+                  </p>
+                </div>
               </div>
             </div>
 
-            <Card variant="glass" className="relative overflow-hidden p-0">
-              <div className="border-b border-slate-800 px-6 py-5">
-                <div className="flex items-center justify-between gap-4">
-                  <div>
-                    <ShowcaseLabel>System overview</ShowcaseLabel>
-                    <h2 className="mt-2 text-2xl">Foundation status</h2>
-                  </div>
+            <div className="relative">
+              <div className="absolute -inset-8 rounded-full bg-blue-600/10 blur-3xl" />
 
-                  <IconContainer
-                    variant="success"
-                    size="large"
-                    rounded="large"
-                    label="Design system complete"
-                  >
-                    <Check size={24} />
-                  </IconContainer>
-                </div>
-              </div>
-
-              <div className="space-y-6 p-6">
-                <Progress
-                  label="Reusable UI foundation"
-                  value={100}
-                  variant="success"
-                  size="large"
-                />
-
-                <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2">
-                  {[
-                    {
-                      icon: <Code2 size={18} />,
-                      label: "Frontend",
-                      value: "Next.js + TypeScript",
-                    },
-                    {
-                      icon: <ShieldCheck size={18} />,
-                      label: "Accessibility",
-                      value: "Semantic + keyboard",
-                    },
-                    {
-                      icon: <Layers3 size={18} />,
-                      label: "Architecture",
-                      value: "Composable modules",
-                    },
-                    {
-                      icon: <Rocket size={18} />,
-                      label: "Next phase",
-                      value: "Portfolio shell",
-                    },
-                  ].map((item) => (
-                    <div
-                      key={item.label}
-                      className="rounded-xl border border-slate-800 bg-slate-950/45 p-4"
-                    >
-                      <div className="text-cyan-400">{item.icon}</div>
-                      <p className="mt-3 text-xs uppercase tracking-[0.16em] text-slate-600">
-                        {item.label}
-                      </p>
-                      <p className="mt-1 text-sm font-medium text-slate-200">
-                        {item.value}
+              <Card variant="glass" className="relative overflow-hidden p-0">
+                <div className="border-b border-slate-800 px-5 py-4">
+                  <div className="flex items-center justify-between gap-4">
+                    <div>
+                      <PanelLabel>System command center</PanelLabel>
+                      <p className="mt-2 font-semibold text-white">
+                        SyedOS build intelligence
                       </p>
                     </div>
-                  ))}
+
+                    <Badge variant="success" dot>
+                      Operational
+                    </Badge>
+                  </div>
                 </div>
 
-                <Alert
-                  variant="success"
-                  title="Ready for application architecture"
-                  description="The UI layer is stable enough to begin the real public and private SyedOS experience."
-                />
-              </div>
-            </Card>
+                <div className="space-y-6 p-5">
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-4">
+                      <p className="text-xs uppercase tracking-[0.16em] text-slate-500">
+                        Frontend
+                      </p>
+                      <p className="mt-2 font-semibold text-white">
+                        Next.js 16
+                      </p>
+                      <p className="mt-1 text-sm text-slate-500">
+                        App Router + TypeScript
+                      </p>
+                    </div>
+
+                    <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-4">
+                      <p className="text-xs uppercase tracking-[0.16em] text-slate-500">
+                        Content
+                      </p>
+                      <p className="mt-2 font-semibold text-white">
+                        Payload CMS
+                      </p>
+                      <p className="mt-1 text-sm text-slate-500">
+                        Structured and editable
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/65 p-4">
+                    <div className="mb-4 flex items-center justify-between gap-4">
+                      <p className="font-medium text-white">
+                        Platform readiness
+                      </p>
+                      <span className="syedos-code-text text-xs text-green-300">
+                        FOUNDATION COMPLETE
+                      </span>
+                    </div>
+
+                    <div className="space-y-4">
+                      <Progress
+                        label="UI architecture"
+                        value={100}
+                        variant="success"
+                        size="small"
+                      />
+                      <Progress
+                        label="Public portfolio"
+                        value={35}
+                        variant="primary"
+                        size="small"
+                      />
+                      <Progress
+                        label="CMS and database"
+                        value={10}
+                        variant="info"
+                        size="small"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-4">
+                    <div className="flex items-center gap-3">
+                      <Spinner
+                        size="small"
+                        variant="success"
+                        label="System ready"
+                      />
+
+                      <div>
+                        <p className="text-sm font-medium text-white">
+                          Production build verified
+                        </p>
+                        <p className="mt-1 text-xs text-slate-500">
+                          TypeScript, static generation, and UI checks passed.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </div>
           </div>
         </section>
 
-        <section className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <StatCard
-            label="Reusable Modules"
-            value="30"
-            description="Core UI and helper demos"
-            icon={<Layers3 size={21} />}
+            label="Core Projects"
+            value="3"
+            description="SyedOS, SyedAI, CampusHire"
+            icon={<Code2 size={21} />}
             trend={{
-              value: "Foundation complete",
-              direction: "up",
-            }}
-          />
-
-          <StatCard
-            label="Interaction Patterns"
-            value="12"
-            description="Forms, overlays, and navigation"
-            icon={<Sparkles size={21} />}
-            trend={{
-              value: "Keyboard ready",
+              value: "Portfolio ready",
               direction: "up",
             }}
           />
@@ -461,210 +484,190 @@ export default function HomePage() {
           <StatCard
             label="Career Modes"
             value="13"
-            description="Planned adaptive experiences"
+            description="Audience-adaptive presentation"
             icon={<BriefcaseBusiness size={21} />}
           />
 
           <StatCard
-            label="Platform Readiness"
-            value="100%"
-            description="UI design-system milestone"
-            icon={<BarChart3 size={21} />}
+            label="AI Capabilities"
+            value="17"
+            description="Agent and assistant modes"
+            icon={<Bot size={21} />}
             trend={{
-              value: "Next: portfolio shell",
+              value: "Expandable",
               direction: "neutral",
             }}
           />
-        </section>
 
-        <div className="mt-10 grid gap-8 lg:grid-cols-[15rem_minmax(0,1fr)] xl:grid-cols-[17rem_minmax(0,1fr)]">
-          <aside className="lg:sticky lg:top-28 lg:self-start">
-            <Card variant="glass" className="p-4">
-              <div className="flex items-center justify-between gap-3 px-2 py-2">
-                <div>
-                  <ShowcaseLabel>Directory</ShowcaseLabel>
-                  <p className="mt-1 font-semibold text-white">
-                    Component groups
-                  </p>
-                </div>
+          <StatCard
+            label="System Status"
+            value="Ready"
+            description="UI foundation completed"
+            icon={<BarChart3 size={21} />}
+            trend={{
+              value: "Build verified",
+              direction: "up",
+            }}
+          />
+        </div>
 
-                <Badge variant="outline">v1.0</Badge>
-              </div>
+        <div className="mt-6 grid gap-6 xl:grid-cols-[15.5rem_minmax(0,1fr)]">
+          <aside className="hidden xl:block">
+            <div className="sticky top-28 space-y-4">
+              <Card variant="glass" className="p-4">
+                <PanelLabel>Component directory</PanelLabel>
 
-              <Divider className="my-3" />
-
-              <nav aria-label="Component group directory">
-                <ul className="space-y-1">
-                  {showcaseNavigation.map((item) => (
-                    <li key={item.href}>
-                      <a
-                        href={item.href}
-                        className="group flex items-center justify-between gap-3 rounded-xl px-3 py-3 text-sm text-slate-400 transition hover:bg-slate-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-                      >
-                        <span>{item.label}</span>
-                        <span className="syedos-code-text rounded-md border border-slate-800 px-2 py-0.5 text-[10px] text-slate-600 transition group-hover:border-slate-700 group-hover:text-slate-400">
-                          {item.count}
-                        </span>
-                      </a>
-                    </li>
+                <nav
+                  aria-label="Section directory"
+                  className="mt-4 space-y-1"
+                >
+                  {sectionNavigation.map((item) => (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      className="group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-sm text-slate-400 transition hover:bg-slate-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                    >
+                      <span>{item.label}</span>
+                      <span className="syedos-code-text text-xs text-slate-600 group-hover:text-cyan-400">
+                        {item.count}
+                      </span>
+                    </a>
                   ))}
-                </ul>
-              </nav>
+                </nav>
+              </Card>
 
-              <Divider className="my-4" />
+              <Card className="p-4">
+                <div className="flex items-start gap-3">
+                  <IconContainer
+                    variant="success"
+                    size="small"
+                    label="Release verified"
+                  >
+                    <Check size={16} />
+                  </IconContainer>
 
-              <div className="rounded-xl border border-blue-500/20 bg-blue-500/5 p-4">
-                <p className="text-sm font-medium text-blue-200">
-                  Private by design
-                </p>
-                <p className="mt-2 text-xs leading-5 text-slate-500">
-                  Public visitors can view approved content. Only the
-                  authenticated owner will edit SyedOS.
-                </p>
-              </div>
-            </Card>
+                  <div>
+                    <p className="text-sm font-semibold text-white">
+                      UI foundation complete
+                    </p>
+                    <p className="mt-1 text-xs leading-relaxed text-slate-500">
+                      Ready to begin the public portfolio and protected
+                      administration layers.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </div>
           </aside>
 
-          <div className="space-y-8">
+          <div className="space-y-6">
             <ShowcaseSection
               id="foundations"
-              eyebrow="01 · Visual foundations"
-              title="Actions, surfaces, identity, and hierarchy"
-              description="The core visual language combines clear actions, structured surfaces, reusable status patterns, and professional identity components."
+              eyebrow="Foundation Layer"
+              title="Visual language, identity, and reusable surfaces"
+              description="The core visual primitives establish consistency across public pages, protected administration, project case studies, and AI-powered experiences."
             >
-              <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
-                <Card interactive>
-                  <div className="flex flex-wrap items-start justify-between gap-4">
-                    <div>
-                      <ShowcaseLabel>Action system</ShowcaseLabel>
-                      <h3 className="mt-2 text-xl">Buttons and links</h3>
-                      <p className="mt-2 max-w-xl text-sm text-slate-400">
-                        Consistent actions for navigation, forms, downloads,
-                        project controls, and destructive operations.
-                      </p>
-                    </div>
-
-                    <IconContainer variant="primary" label="Action system">
-                      <ArrowRight size={20} />
+              <div className="grid gap-5 md:grid-cols-3">
+                {capabilityCards.map((capability) => (
+                  <Card key={capability.title} variant="elevated" interactive>
+                    <IconContainer
+                      variant={capability.variant}
+                      size="large"
+                      label={capability.title}
+                    >
+                      {capability.icon}
                     </IconContainer>
-                  </div>
 
-                  <div className="mt-7 flex flex-wrap gap-3">
+                    <h3 className="mt-5 text-xl">{capability.title}</h3>
+                    <p className="mt-2">{capability.description}</p>
+                  </Card>
+                ))}
+              </div>
+
+              <Divider label="Actions and navigation" className="my-9" />
+
+              <div className="grid gap-6 lg:grid-cols-2">
+                <Card>
+                  <PanelLabel>Action system</PanelLabel>
+                  <h3 className="mt-3 text-xl">
+                    Clear actions with semantic variants
+                  </h3>
+                  <p className="mt-2">
+                    Primary, secondary, ghost, destructive, disabled, and
+                    loading states are ready for production workflows.
+                  </p>
+
+                  <div className="mt-6 flex flex-wrap gap-3">
                     <Button rightIcon={<ArrowRight size={17} />}>
-                      Primary action
+                      Continue
                     </Button>
+
                     <Button
                       variant="secondary"
                       leftIcon={<Download size={17} />}
                     >
                       Download
                     </Button>
-                    <Button variant="ghost">Ghost action</Button>
-                    <Button variant="danger" leftIcon={<Trash2 size={17} />}>
+
+                    <Button variant="ghost">Preview</Button>
+
+                    <Button
+                      variant="danger"
+                      leftIcon={<Trash2 size={17} />}
+                    >
                       Delete
                     </Button>
+
                     <Button loading>Processing</Button>
-                  </div>
-
-                  <Divider label="Navigation actions" className="my-7" />
-
-                  <div className="flex flex-wrap gap-3">
-                    <LinkButton
-                      href="/projects"
-                      rightIcon={<ArrowRight size={17} />}
-                    >
-                      View projects
-                    </LinkButton>
-                    <LinkButton
-                      href="https://github.com/syedmohiuddin106-dot"
-                      external
-                      variant="secondary"
-                      leftIcon={<GitBranch size={17} />}
-                      rightIcon={<ExternalLink size={15} />}
-                      ariaLabel="Open GitHub"
-                    >
-                      GitHub
-                    </LinkButton>
                   </div>
                 </Card>
 
                 <Card variant="glass">
-                  <ShowcaseLabel>Status language</ShowcaseLabel>
-                  <h3 className="mt-2 text-xl">Badges and icon surfaces</h3>
+                  <PanelLabel>Link actions</PanelLabel>
+                  <h3 className="mt-3 text-xl">
+                    Internal, external, and downloadable destinations
+                  </h3>
+                  <p className="mt-2">
+                    Navigation remains visually consistent while preserving
+                    the correct semantic link behavior.
+                  </p>
 
-                  <div className="mt-6 flex flex-wrap gap-2.5">
-                    <Badge variant="primary">Featured</Badge>
-                    <Badge variant="success" dot>
-                      Completed
-                    </Badge>
-                    <Badge variant="warning" dot>
-                      In development
-                    </Badge>
-                    <Badge variant="danger" dot>
-                      Archived
-                    </Badge>
-                    <Badge variant="info">AI project</Badge>
-                    <Badge variant="outline">Final-year student</Badge>
-                  </div>
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <LinkButton
+                      href="/projects"
+                      rightIcon={<ArrowRight size={17} />}
+                    >
+                      Projects
+                    </LinkButton>
 
-                  <div className="mt-7 flex flex-wrap items-center gap-4">
-                    <IconContainer variant="default" size="small">
-                      <Code2 size={17} />
-                    </IconContainer>
-                    <IconContainer variant="primary">
-                      <Rocket size={20} />
-                    </IconContainer>
-                    <IconContainer variant="success">
-                      <Check size={20} />
-                    </IconContainer>
-                    <IconContainer variant="warning">
-                      <GraduationCap size={20} />
-                    </IconContainer>
-                    <IconContainer variant="info" size="large" rounded="full">
-                      <Sparkles size={24} />
-                    </IconContainer>
+                    <LinkButton
+                      href="https://github.com/syedmohiuddin106-dot"
+                      variant="secondary"
+                      external
+                      leftIcon={<GitBranch size={17} />}
+                      rightIcon={<ExternalLink size={15} />}
+                      ariaLabel="Open Syed Mohiuddin's GitHub profile"
+                    >
+                      GitHub
+                    </LinkButton>
+
+                    <LinkButton
+                      href="/resume/syed-mohiuddin-resume.pdf"
+                      variant="ghost"
+                      download
+                      leftIcon={<Download size={17} />}
+                      ariaLabel="Download Syed Mohiuddin's resume"
+                    >
+                      Resume
+                    </LinkButton>
                   </div>
                 </Card>
               </div>
 
-              <div className="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-                <Card variant="elevated" interactive>
-                  <IconContainer variant="primary" size="large">
-                    <Code2 size={24} />
-                  </IconContainer>
-                  <h3 className="mt-5 text-xl">Software engineering</h3>
-                  <p className="mt-2 text-sm text-slate-400">
-                    Present architecture, implementation, testing, security,
-                    deployment, and measurable outcomes.
-                  </p>
-                </Card>
-
-                <Card variant="glass" interactive>
-                  <IconContainer variant="info" size="large">
-                    <Bot size={24} />
-                  </IconContainer>
-                  <h3 className="mt-5 text-xl">AI applications</h3>
-                  <p className="mt-2 text-sm text-slate-400">
-                    Explain agent workflows, APIs, limits, validation, safety,
-                    and responsible implementation.
-                  </p>
-                </Card>
-
+              <div className="mt-6 grid gap-6 2xl:grid-cols-[1.1fr_0.9fr]">
                 <Card variant="editorial">
-                  <IconContainer variant="warning" size="large">
-                    <GraduationCap size={24} />
-                  </IconContainer>
-                  <h3 className="mt-5 text-xl">Academic profile</h3>
-                  <p className="mt-2 text-sm text-slate-400">
-                    Organize education, research direction, academic work,
-                    certificates, and master&apos;s preparation.
-                  </p>
-                </Card>
-              </div>
+                  <PanelLabel>Identity and status</PanelLabel>
 
-              <div className="mt-6 grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
-                <Card>
-                  <ShowcaseLabel>Identity system</ShowcaseLabel>
                   <div className="mt-5 flex items-start gap-4">
                     <Avatar
                       alt="Syed Mohiuddin"
@@ -675,213 +678,80 @@ export default function HomePage() {
 
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
-                        <h3 className="text-xl">Syed Mohiuddin</h3>
+                        <h3 className="text-2xl">Syed Mohiuddin</h3>
                         <Badge variant="success" dot>
                           Available
                         </Badge>
                       </div>
-                      <p className="mt-2 text-sm text-slate-400">
+
+                      <p className="mt-2">
                         Information Technology student building full-stack,
                         AI-assisted, and career-focused software products.
                       </p>
+
                       <div className="mt-4 flex flex-wrap gap-2">
                         <Badge variant="primary">Next.js</Badge>
-                        <Badge variant="info">AI integration</Badge>
-                        <Badge variant="outline">PHP + MySQL</Badge>
+                        <Badge variant="info">AI Integration</Badge>
+                        <Badge variant="outline">PHP</Badge>
+                        <Badge variant="outline">MySQL</Badge>
                       </div>
                     </div>
                   </div>
                 </Card>
 
-                <Card variant="glass">
-                  <ShowcaseLabel>Context assistance</ShowcaseLabel>
-                  <div className="mt-5 flex flex-wrap items-center gap-5">
-                    <Tooltip content="Open platform settings">
+                <Card>
+                  <PanelLabel>Tooltip and icon surfaces</PanelLabel>
+
+                  <div className="mt-6 flex flex-wrap items-center gap-4">
+                    <Tooltip content="Platform configuration">
                       <button
                         type="button"
-                        aria-label="Settings"
-                        className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-400 transition hover:border-blue-500/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                        aria-label="Platform configuration"
+                        className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-300 transition hover:border-blue-500/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                       >
                         <Settings size={20} />
                       </button>
                     </Tooltip>
 
                     <Tooltip
-                      content="View technical information"
+                      content="Security architecture"
                       position="bottom"
                     >
                       <button
                         type="button"
-                        aria-label="Technical information"
-                        className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-400 transition hover:border-cyan-500/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
+                        aria-label="Security architecture"
+                        className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-300 transition hover:border-green-500/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
                       >
-                        <Info size={20} />
+                        <ShieldCheck size={20} />
                       </button>
                     </Tooltip>
 
-                    <Tooltip
-                      content="Get help with this section"
-                      position="right"
-                    >
+                    <Tooltip content="Project documentation" position="right">
                       <button
                         type="button"
-                        aria-label="Help"
-                        className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-400 transition hover:border-green-500/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
+                        aria-label="Project documentation"
+                        className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-300 transition hover:border-cyan-500/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
                       >
                         <HelpCircle size={20} />
                       </button>
                     </Tooltip>
 
-                    <Tooltip
-                      content="This project is being actively developed"
-                      position="left"
+                    <IconContainer
+                      variant="primary"
+                      size="large"
+                      rounded="full"
+                      label="Launch"
                     >
-                      <span tabIndex={0}>
-                        <Badge variant="warning" dot>
-                          Active build
-                        </Badge>
-                      </span>
-                    </Tooltip>
-                  </div>
-                </Card>
-              </div>
-            </ShowcaseSection>
+                      <Rocket size={23} />
+                    </IconContainer>
 
-            <ShowcaseSection
-              id="feedback"
-              eyebrow="02 · Feedback and loading"
-              title="Clear system communication at every state"
-              description="Alerts, notifications, empty states, loading indicators, and placeholders keep visitors and administrators informed without visual noise."
-            >
-              <div className="space-y-4">
-                <Alert
-                  variant="info"
-                  title="Design-system documentation available"
-                  description="Every reusable component is represented in this laboratory before it is used inside production pages."
-                />
-                <Alert
-                  variant="success"
-                  title="UI foundation completed"
-                  description="The component milestone is verified and ready for the actual SyedOS portfolio architecture."
-                  action={
-                    <Button variant="secondary" size="small">
-                      View roadmap
-                    </Button>
-                  }
-                />
-                <Alert
-                  variant="warning"
-                  title="Content integration remains"
-                  description="Portfolio copy, media, CMS collections, authentication, and deployment are the next implementation phases."
-                />
-              </div>
-
-              <div className="mt-6 grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
-                <Card>
-                  <ShowcaseLabel>Temporary notifications</ShowcaseLabel>
-                  <h3 className="mt-2 text-xl">Interactive toast system</h3>
-                  <p className="mt-2 text-sm text-slate-400">
-                    Trigger semantic notifications for saves, validation,
-                    publishing, and deployment activity.
-                  </p>
-                  <div className="mt-6">
-                    <ToastDemo />
-                  </div>
-                </Card>
-
-                <Card variant="glass">
-                  <ShowcaseLabel>Loading indicators</ShowcaseLabel>
-                  <h3 className="mt-2 text-xl">Progress in motion</h3>
-                  <div className="mt-6 flex flex-wrap items-center gap-7">
-                    <Spinner size="small" label="Loading compact content" />
-                    <Spinner size="medium" variant="success" label="Saving" />
-                    <Spinner size="large" variant="warning" label="Checking" />
-                    <div className="rounded-xl bg-blue-600 p-3">
-                      <Spinner variant="light" label="Submitting" />
-                    </div>
-                  </div>
-                  <div className="mt-6 flex flex-wrap gap-3">
-                    <Button
-                      disabled
-                      leftIcon={
-                        <Spinner
-                          size="small"
-                          variant="light"
-                          label="Submitting"
-                        />
-                      }
+                    <IconContainer
+                      variant="warning"
+                      size="large"
+                      label="Education"
                     >
-                      Submitting
-                    </Button>
-                    <Button
-                      variant="secondary"
-                      disabled
-                      leftIcon={<Spinner size="small" label="Loading" />}
-                    >
-                      Loading projects
-                    </Button>
-                  </div>
-                </Card>
-              </div>
-
-              <div className="mt-6 grid gap-6 lg:grid-cols-2">
-                <EmptyState
-                  icon={<FolderSearch size={25} />}
-                  title="No projects match these filters"
-                  description="Change the selected career mode, technology, or project category to restore matching case studies."
-                  action={
-                    <Button leftIcon={<Plus size={17} />}>Add project</Button>
-                  }
-                  secondaryAction={
-                    <Button variant="secondary">Clear filters</Button>
-                  }
-                />
-
-                <EmptyState
-                  icon={<Inbox size={25} />}
-                  title="No recruiter activity yet"
-                  description="Approved engagement events will appear after the public portfolio and privacy-friendly analytics are deployed."
-                  action={<Button variant="secondary">Refresh activity</Button>}
-                />
-              </div>
-
-              <div className="mt-6 grid gap-6 lg:grid-cols-2">
-                <Card>
-                  <ShowcaseLabel>Profile skeleton</ShowcaseLabel>
-                  <div className="mt-6 flex items-start gap-4">
-                    <Skeleton
-                      variant="circle"
-                      width="64px"
-                      height="64px"
-                      className="shrink-0"
-                    />
-                    <div className="flex-1 space-y-3">
-                      <Skeleton variant="text" width="42%" />
-                      <Skeleton variant="text" width="72%" />
-                      <Skeleton variant="text" width="58%" />
-                      <div className="flex gap-2 pt-2">
-                        <Skeleton
-                          width="76px"
-                          height="26px"
-                          className="rounded-full"
-                        />
-                        <Skeleton
-                          width="92px"
-                          height="26px"
-                          className="rounded-full"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </Card>
-
-                <Card variant="glass">
-                  <ShowcaseLabel>Project skeleton</ShowcaseLabel>
-                  <Skeleton height="130px" className="mt-6 w-full" />
-                  <div className="mt-5 space-y-3">
-                    <Skeleton variant="text" width="45%" height="22px" />
-                    <Skeleton variant="text" width="100%" />
-                    <Skeleton variant="text" width="82%" />
+                      <GraduationCap size={23} />
+                    </IconContainer>
                   </div>
                 </Card>
               </div>
@@ -889,64 +759,71 @@ export default function HomePage() {
 
             <ShowcaseSection
               id="forms"
-              eyebrow="03 · Forms and controls"
-              title="Accessible input architecture for public and private workflows"
-              description="The form system supports contact messages, authentication, profile editing, CMS content, search, filtering, visibility, consent, and administrator settings."
+              eyebrow="Form Architecture"
+              title="Professional controls for content, settings, and authentication"
+              description="Every form control supports accessible labels, descriptions, validation feedback, disabled states, and consistent focus behavior."
             >
-              <div className="grid gap-6 xl:grid-cols-2">
+              <div className="grid gap-6 lg:grid-cols-2">
                 <Card>
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <ShowcaseLabel>Text entry</ShowcaseLabel>
-                      <h3 className="mt-2 text-xl">Identity and search</h3>
-                    </div>
-                    <IconContainer variant="primary" label="Form inputs">
-                      <User size={20} />
-                    </IconContainer>
-                  </div>
-
-                  <div className="mt-7 space-y-6">
+                  <PanelLabel>Identity and discovery</PanelLabel>
+                  <div className="mt-6 space-y-6">
                     <Input
                       label="Full name"
-                      name="advancedFullName"
+                      name="fullName"
                       placeholder="Enter your full name"
                       leftIcon={<User size={18} />}
                       required
                     />
+
                     <Input
-                      label="Email address"
-                      name="advancedEmail"
+                      label="Professional email"
+                      name="professionalEmail"
                       type="email"
                       placeholder="name@example.com"
-                      description="Used only for professional communication."
+                      description="Used for approved professional enquiries."
                       leftIcon={<Mail size={18} />}
                     />
+
                     <Input
                       label="Search projects"
-                      name="advancedProjectSearch"
+                      name="projectSearch"
                       type="search"
-                      placeholder="Search technology, category, or project"
+                      placeholder="Search by technology or project"
                       leftIcon={<Search size={18} />}
+                    />
+
+                    <Select
+                      label="Technology filter"
+                      name="technologyFilter"
+                      leftIcon={<Filter size={18} />}
+                      defaultValue="nextjs"
+                      options={[
+                        { label: "All technologies", value: "all" },
+                        { label: "Next.js", value: "nextjs" },
+                        { label: "TypeScript", value: "typescript" },
+                        { label: "PHP", value: "php" },
+                        { label: "MySQL", value: "mysql" },
+                      ]}
                     />
                   </div>
                 </Card>
 
                 <Card variant="glass">
-                  <ShowcaseLabel>Authentication states</ShowcaseLabel>
-                  <h3 className="mt-2 text-xl">Secure field patterns</h3>
-                  <div className="mt-7 space-y-6">
+                  <PanelLabel>Authentication and validation</PanelLabel>
+                  <div className="mt-6 space-y-6">
                     <Input
                       label="Administrator email"
-                      name="advancedAdminEmail"
+                      name="adminEmail"
                       type="email"
                       value="invalid-email"
                       readOnly
                       leftIcon={<Mail size={18} />}
-                      error="Enter a valid administrator email address."
+                      error="Enter a valid administrator email."
                     />
+
                     <Input
                       label="Password"
-                      name="advancedPassword"
+                      name="password"
                       type="password"
                       placeholder="Enter your password"
                       leftIcon={<LockKeyhole size={18} />}
@@ -954,15 +831,16 @@ export default function HomePage() {
                         <button
                           type="button"
                           aria-label="Show password"
-                          className="rounded-md p-1 text-slate-500 transition hover:text-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                          className="rounded-md p-1 text-slate-500 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                         >
                           <Eye size={18} />
                         </button>
                       }
                     />
+
                     <Input
                       label="Confirmed password"
-                      name="advancedConfirmedPassword"
+                      name="confirmedPassword"
                       type="password"
                       value="password"
                       readOnly
@@ -976,75 +854,10 @@ export default function HomePage() {
                         </span>
                       }
                     />
-                  </div>
-                </Card>
-              </div>
 
-              <div className="mt-6 grid gap-6 xl:grid-cols-2">
-                <Card>
-                  <ShowcaseLabel>Long-form content</ShowcaseLabel>
-                  <h3 className="mt-2 text-xl">Textarea workflows</h3>
-                  <div className="mt-7 space-y-6">
-                    <Textarea
-                      label="Professional biography"
-                      name="advancedBiography"
-                      defaultValue="Information Technology student focused on full-stack engineering, artificial intelligence, and practical software products."
-                      maxLength={300}
-                      showCharacterCount
-                    />
-                    <Textarea
-                      label="Project description"
-                      name="advancedProjectDescription"
-                      placeholder="Explain the problem, architecture, implementation, security, testing, and outcomes."
-                      className="min-h-40"
-                      maxLength={1200}
-                      showCharacterCount
-                    />
-                  </div>
-                </Card>
-
-                <Card variant="glass">
-                  <ShowcaseLabel>Structured selection</ShowcaseLabel>
-                  <h3 className="mt-2 text-xl">Filters and modes</h3>
-                  <div className="mt-7 space-y-6">
-                    <Select
-                      label="Project category"
-                      name="advancedProjectCategory"
-                      placeholder="Choose a category"
-                      leftIcon={<Layers3 size={18} />}
-                      defaultValue=""
-                      required
-                      options={[
-                        {
-                          label: "Full-Stack Web Development",
-                          value: "full-stack",
-                        },
-                        {
-                          label: "Artificial Intelligence",
-                          value: "artificial-intelligence",
-                        },
-                        {
-                          label: "Cloud and DevOps",
-                          value: "cloud-devops",
-                        },
-                      ]}
-                    />
-                    <Select
-                      label="Technology filter"
-                      name="advancedTechnologyFilter"
-                      leftIcon={<Filter size={18} />}
-                      defaultValue="nextjs"
-                      options={[
-                        { label: "All technologies", value: "all" },
-                        { label: "Next.js", value: "nextjs" },
-                        { label: "TypeScript", value: "typescript" },
-                        { label: "PHP", value: "php" },
-                        { label: "MySQL", value: "mysql" },
-                      ]}
-                    />
                     <Select
                       label="Audience mode"
-                      name="advancedAudienceMode"
+                      name="audienceMode"
                       leftIcon={<UserRoundCog size={18} />}
                       defaultValue="recruiter"
                       options={[
@@ -1067,94 +880,36 @@ export default function HomePage() {
                 </Card>
               </div>
 
-              <div className="mt-6 grid gap-6 xl:grid-cols-3">
+              <div className="mt-6 grid gap-6 lg:grid-cols-2">
                 <Card>
-                  <ShowcaseLabel>Multi-select controls</ShowcaseLabel>
+                  <PanelLabel>Long-form content</PanelLabel>
                   <div className="mt-6 space-y-6">
-                    <Checkbox
-                      label="Show public profile"
-                      name="advancedPublicProfile"
-                      description="Allow approved portfolio content to be viewed publicly."
-                      defaultChecked
+                    <Textarea
+                      label="Professional biography"
+                      name="professionalBiography"
+                      defaultValue="Information Technology student focused on full-stack development, artificial intelligence, and practical software products."
+                      maxLength={300}
+                      showCharacterCount
                     />
-                    <Checkbox
-                      label="Recruiter notifications"
-                      name="advancedRecruiterNotifications"
-                      description="Receive alerts when recruiter activity is recorded."
-                    />
-                    <Checkbox
-                      label="Accept privacy policy"
-                      name="advancedPrivacyConsent"
-                      description="Required before submitting personal information."
-                      required
-                    />
-                  </div>
-                </Card>
 
-                <Card variant="glass">
-                  <ShowcaseLabel>Single-choice controls</ShowcaseLabel>
-                  <div className="mt-6">
-                    <RadioGroup
-                      label="Primary career mode"
-                      name="advancedPrimaryCareerMode"
-                      defaultValue="full-stack"
-                      required
-                      options={[
-                        {
-                          label: "Full-Stack Developer",
-                          value: "full-stack",
-                          description:
-                            "Frontend, backend, database, and deployment.",
-                        },
-                        {
-                          label: "AI and ML Engineer",
-                          value: "ai-ml",
-                          description:
-                            "AI integrations, agents, and automation.",
-                        },
-                        {
-                          label: "Cloud and DevOps Engineer",
-                          value: "cloud-devops",
-                          description:
-                            "Cloud, containers, CI/CD, and operations.",
-                        },
-                      ]}
+                    <Textarea
+                      label="AI-assisted project review"
+                      name="aiPrompt"
+                      defaultValue="Review this project description and suggest improvements for recruiters, technical interviews, and public portfolio presentation."
+                      maxLength={20000}
+                      showCharacterCount
+                      className="min-h-40"
                     />
                   </div>
                 </Card>
 
                 <Card variant="editorial">
-                  <ShowcaseLabel>Immediate settings</ShowcaseLabel>
-                  <div className="mt-6 space-y-7">
-                    <Switch
-                      label="Public portfolio"
-                      name="advancedPublicPortfolio"
-                      description="Expose approved content to visitors."
-                      defaultChecked
-                    />
-                    <Switch
-                      label="Privacy-friendly analytics"
-                      name="advancedPrivacyAnalytics"
-                      description="Collect anonymous engagement signals."
-                      defaultChecked
-                    />
-                    <Switch
-                      label="AI portfolio assistant"
-                      name="advancedAiAssistant"
-                      description="Answer approved questions about public work."
-                    />
-                  </div>
-                </Card>
-              </div>
-
-              <div className="mt-6 grid gap-6 xl:grid-cols-2">
-                <Card>
-                  <ShowcaseLabel>Field composition</ShowcaseLabel>
+                  <PanelLabel>Custom field composition</PanelLabel>
                   <div className="mt-6 space-y-7">
                     <FormField
                       label="Portfolio URL"
-                      htmlFor="advanced-portfolio-url"
-                      description="Use the final production URL after deployment."
+                      htmlFor="portfolio-url"
+                      description="The final production domain for SyedOS."
                       required
                       actions={
                         <button
@@ -1166,8 +921,8 @@ export default function HomePage() {
                       }
                     >
                       <input
-                        id="advanced-portfolio-url"
-                        name="advancedPortfolioUrl"
+                        id="portfolio-url"
+                        name="portfolioUrl"
                         type="url"
                         placeholder="https://your-domain.com"
                         className="h-11 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3.5 text-sm text-slate-100 placeholder:text-slate-600 transition hover:border-slate-600 focus-visible:border-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/25"
@@ -1175,99 +930,145 @@ export default function HomePage() {
                     </FormField>
 
                     <FormField
-                      label="GitHub repository"
-                      htmlFor="advanced-github-repository"
-                      error="Enter a valid GitHub repository URL."
-                      actions={
-                        <button
-                          type="button"
-                          className="text-xs font-medium text-cyan-400 transition hover:text-cyan-300"
-                        >
-                          Verify repository
-                        </button>
-                      }
+                      label="Featured technology"
+                      htmlFor="featured-technology"
+                      description="Emphasized in the public hero and recruiter mode."
                     >
-                      <input
-                        id="advanced-github-repository"
-                        name="advancedGithubRepository"
-                        value="invalid-repository"
-                        readOnly
-                        aria-invalid="true"
-                        className="h-11 w-full rounded-xl border border-red-500/60 bg-slate-950/70 px-3.5 text-sm text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/25"
-                      />
+                      <select
+                        id="featured-technology"
+                        name="featuredTechnology"
+                        defaultValue="nextjs"
+                        className="h-11 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3.5 text-sm text-slate-100 transition hover:border-slate-600 focus-visible:border-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/25"
+                      >
+                        <option value="nextjs">Next.js</option>
+                        <option value="typescript">TypeScript</option>
+                        <option value="php">PHP</option>
+                        <option value="mysql">MySQL</option>
+                      </select>
                     </FormField>
+                  </div>
+                </Card>
+              </div>
+
+              <Divider label="Preferences and publishing" className="my-9" />
+
+              <div className="grid gap-6 lg:grid-cols-3">
+                <Card>
+                  <PanelLabel>Checkboxes</PanelLabel>
+                  <div className="mt-6 space-y-6">
+                    <Checkbox
+                      label="Show public profile"
+                      name="publicProfile"
+                      description="Allow recruiters and visitors to view the published portfolio."
+                      defaultChecked
+                    />
+
+                    <Checkbox
+                      label="Receive recruiter notifications"
+                      name="recruiterNotifications"
+                      description="Notify the administrator about verified recruiter activity."
+                    />
+
+                    <Checkbox
+                      label="Accept privacy policy"
+                      name="privacyConsent"
+                      description="Required before submitting personal information."
+                      required
+                    />
                   </div>
                 </Card>
 
                 <Card variant="glass">
-                  <ShowcaseLabel>Completion overview</ShowcaseLabel>
-                  <h3 className="mt-2 text-xl">Form-system readiness</h3>
-                  <div className="mt-7 space-y-6">
-                    <Progress
-                      label="Public contact workflows"
-                      value={100}
-                      variant="success"
-                    />
-                    <Progress
-                      label="Administrator forms"
-                      value={100}
-                      variant="success"
-                    />
-                    <Progress
-                      label="CMS field patterns"
-                      value={100}
-                      variant="success"
-                    />
-                    <Progress
-                      label="Database integration"
-                      value={10}
-                      variant="info"
+                  <PanelLabel>Radio groups</PanelLabel>
+                  <div className="mt-6">
+                    <RadioGroup
+                      label="Primary career mode"
+                      name="primaryCareerMode"
+                      defaultValue="full-stack"
+                      required
+                      options={[
+                        {
+                          label: "Full-Stack Developer",
+                          value: "full-stack",
+                        },
+                        {
+                          label: "AI and ML Engineer",
+                          value: "ai-ml",
+                        },
+                        {
+                          label: "Cloud and DevOps Engineer",
+                          value: "cloud-devops",
+                        },
+                      ]}
                     />
                   </div>
                 </Card>
+
+                <Card variant="editorial">
+                  <PanelLabel>Switch controls</PanelLabel>
+                  <div className="mt-6 space-y-7">
+                    <Switch
+                      label="Public portfolio"
+                      name="publicPortfolio"
+                      description="Allow visitors to view published content."
+                      defaultChecked
+                    />
+
+                    <Switch
+                      label="AI portfolio assistant"
+                      name="aiPortfolioAssistant"
+                      description="Allow approved portfolio questions."
+                    />
+
+                    <Switch
+                      label="Database backups"
+                      name="databaseBackups"
+                      description="Managed automatically by the platform."
+                      checked
+                      readOnly
+                      disabled
+                    />
+                  </div>
+                </Card>
+              </div>
+
+              <div className="mt-6">
+                <Alert
+                  variant="warning"
+                  title="Production deployment requires configuration"
+                  description="Complete database, authentication, environment-variable, and hosting configuration before enabling the production switch."
+                  action={
+                    <Button variant="ghost" size="small">
+                      Review deployment plan
+                    </Button>
+                  }
+                />
               </div>
             </ShowcaseSection>
 
             <ShowcaseSection
               id="navigation"
-              eyebrow="04 · Navigation and overlays"
-              title="Structured movement through complex career content"
-              description="Breadcrumbs, tabs, accordions, contextual menus, pagination, and modals organize dense portfolio and administrator experiences."
+              eyebrow="Interaction Architecture"
+              title="Navigation, overlays, and contextual disclosure"
+              description="Complex information remains easy to scan through hierarchical navigation, tabs, accordions, menus, pagination, and modal workflows."
             >
-              <Card>
-                <div className="flex flex-wrap items-start justify-between gap-4">
-                  <div>
-                    <ShowcaseLabel>Hierarchy</ShowcaseLabel>
-                    <h3 className="mt-2 text-xl">Breadcrumb navigation</h3>
-                  </div>
-                  <Badge variant="outline">Semantic nav</Badge>
-                </div>
-
-                <div className="mt-6 grid gap-4 lg:grid-cols-2">
-                  <div className="rounded-xl border border-slate-800 bg-slate-950/45 p-5">
-                    <Breadcrumb
-                      items={[
-                        { label: "Home", href: "/" },
-                        { label: "Projects", href: "/projects" },
-                        { label: "SyedOS" },
-                      ]}
-                    />
-                  </div>
-                  <div className="rounded-xl border border-slate-800 bg-slate-950/45 p-5">
-                    <Breadcrumb
-                      items={[
-                        { label: "Dashboard", href: "/admin" },
-                        { label: "Projects", href: "/admin/projects" },
-                        { label: "Edit SyedOS" },
-                      ]}
-                    />
-                  </div>
+              <Card variant="glass">
+                <PanelLabel>Hierarchy</PanelLabel>
+                <div className="mt-5 rounded-xl border border-slate-800 bg-slate-950/50 p-5">
+                  <Breadcrumb
+                    items={[
+                      { label: "Dashboard", href: "/admin" },
+                      { label: "Projects", href: "/admin/projects" },
+                      { label: "SyedOS", href: "/admin/projects/syedos" },
+                      { label: "Interface Lab" },
+                    ]}
+                  />
                 </div>
               </Card>
 
-              <div className="mt-6 grid gap-6 xl:grid-cols-2">
-                <Card variant="glass">
-                  <ShowcaseLabel>Tabbed content</ShowcaseLabel>
+              <div className="mt-6 grid gap-6 lg:grid-cols-2">
+                <Card>
+                  <PanelLabel>Project intelligence</PanelLabel>
                   <div className="mt-6">
                     <Tabs
                       defaultValue="overview"
@@ -1281,9 +1082,9 @@ export default function HomePage() {
                                 Intelligent career platform
                               </h4>
                               <p className="mt-2 text-sm text-slate-400">
-                                SyedOS adapts public content for recruiters,
-                                hiring managers, admissions teams, and general
-                                visitors.
+                                SyedOS presents projects, skills, education,
+                                evidence, and AI-assisted career information
+                                through audience-aware experiences.
                               </p>
                               <div className="mt-4 flex flex-wrap gap-2">
                                 <Badge variant="primary">Next.js</Badge>
@@ -1297,10 +1098,11 @@ export default function HomePage() {
                           value: "architecture",
                           label: "Architecture",
                           content: (
-                            <p className="text-sm text-slate-400">
-                              Modular Next.js frontend, Payload CMS, PostgreSQL,
-                              secure authentication, analytics, and AI feature
-                              services.
+                            <p className="text-sm leading-relaxed text-slate-400">
+                              The architecture separates presentation,
+                              structured content, authentication, analytics,
+                              AI services, and future integrations into
+                              maintainable modules.
                             </p>
                           ),
                         },
@@ -1308,26 +1110,20 @@ export default function HomePage() {
                           value: "security",
                           label: "Security",
                           content: (
-                            <p className="text-sm text-slate-400">
-                              Protected routes, secure sessions, role-based
-                              authorization, validated inputs, and restricted
-                              data access.
+                            <p className="text-sm leading-relaxed text-slate-400">
+                              Protected routes, secure sessions, role checks,
+                              environment isolation, validation, and restricted
+                              data access form the security foundation.
                             </p>
                           ),
-                        },
-                        {
-                          value: "testing",
-                          label: "Testing",
-                          disabled: true,
-                          content: <p>Testing phase queued.</p>,
                         },
                       ]}
                     />
                   </div>
                 </Card>
 
-                <Card>
-                  <ShowcaseLabel>Expandable content</ShowcaseLabel>
+                <Card variant="editorial">
+                  <PanelLabel>Frequently asked questions</PanelLabel>
                   <div className="mt-6">
                     <Accordion
                       allowMultiple
@@ -1335,32 +1131,33 @@ export default function HomePage() {
                       items={[
                         {
                           value: "editing",
-                          title: "Who can edit SyedOS?",
+                          title: "Who can edit the portfolio?",
                           content: (
                             <p>
-                              Only the authenticated owner can access the
-                              private administrator and CMS workflows.
+                              Only Syed Mohiuddin can edit protected portfolio
+                              content after secure administrator authentication.
                             </p>
                           ),
                         },
                         {
                           value: "visitors",
-                          title: "What can visitors access?",
+                          title: "What can public visitors access?",
                           content: (
                             <p>
                               Visitors can view approved public projects,
-                              skills, education, certificates, resume links, and
-                              contact options.
+                              skills, education, certificates, resume links,
+                              and professional contact options.
                             </p>
                           ),
                         },
                         {
                           value: "cms",
-                          title: "Can content change without editing code?",
+                          title: "Can content be changed without code?",
                           content: (
                             <p>
-                              Yes. Payload CMS will manage structured content
-                              from the protected dashboard.
+                              Yes. Payload CMS will manage structured profile,
+                              project, certificate, education, and resume
+                              content from a protected dashboard.
                             </p>
                           ),
                         },
@@ -1370,20 +1167,24 @@ export default function HomePage() {
                 </Card>
               </div>
 
-              <div className="mt-6 grid gap-6 xl:grid-cols-2">
+              <div className="mt-6 grid gap-6 lg:grid-cols-2">
                 <Card>
-                  <ShowcaseLabel>Contextual project actions</ShowcaseLabel>
-                  <div className="mt-6 flex items-center justify-between rounded-xl border border-slate-800 bg-slate-950/40 p-4">
+                  <PanelLabel>Contextual actions</PanelLabel>
+
+                  <div className="mt-6 flex items-center justify-between rounded-xl border border-slate-800 bg-slate-950/35 p-4">
                     <div>
-                      <p className="font-medium text-white">SyedOS</p>
+                      <p className="font-medium text-white">
+                        SyedOS Career Platform
+                      </p>
                       <p className="mt-1 text-sm text-slate-500">
-                        Intelligent career portfolio platform
+                        Advanced portfolio project
                       </p>
                     </div>
+
                     <DropdownMenu
                       align="right"
                       trigger={
-                        <span className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-400 transition hover:border-blue-500/50 hover:text-white">
+                        <span className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-300 transition hover:border-blue-500/50 hover:text-white">
                           <Ellipsis size={20} />
                         </span>
                       }
@@ -1408,11 +1209,8 @@ export default function HomePage() {
                       ]}
                     />
                   </div>
-                </Card>
 
-                <Card variant="glass">
-                  <ShowcaseLabel>Administrator account menu</ShowcaseLabel>
-                  <div className="mt-6 flex justify-end">
+                  <div className="mt-5 flex justify-end">
                     <DropdownMenu
                       align="right"
                       width="large"
@@ -1424,6 +1222,7 @@ export default function HomePage() {
                             size="small"
                             status="online"
                           />
+
                           <span>
                             <span className="block text-sm font-medium text-white">
                               Syed Mohiuddin
@@ -1445,8 +1244,10 @@ export default function HomePage() {
                           icon: <Settings size={17} />,
                           shortcut: "S",
                         },
-                        { label: "Dark theme", selected: true },
-                        { label: "System theme", disabled: true },
+                        {
+                          label: "Dark theme",
+                          selected: true,
+                        },
                         {
                           label: "Sign out",
                           icon: <LogOut size={17} />,
@@ -1456,25 +1257,200 @@ export default function HomePage() {
                     />
                   </div>
                 </Card>
-              </div>
 
-              <div className="mt-6 grid gap-6 xl:grid-cols-2">
-                <Card>
-                  <ShowcaseLabel>Overlay workflows</ShowcaseLabel>
-                  <h3 className="mt-2 text-xl">Modal demonstrations</h3>
-                  <p className="mt-2 text-sm text-slate-400">
-                    Test project creation and destructive confirmation dialogs.
+                <Card variant="glass">
+                  <PanelLabel>Modal workflows</PanelLabel>
+                  <p className="mt-3">
+                    Project forms and destructive confirmations are isolated in
+                    accessible overlay workflows.
                   </p>
                   <div className="mt-6">
                     <ModalDemo />
                   </div>
                 </Card>
+              </div>
+
+              <div className="mt-6">
+                <PaginationDemo />
+              </div>
+            </ShowcaseSection>
+
+            <ShowcaseSection
+              id="feedback"
+              eyebrow="Feedback and System States"
+              title="Clear communication for every platform condition"
+              description="Users receive immediate, semantic, and accessible feedback for success, warnings, errors, loading, empty data, and background operations."
+            >
+              <div className="space-y-4">
+                <Alert
+                  variant="info"
+                  title="Platform foundation ready"
+                  description="The reusable component system is available for building public portfolio pages and protected administrator experiences."
+                />
+
+                <Alert
+                  variant="success"
+                  title="Production build verified"
+                  description="TypeScript checks, static generation, and the optimized Next.js build completed successfully."
+                  action={
+                    <Button variant="secondary" size="small">
+                      View build report
+                    </Button>
+                  }
+                />
+
+                <Alert
+                  variant="warning"
+                  title="Profile evidence still required"
+                  description="Add final project screenshots, certificates, resume assets, and verified outcomes before public deployment."
+                />
+
+                <Alert
+                  variant="danger"
+                  title="Example deployment failure"
+                  description="Database connectivity, environment variables, and hosting configuration must be validated before release."
+                  action={
+                    <Button variant="secondary" size="small">
+                      Open logs
+                    </Button>
+                  }
+                />
+              </div>
+
+              <Divider label="Temporary notifications" className="my-9" />
+
+              <Card>
+                <PanelLabel>Toast notification center</PanelLabel>
+                <p className="mt-3">
+                  Trigger temporary messages for saving, validation,
+                  authentication, publishing, and deployment workflows.
+                </p>
+                <div className="mt-6">
+                  <ToastDemo />
+                </div>
+              </Card>
+
+              <div className="mt-6 grid gap-6 lg:grid-cols-2">
+                <EmptyState
+                  icon={<FolderSearch size={25} />}
+                  title="No projects match the active filters"
+                  description="Change the category, technology, career mode, or audience settings to discover additional projects."
+                  action={
+                    <Button leftIcon={<Plus size={17} />}>
+                      Add project
+                    </Button>
+                  }
+                  secondaryAction={
+                    <Button variant="secondary">Clear filters</Button>
+                  }
+                />
+
+                <EmptyState
+                  icon={<Inbox size={25} />}
+                  title="No recruiter notifications"
+                  description="Verified recruiter activity, administrator alerts, and professional enquiries will appear here."
+                  action={
+                    <Button variant="secondary">Refresh activity</Button>
+                  }
+                />
+              </div>
+
+              <Divider label="Loading architecture" className="my-9" />
+
+              <div className="grid gap-6 lg:grid-cols-2">
+                <Card>
+                  <PanelLabel>Profile skeleton</PanelLabel>
+                  <div className="mt-6 flex items-start gap-4">
+                    <Skeleton
+                      variant="circle"
+                      width="64px"
+                      height="64px"
+                      className="shrink-0"
+                    />
+
+                    <div className="flex-1 space-y-3">
+                      <Skeleton variant="text" width="42%" />
+                      <Skeleton variant="text" width="72%" />
+                      <Skeleton variant="text" width="58%" />
+
+                      <div className="flex gap-2 pt-2">
+                        <Skeleton
+                          width="72px"
+                          height="26px"
+                          className="rounded-full"
+                        />
+                        <Skeleton
+                          width="88px"
+                          height="26px"
+                          className="rounded-full"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </Card>
 
                 <Card variant="glass">
-                  <ShowcaseLabel>Record navigation</ShowcaseLabel>
-                  <h3 className="mt-2 text-xl">Pagination demonstrations</h3>
-                  <div className="mt-6">
-                    <PaginationDemo />
+                  <PanelLabel>Asynchronous operations</PanelLabel>
+
+                  <div className="mt-6 space-y-5">
+                    <div className="flex items-center gap-4 rounded-xl border border-slate-800 p-4">
+                      <Spinner
+                        size="medium"
+                        label="Generating AI response"
+                      />
+                      <div>
+                        <p className="font-medium text-white">
+                          Generating AI response
+                        </p>
+                        <p className="mt-1 text-sm text-slate-500">
+                          SyedAI is processing approved portfolio context.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4 rounded-xl border border-slate-800 p-4">
+                      <Spinner
+                        size="medium"
+                        variant="success"
+                        label="Saving project"
+                      />
+                      <div>
+                        <p className="font-medium text-white">
+                          Saving project changes
+                        </p>
+                        <p className="mt-1 text-sm text-slate-500">
+                          Updating structured content and public visibility.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap gap-3">
+                      <Button
+                        disabled
+                        leftIcon={
+                          <Spinner
+                            size="small"
+                            variant="light"
+                            label="Submitting"
+                          />
+                        }
+                      >
+                        Submitting
+                      </Button>
+
+                      <Button
+                        variant="secondary"
+                        disabled
+                        leftIcon={
+                          <Spinner
+                            size="small"
+                            label="Loading projects"
+                          />
+                        }
+                      >
+                        Loading projects
+                      </Button>
+                    </div>
                   </div>
                 </Card>
               </div>
@@ -1482,43 +1458,13 @@ export default function HomePage() {
 
             <ShowcaseSection
               id="data"
-              eyebrow="05 · Data and system states"
-              title="Metrics, progress, tables, and operational visibility"
-              description="Structured data components translate project, visitor, recruiter, CMS, and administrator activity into readable interfaces."
+              eyebrow="Data and Operational Intelligence"
+              title="Metrics, progress, records, and administrator visibility"
+              description="Structured data components support project management, recruiter activity, analytics, progress reporting, and future CMS-backed operations."
             >
-              <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-                <StatCard
-                  label="Major Projects"
-                  value="3"
-                  description="Portfolio case studies"
-                  icon={<Code2 size={21} />}
-                  trend={{ value: "Active development", direction: "up" }}
-                />
-                <StatCard
-                  label="AI Agent Modes"
-                  value="17"
-                  description="SyedAI capabilities"
-                  icon={<Bot size={21} />}
-                  trend={{ value: "Verified", direction: "neutral" }}
-                />
-                <StatCard
-                  label="Career Modes"
-                  value="13"
-                  description="Adaptive profile states"
-                  icon={<BriefcaseBusiness size={21} />}
-                />
-                <StatCard
-                  label="Analytics"
-                  value="Ready"
-                  description="Integration prepared"
-                  icon={<BarChart3 size={21} />}
-                  trend={{ value: "Privacy-first", direction: "up" }}
-                />
-              </div>
-
-              <div className="mt-6 grid gap-6 xl:grid-cols-2">
+              <div className="grid gap-6 lg:grid-cols-2">
                 <Card>
-                  <ShowcaseLabel>Technical profile</ShowcaseLabel>
+                  <PanelLabel>Technical capability profile</PanelLabel>
                   <div className="mt-6 space-y-6">
                     <Progress
                       label="Full-Stack Web Development"
@@ -1544,23 +1490,23 @@ export default function HomePage() {
                 </Card>
 
                 <Card variant="glass">
-                  <ShowcaseLabel>Platform roadmap</ShowcaseLabel>
+                  <PanelLabel>Platform delivery progress</PanelLabel>
                   <div className="mt-6 space-y-6">
                     <Progress
-                      label="Design-system foundation"
+                      label="Design system foundation"
                       value={100}
                       variant="success"
                       size="large"
                     />
                     <Progress
-                      label="Public portfolio shell"
-                      value={15}
+                      label="Public portfolio"
+                      value={35}
                       variant="primary"
                       size="large"
                     />
                     <Progress
-                      label="Payload CMS integration"
-                      value={5}
+                      label="CMS integration"
+                      value={10}
                       variant="info"
                       size="large"
                     />
@@ -1578,19 +1524,25 @@ export default function HomePage() {
                 <Card>
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div>
-                      <ShowcaseLabel>Administrator data</ShowcaseLabel>
-                      <h3 className="mt-2 text-xl">Project management</h3>
-                      <p className="mt-2 text-sm text-slate-400">
-                        Responsive records for publication state, updates, and
-                        contextual actions.
+                      <PanelLabel>Project records</PanelLabel>
+                      <h3 className="mt-3 text-xl">
+                        Portfolio project management
+                      </h3>
+                      <p className="mt-2">
+                        Responsive structured data for project status,
+                        categories, updates, and contextual actions.
                       </p>
                     </div>
-                    <Button size="small" leftIcon={<Plus size={16} />}>
+
+                    <Button
+                      size="small"
+                      leftIcon={<Plus size={16} />}
+                    >
                       Add project
                     </Button>
                   </div>
 
-                  <div className="mt-7">
+                  <div className="mt-8">
                     <Table
                       caption="SyedOS project management records"
                       data={projectRows}
@@ -1614,7 +1566,10 @@ export default function HomePage() {
                           key: "status",
                           header: "Status",
                           cell: (project) => {
-                            const variant: "success" | "primary" | "warning" =
+                            const variant:
+                              | "success"
+                              | "primary"
+                              | "warning" =
                               project.status === "Completed"
                                 ? "success"
                                 : project.status === "Active"
@@ -1658,12 +1613,15 @@ export default function HomePage() {
                 </Card>
               </div>
 
-              <div className="mt-6 grid gap-6 xl:grid-cols-2">
-                <Card variant="glass">
-                  <ShowcaseLabel>Recent activity</ShowcaseLabel>
+              <div className="mt-6 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+                <Card
+                  variant="glass"
+                  className="min-w-0 overflow-hidden"
+                >
+                  <PanelLabel>Administrator activity</PanelLabel>
                   <div className="mt-6">
                     <Table
-                      caption="Recent administrator activity"
+                      caption="Recent SyedOS administrator activity"
                       data={activityRows}
                       getRowKey={(activity) => activity.id}
                       columns={[
@@ -1692,8 +1650,12 @@ export default function HomePage() {
                                   className="text-green-400"
                                 />
                               ) : (
-                                <Clock3 size={17} className="text-amber-400" />
+                                <Clock3
+                                  size={17}
+                                  className="text-amber-400"
+                                />
                               )}
+
                               <span>{activity.status}</span>
                             </div>
                           ),
@@ -1703,26 +1665,22 @@ export default function HomePage() {
                   </div>
                 </Card>
 
-                <Card variant="editorial">
-                  <ShowcaseLabel>Empty records</ShowcaseLabel>
+                <Card
+                  variant="editorial"
+                  className="min-w-0 overflow-hidden"
+                >
+                  <PanelLabel>Analytics state</PanelLabel>
                   <div className="mt-6">
-                    <Table
-                      caption="Empty recruiter activity table"
-                      data={[] as Array<{ id: string; recruiter: string }>}
-                      getRowKey={(record) => record.id}
-                      emptyMessage="No recruiter activity has been recorded yet."
-                      columns={[
-                        {
-                          key: "recruiter",
-                          header: "Recruiter",
-                          cell: (record) => record.recruiter,
-                        },
-                        {
-                          key: "activity",
-                          header: "Activity",
-                          cell: () => "No activity",
-                        },
-                      ]}
+                    <EmptyState
+                      compact
+                      icon={<BarChart3 size={21} />}
+                      title="Analytics begin after deployment"
+                      description="Privacy-friendly visitor, recruiter, and content-performance data will appear after the public portfolio is released."
+                      action={
+                        <Button variant="ghost" size="small">
+                          Review analytics plan
+                        </Button>
+                      }
                     />
                   </div>
                 </Card>
@@ -1731,142 +1689,156 @@ export default function HomePage() {
 
             <ShowcaseSection
               id="release"
-              eyebrow="06 · Release readiness"
-              title="The UI foundation is complete and ready to become SyedOS"
-              description="The next phase replaces this laboratory with the real public portfolio, private administrator shell, content architecture, data layer, authentication, AI, testing, and deployment."
+              eyebrow="Release Readiness"
+              title="The reusable SyedOS interface foundation is complete"
+              description="The next phase converts this component laboratory into the public portfolio, private administrator dashboard, CMS-backed content platform, AI services, and production deployment."
             >
-              <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
-                <Card variant="glass" className="relative overflow-hidden">
-                  <div
-                    aria-hidden="true"
-                    className="absolute right-[-5rem] top-[-5rem] h-48 w-48 rounded-full bg-blue-500/15 blur-3xl"
-                  />
+              <div className="grid gap-6 lg:grid-cols-[1.08fr_0.92fr]">
+                <Card variant="glass">
+                  <PanelLabel>Verified foundation</PanelLabel>
 
-                  <div className="relative">
-                    <div className="flex flex-wrap items-start justify-between gap-5">
-                      <div>
-                        <Badge variant="success" dot size="medium">
-                          Milestone verified
-                        </Badge>
-                        <h3 className="mt-5 max-w-2xl text-2xl sm:text-3xl">
-                          SyedOS UI component files are fully completed.
-                        </h3>
-                        <p className="mt-4 max-w-2xl leading-7 text-slate-400">
-                          The component layer now supports professional public
-                          pages, protected administrator workflows, structured
-                          content, responsive data displays, and advanced
-                          interactions.
+                  <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                    {[
+                      "Responsive interface system",
+                      "Accessible interactive controls",
+                      "Semantic feedback states",
+                      "Typed data presentation",
+                      "Public and admin patterns",
+                      "Reusable content architecture",
+                    ].map((item) => (
+                      <div
+                        key={item}
+                        className="flex items-start gap-3 rounded-xl border border-slate-800 bg-slate-950/45 p-4"
+                      >
+                        <IconContainer
+                          variant="success"
+                          size="small"
+                          rounded="full"
+                          label="Verified"
+                        >
+                          <Check size={15} />
+                        </IconContainer>
+
+                        <p className="text-sm font-medium text-slate-300">
+                          {item}
                         </p>
                       </div>
+                    ))}
+                  </div>
+                </Card>
 
-                      <IconContainer
-                        variant="success"
-                        size="large"
-                        rounded="full"
-                        label="UI complete"
-                      >
-                        <Check size={26} />
-                      </IconContainer>
-                    </div>
+                <Card variant="elevated">
+                  <PanelLabel>Next production layer</PanelLabel>
 
-                    <div className="mt-8 grid gap-3 sm:grid-cols-2">
-                      {[
-                        "Build reusable Navbar and Footer",
-                        "Create the advanced public homepage",
-                        "Add About, Skills, Projects, and Education",
-                        "Build the private administrator shell",
-                        "Integrate Payload CMS and PostgreSQL",
-                        "Add authentication, analytics, AI, and deployment",
-                      ].map((item) => (
-                        <div
-                          key={item}
-                          className="flex items-start gap-3 rounded-xl border border-slate-800 bg-slate-950/45 p-4"
+                  <div className="mt-6 space-y-4">
+                    <div className="rounded-xl border border-slate-800 bg-slate-950/45 p-4">
+                      <div className="flex items-center gap-3">
+                        <IconContainer
+                          variant="primary"
+                          size="small"
+                          label="Public portfolio"
                         >
-                          <CircleCheck
-                            size={17}
-                            className="mt-0.5 shrink-0 text-cyan-400"
-                          />
-                          <span className="text-sm text-slate-300">{item}</span>
+                          <Rocket size={16} />
+                        </IconContainer>
+                        <div>
+                          <p className="font-medium text-white">
+                            Public portfolio shell
+                          </p>
+                          <p className="mt-1 text-sm text-slate-500">
+                            Navbar, footer, hero, projects, skills, education,
+                            certificates, and contact.
+                          </p>
                         </div>
-                      ))}
+                      </div>
                     </div>
 
-                    <div className="mt-8 flex flex-wrap gap-3">
-                      <Button rightIcon={<ArrowRight size={18} />}>
-                        Begin portfolio shell
-                      </Button>
-                      <Button
-                        variant="secondary"
-                        leftIcon={<BookOpen size={18} />}
-                      >
-                        Review architecture
-                      </Button>
+                    <div className="rounded-xl border border-slate-800 bg-slate-950/45 p-4">
+                      <div className="flex items-center gap-3">
+                        <IconContainer
+                          variant="success"
+                          size="small"
+                          label="Private administration"
+                        >
+                          <ShieldCheck size={16} />
+                        </IconContainer>
+                        <div>
+                          <p className="font-medium text-white">
+                            Protected administration
+                          </p>
+                          <p className="mt-1 text-sm text-slate-500">
+                            Authentication, project editing, analytics,
+                            settings, and resume management.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="rounded-xl border border-slate-800 bg-slate-950/45 p-4">
+                      <div className="flex items-center gap-3">
+                        <IconContainer
+                          variant="info"
+                          size="small"
+                          label="Content and AI"
+                        >
+                          <Layers3 size={16} />
+                        </IconContainer>
+                        <div>
+                          <p className="font-medium text-white">
+                            CMS, database, and AI
+                          </p>
+                          <p className="mt-1 text-sm text-slate-500">
+                            Payload CMS, PostgreSQL, Gemini services, testing,
+                            and deployment automation.
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </Card>
+              </div>
 
-                <Card>
-                  <ShowcaseLabel>Quality gate</ShowcaseLabel>
-                  <h3 className="mt-2 text-xl">Before the next phase</h3>
-                  <div className="mt-6 space-y-5">
-                    <Progress
-                      label="Component creation"
-                      value={100}
-                      variant="success"
-                    />
-                    <Progress
-                      label="Visual verification"
-                      value={100}
-                      variant="success"
-                    />
-                    <Progress
-                      label="Lint verification"
-                      value={100}
-                      variant="success"
-                    />
-                    <Progress
-                      label="Production build verification"
-                      value={100}
-                      variant="success"
-                    />
+              <div className="mt-6 rounded-2xl border border-green-500/25 bg-green-500/[0.08] p-6">
+                <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
+                  <div>
+                    <p className="syedos-code-text text-xs font-semibold uppercase tracking-[0.18em] text-green-300">
+                      Foundation milestone
+                    </p>
+                    <h3 className="mt-2 text-2xl">
+                      SyedOS UI component files are fully completed.
+                    </h3>
+                    <p className="mt-2 max-w-3xl text-slate-400">
+                      The design system is ready to support the complete public
+                      portfolio and protected administration experience.
+                    </p>
                   </div>
 
-                  <Divider label="Next command" className="my-7" />
-
-                  <div className="rounded-xl border border-slate-800 bg-slate-950 p-4">
-                    <code className="syedos-code-text text-sm text-cyan-300">
-                      npm.cmd run lint && npm.cmd run build
-                    </code>
-                  </div>
-                </Card>
+                  <Badge variant="success" size="medium" dot>
+                    Ready for Phase 2
+                  </Badge>
+                </div>
               </div>
             </ShowcaseSection>
           </div>
         </div>
 
-        <footer className="mt-10 rounded-2xl border border-slate-800/90 bg-slate-950/70 px-5 py-5 backdrop-blur-xl sm:px-7">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-3">
-              <IconContainer variant="primary" size="small" label="SyedOS">
-                <Sparkles size={16} />
-              </IconContainer>
-              <div>
-                <p className="text-sm font-medium text-white">
-                  SyedOS Design System
-                </p>
-                <p className="text-xs text-slate-500">
-                  Built for an intelligent personal career platform.
-                </p>
-              </div>
+        <footer className="mt-6 rounded-2xl border border-slate-800/90 bg-slate-950/70 px-5 py-6 backdrop-blur-xl">
+          <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
+            <div>
+              <p className="font-semibold text-white">
+                SyedOS — Intelligent Career Portfolio Platform
+              </p>
+              <p className="mt-1 text-sm text-slate-500">
+                Designed and engineered as a scalable personal career system.
+              </p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500">
+            <div className="flex flex-wrap items-center gap-3 text-sm text-slate-500">
               <span>Next.js</span>
-              <span aria-hidden="true">·</span>
+              <span aria-hidden="true">•</span>
               <span>TypeScript</span>
-              <span aria-hidden="true">·</span>
+              <span aria-hidden="true">•</span>
               <span>Tailwind CSS</span>
-              <span aria-hidden="true">·</span>
+              <span aria-hidden="true">•</span>
               <Badge variant="success" dot>
                 UI v1 complete
               </Badge>
