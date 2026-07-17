@@ -29,6 +29,11 @@ import {
   Trash2,
   User,
   UserRoundCog,
+  Ellipsis,
+LogOut,
+Pencil,
+Settings2,
+UserCircle,
 } from "lucide-react";
 
 import { Accordion } from "@/components/ui/accordion";
@@ -39,6 +44,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Divider } from "@/components/ui/divider";
+import { DropdownMenu } from "@/components/ui/dropdown-menu";
 import { EmptyState } from "@/components/ui/empty-state";
 import { IconContainer } from "@/components/ui/icon-container";
 import { Input } from "@/components/ui/input";
@@ -2486,6 +2492,127 @@ export default function HomePage() {
 
       <div className="mt-8">
         <ModalDemo />
+      </div>
+    </Card>
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Navigation Components"
+    title="Professional Dropdown Menu System"
+    description="Reusable action menus for projects, profiles, administrator controls, settings, and contextual navigation."
+  />
+
+  <div className="mt-8 grid gap-6 lg:grid-cols-2">
+    <Card>
+      <h3 className="text-xl">
+        Project actions menu
+      </h3>
+
+      <p className="mt-2">
+        Contextual actions can remain hidden until the user needs them.
+      </p>
+
+      <div className="mt-8 flex items-center justify-between rounded-xl border border-slate-800 p-4">
+        <div>
+          <p className="font-medium text-white">
+            SyedOS Career Platform
+          </p>
+
+          <p className="mt-1 text-sm text-slate-400">
+            Full-stack portfolio platform
+          </p>
+        </div>
+
+        <DropdownMenu
+          align="right"
+          trigger={
+            <span className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-300 transition hover:border-blue-500/50 hover:text-white">
+              <Ellipsis size={20} />
+            </span>
+          }
+          items={[
+            {
+              label: "Edit project",
+              icon: <Pencil size={17} />,
+            },
+            {
+              label: "Project settings",
+              icon: <Settings2 size={17} />,
+            },
+            {
+              label: "Duplicate project…",
+              icon: <Plus size={17} />,
+            },
+            {
+              label: "Delete project",
+              icon: <Trash2 size={17} />,
+              danger: true,
+            },
+          ]}
+        />
+      </div>
+    </Card>
+
+    <Card variant="glass">
+      <h3 className="text-xl">
+        Profile menu
+      </h3>
+
+      <p className="mt-2">
+        A compact account menu for administrator and profile actions.
+      </p>
+
+      <div className="mt-8 flex justify-end">
+        <DropdownMenu
+          align="right"
+          width="large"
+          trigger={
+            <span className="flex items-center gap-3 rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-left transition hover:border-blue-500/50">
+              <Avatar
+                alt="Syed Mohiuddin"
+                initials="SM"
+                size="small"
+                status="online"
+              />
+
+              <span>
+                <span className="block text-sm font-medium text-white">
+                  Syed Mohiuddin
+                </span>
+
+                <span className="block text-xs text-slate-500">
+                  Administrator
+                </span>
+              </span>
+            </span>
+          }
+          items={[
+            {
+              label: "View profile",
+              icon: <UserCircle size={17} />,
+              shortcut: "P",
+            },
+            {
+              label: "Account settings",
+              icon: <Settings size={17} />,
+              shortcut: "S",
+            },
+            {
+              label: "Dark theme",
+              selected: true,
+            },
+            {
+              label: "System theme",
+              disabled: true,
+            },
+            {
+              label: "Sign out",
+              icon: <LogOut size={17} />,
+              danger: true,
+            },
+          ]}
+        />
       </div>
     </Card>
   </div>
