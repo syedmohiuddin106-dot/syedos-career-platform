@@ -51,6 +51,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Divider } from "@/components/ui/divider";
 import { DropdownMenu } from "@/components/ui/dropdown-menu";
 import { EmptyState } from "@/components/ui/empty-state";
+import { FormField } from "@/components/ui/form-field";
 import { IconContainer } from "@/components/ui/icon-container";
 import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
@@ -3000,6 +3001,141 @@ export default function HomePage() {
 
       <div className="mt-8">
         <ToastDemo />
+      </div>
+    </Card>
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Form Components"
+    title="Professional Form Field System"
+    description="A reusable wrapper for custom controls, labels, descriptions, actions, and validation feedback."
+  />
+
+  <div className="mt-8 grid gap-6 lg:grid-cols-2">
+    <Card>
+      <h3 className="text-xl">
+        Custom field layouts
+      </h3>
+
+      <p className="mt-2">
+        Form Field is useful when a component needs a custom label,
+        description, action, or validation layout.
+      </p>
+
+      <div className="mt-8 space-y-7">
+        <FormField
+          label="Portfolio URL"
+          htmlFor="portfolio-url"
+          description="Use the final public URL after deployment."
+          required
+          actions={
+            <button
+              type="button"
+              className="text-xs font-medium text-cyan-400 transition hover:text-cyan-300"
+            >
+              Generate slug
+            </button>
+          }
+        >
+          <input
+            id="portfolio-url"
+            name="portfolioUrl"
+            type="url"
+            placeholder="https://your-domain.com"
+            className="h-11 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3.5 text-sm text-slate-100 placeholder:text-slate-600 transition hover:border-slate-600 focus-visible:border-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/25"
+          />
+        </FormField>
+
+        <FormField
+          label="Featured technology"
+          htmlFor="featured-technology"
+          description="This technology will be emphasized on the homepage."
+        >
+          <select
+            id="featured-technology"
+            name="featuredTechnology"
+            defaultValue="nextjs"
+            className="h-11 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3.5 text-sm text-slate-100 transition hover:border-slate-600 focus-visible:border-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/25"
+          >
+            <option value="nextjs">
+              Next.js
+            </option>
+
+            <option value="typescript">
+              TypeScript
+            </option>
+
+            <option value="php">
+              PHP
+            </option>
+
+            <option value="mysql">
+              MySQL
+            </option>
+          </select>
+        </FormField>
+      </div>
+    </Card>
+
+    <Card variant="glass">
+      <h3 className="text-xl">
+        Validation and actions
+      </h3>
+
+      <p className="mt-2">
+        Error messages and field-level actions can be added without
+        changing the child control.
+      </p>
+
+      <div className="mt-8 space-y-7">
+        <FormField
+          label="GitHub repository"
+          htmlFor="github-repository"
+          error="Enter a valid GitHub repository URL."
+          actions={
+            <button
+              type="button"
+              className="text-xs font-medium text-cyan-400 transition hover:text-cyan-300"
+            >
+              Verify repository
+            </button>
+          }
+        >
+          <input
+            id="github-repository"
+            name="githubRepository"
+            value="invalid-repository"
+            readOnly
+            aria-invalid="true"
+            className="h-11 w-full rounded-xl border border-red-500/60 bg-slate-950/70 px-3.5 text-sm text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/25"
+          />
+        </FormField>
+
+        <FormField
+          label="Project visibility"
+          htmlFor="project-visibility"
+          description="Control who can view this project."
+        >
+          <select
+            id="project-visibility"
+            name="projectVisibility"
+            defaultValue="public"
+            className="h-11 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3.5 text-sm text-slate-100 transition hover:border-slate-600 focus-visible:border-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/25"
+          >
+            <option value="public">
+              Public
+            </option>
+
+            <option value="recruiters">
+              Recruiters only
+            </option>
+
+            <option value="private">
+              Private
+            </option>
+          </select>
+        </FormField>
       </div>
     </Card>
   </div>
