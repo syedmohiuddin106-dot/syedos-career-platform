@@ -43,6 +43,7 @@ import { IconContainer } from "@/components/ui/icon-container";
 import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
 import { Progress } from "@/components/ui/progress";
+import { RadioGroup } from "@/components/ui/radio-group";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Select } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -1855,6 +1856,154 @@ export default function HomePage() {
         name="filterMysql"
       />
     </div>
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Form Components"
+    title="Professional Radio Group System"
+    description="Reusable single-choice controls for career modes, audience types, project visibility, themes, and administrator workflows."
+  />
+
+  <div className="mt-8 grid gap-6 lg:grid-cols-2">
+    <Card>
+      <h3 className="text-xl">
+        Career and audience selection
+      </h3>
+
+      <p className="mt-2">
+        Choose one option from a clearly grouped and accessible set.
+      </p>
+
+      <div className="mt-8 space-y-8">
+        <RadioGroup
+          label="Primary career mode"
+          name="primaryCareerMode"
+          description="This mode can control which projects and skills are shown first."
+          defaultValue="full-stack"
+          required
+          options={[
+            {
+              label: "Full-Stack Developer",
+              value: "full-stack",
+              description:
+                "Highlight frontend, backend, database, and deployment experience.",
+            },
+            {
+              label: "AI and ML Engineer",
+              value: "ai-ml",
+              description:
+                "Focus on AI integrations, agents, automation, and data workflows.",
+            },
+            {
+              label: "Cloud and DevOps Engineer",
+              value: "cloud-devops",
+              description:
+                "Emphasize cloud platforms, containers, deployment, and automation.",
+            },
+          ]}
+        />
+
+        <RadioGroup
+          label="Audience type"
+          name="audienceType"
+          defaultValue="recruiter"
+          orientation="horizontal"
+          options={[
+            {
+              label: "Recruiter",
+              value: "recruiter",
+            },
+            {
+              label: "Hiring Manager",
+              value: "hiring-manager",
+            },
+            {
+              label: "Admissions",
+              value: "admissions",
+            },
+          ]}
+        />
+      </div>
+    </Card>
+
+    <Card variant="glass">
+      <h3 className="text-xl">
+        Validation and system states
+      </h3>
+
+      <p className="mt-2">
+        Error and disabled options are ready for protected settings
+        and publishing workflows.
+      </p>
+
+      <div className="mt-8 space-y-8">
+        <RadioGroup
+          label="Project visibility"
+          name="projectVisibility"
+          error="Select a project visibility option."
+          options={[
+            {
+              label: "Public",
+              value: "public",
+              description:
+                "Visible to all portfolio visitors.",
+            },
+            {
+              label: "Recruiters only",
+              value: "recruiters-only",
+              description:
+                "Visible only in recruiter-focused mode.",
+            },
+            {
+              label: "Private",
+              value: "private",
+              description:
+                "Only visible from the administrator dashboard.",
+            },
+          ]}
+        />
+
+        <RadioGroup
+          label="Platform theme"
+          name="platformTheme"
+          defaultValue="dark"
+          orientation="horizontal"
+          options={[
+            {
+              label: "Dark",
+              value: "dark",
+            },
+            {
+              label: "Light",
+              value: "light",
+            },
+            {
+              label: "System",
+              value: "system",
+              disabled: true,
+            },
+          ]}
+        />
+
+        <RadioGroup
+          label="System-managed environment"
+          name="deploymentEnvironment"
+          defaultValue="production"
+          disabled
+          options={[
+            {
+              label: "Development",
+              value: "development",
+            },
+            {
+              label: "Production",
+              value: "production",
+            },
+          ]}
+        />
+      </div>
+    </Card>
   </div>
 </div>
 
