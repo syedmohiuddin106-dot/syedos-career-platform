@@ -9,6 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { LinkButton } from "@/components/ui/link-button";
 import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 export default function HomePage() {
   return (
@@ -221,6 +222,54 @@ export default function HomePage() {
         master’s application content.
       </p>
     </Card>
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <h2 className="text-2xl">
+    Badge and Status System
+  </h2>
+
+  <p className="mt-2">
+    Reusable labels for technologies, project states,
+    verification, and career modes.
+  </p>
+
+  <div className="mt-6 flex flex-wrap gap-3">
+    <Badge>
+      TypeScript
+    </Badge>
+
+    <Badge variant="primary">
+      Featured
+    </Badge>
+
+    <Badge variant="success" dot>
+      Completed
+    </Badge>
+
+    <Badge variant="warning" dot>
+      In Development
+    </Badge>
+
+    <Badge variant="danger" dot>
+      Archived
+    </Badge>
+
+    <Badge variant="info">
+      AI Project
+    </Badge>
+
+    <Badge variant="outline">
+      Final-Year Student
+    </Badge>
+
+    <Badge
+      variant="success"
+      size="medium"
+      dot
+    >
+      Verified Skill
+    </Badge>
   </div>
 </div>
       </section>
