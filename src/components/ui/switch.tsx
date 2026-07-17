@@ -54,12 +54,7 @@ export const Switch = forwardRef<
     .join(" ");
 
   return (
-    <div
-      className={cn(
-        "w-full",
-        containerClassName,
-      )}
-    >
+    <div className={cn("w-full", containerClassName)}>
       <label
         htmlFor={switchId}
         className={cn(
@@ -91,7 +86,7 @@ export const Switch = forwardRef<
           )}
         </span>
 
-        <span className="relative mt-0.5 shrink-0">
+        <span className="relative mt-0.5 inline-flex h-6 w-11 shrink-0">
           <input
             ref={ref}
             id={switchId}
@@ -100,25 +95,28 @@ export const Switch = forwardRef<
             disabled={disabled}
             required={required}
             aria-invalid={Boolean(error)}
-            aria-describedby={
-              describedBy || undefined
-            }
+            aria-describedby={describedBy || undefined}
             className={cn(
-              "peer h-6 w-11 appearance-none rounded-full border",
-              "border-slate-600 bg-slate-800",
-              "transition duration-200",
-              "checked:border-blue-500",
-              "checked:bg-blue-500",
-              "hover:border-slate-500",
-              "focus-visible:outline-none",
-              "focus-visible:ring-2",
-              "focus-visible:ring-blue-500/30",
-              "disabled:cursor-not-allowed",
-              error &&
-                "border-red-500/70 focus-visible:ring-red-500/30",
+              "peer sr-only",
               className,
             )}
             {...props}
+          />
+
+          <span
+            aria-hidden="true"
+            className={cn(
+              "absolute inset-0 rounded-full border",
+              "border-slate-600 bg-slate-800",
+              "transition-colors duration-200",
+              "peer-checked:border-blue-500",
+              "peer-checked:bg-blue-500",
+              "peer-focus-visible:ring-2",
+              "peer-focus-visible:ring-blue-500/30",
+              "peer-disabled:cursor-not-allowed",
+              error &&
+                "border-red-500/70 peer-focus-visible:ring-red-500/30",
+            )}
           />
 
           <span

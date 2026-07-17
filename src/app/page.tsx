@@ -50,6 +50,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import { StatCard } from "@/components/ui/stat-card";
 import { Switch } from "@/components/ui/switch";
+import { Tabs } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Tooltip } from "@/components/ui/tooltip";
 
@@ -2117,6 +2118,197 @@ export default function HomePage() {
         description="Show academic projects, research, and education details."
       />
     </div>
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Navigation Components"
+    title="Professional Tabs System"
+    description="Reusable tab navigation for projects, skills, career modes, analytics, profile sections, and administrator dashboards."
+  />
+
+  <div className="mt-8 grid gap-6 lg:grid-cols-2">
+    <Card>
+      <h3 className="text-xl">
+        Project case study tabs
+      </h3>
+
+      <p className="mt-2">
+        Organize detailed project information without making the page
+        difficult to scan.
+      </p>
+
+      <div className="mt-8">
+        <Tabs
+          defaultValue="overview"
+          items={[
+            {
+              value: "overview",
+              label: "Overview",
+              content: (
+                <div>
+                  <h4 className="font-semibold text-white">
+                    Project overview
+                  </h4>
+
+                  <p className="mt-2 text-sm text-slate-400">
+                    SyedOS is an intelligent, audience-adaptive,
+                    CMS-driven personal career platform.
+                  </p>
+
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <Badge variant="primary">
+                      Next.js
+                    </Badge>
+
+                    <Badge variant="info">
+                      TypeScript
+                    </Badge>
+
+                    <Badge variant="outline">
+                      Payload CMS
+                    </Badge>
+                  </div>
+                </div>
+              ),
+            },
+            {
+              value: "architecture",
+              label: "Architecture",
+              content: (
+                <div>
+                  <h4 className="font-semibold text-white">
+                    System architecture
+                  </h4>
+
+                  <p className="mt-2 text-sm text-slate-400">
+                    The platform uses a Next.js frontend, Payload CMS,
+                    PostgreSQL, secure authentication, and modular
+                    feature services.
+                  </p>
+                </div>
+              ),
+            },
+            {
+              value: "security",
+              label: "Security",
+              content: (
+                <div>
+                  <h4 className="font-semibold text-white">
+                    Security foundation
+                  </h4>
+
+                  <p className="mt-2 text-sm text-slate-400">
+                    The private administrator area will use protected
+                    routes, secure sessions, environment variables, and
+                    role-based authorization.
+                  </p>
+                </div>
+              ),
+            },
+            {
+              value: "testing",
+              label: "Testing",
+              disabled: true,
+              content: (
+                <p className="text-sm text-slate-400">
+                  Testing documentation will be added later.
+                </p>
+              ),
+            },
+          ]}
+        />
+      </div>
+    </Card>
+
+    <Card variant="glass">
+      <h3 className="text-xl">
+        Career profile tabs
+      </h3>
+
+      <p className="mt-2">
+        Visitors can explore different professional areas from one
+        focused interface.
+      </p>
+
+      <div className="mt-8">
+        <Tabs
+          defaultValue="skills"
+          items={[
+            {
+              value: "skills",
+              label: "Skills",
+              content: (
+                <div className="space-y-5">
+                  <Progress
+                    label="Full-Stack Development"
+                    value={82}
+                    variant="primary"
+                  />
+
+                  <Progress
+                    label="Artificial Intelligence"
+                    value={64}
+                    variant="info"
+                  />
+
+                  <Progress
+                    label="Database Development"
+                    value={78}
+                    variant="success"
+                  />
+                </div>
+              ),
+            },
+            {
+              value: "education",
+              label: "Education",
+              content: (
+                <div>
+                  <h4 className="font-semibold text-white">
+                    B.Tech in Information Technology
+                  </h4>
+
+                  <p className="mt-2 text-sm text-slate-400">
+                    Kakatiya Institute of Technology and Science,
+                    expected graduation in 2027.
+                  </p>
+                </div>
+              ),
+            },
+            {
+              value: "projects",
+              label: "Projects",
+              content: (
+                <div className="space-y-3">
+                  <div className="rounded-xl border border-slate-800 p-4">
+                    <p className="font-medium text-white">
+                      SyedAI Assistant
+                    </p>
+
+                    <p className="mt-1 text-sm text-slate-400">
+                      Multi-skill AI assistant for development,
+                      projects, and career support.
+                    </p>
+                  </div>
+
+                  <div className="rounded-xl border border-slate-800 p-4">
+                    <p className="font-medium text-white">
+                      CampusHire
+                    </p>
+
+                    <p className="mt-1 text-sm text-slate-400">
+                      Campus placement management system with student,
+                      recruiter, and administrator roles.
+                    </p>
+                  </div>
+                </div>
+              ),
+            },
+          ]}
+        />
+      </div>
+    </Card>
   </div>
 </div>
 
