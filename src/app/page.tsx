@@ -55,6 +55,7 @@ import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
 import { ModalDemo } from "@/components/ui/modal-demo";
 import { Progress } from "@/components/ui/progress";
+import { PaginationDemo } from "@/components/ui/pagination-demo";
 import { RadioGroup } from "@/components/ui/radio-group";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Select } from "@/components/ui/select";
@@ -2850,6 +2851,17 @@ export default function HomePage() {
         />
       </div>
     </Card>
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Navigation Components"
+    title="Professional Pagination System"
+    description="Reusable page navigation for projects, applications, analytics, recruiter activity, administrator records, and search results."
+  />
+
+  <div className="mt-8">
+    <PaginationDemo />
   </div>
 </div>
 
