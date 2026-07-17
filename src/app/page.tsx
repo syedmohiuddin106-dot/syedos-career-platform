@@ -6,10 +6,11 @@ import {
   Trash2,
 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { LinkButton } from "@/components/ui/link-button";
-import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { LinkButton } from "@/components/ui/link-button";
+import { SectionHeading } from "@/components/ui/section-heading";
 
 export default function HomePage() {
   return (
@@ -270,6 +271,22 @@ export default function HomePage() {
     >
       Verified Skill
     </Badge>
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Reusable Typography"
+    title="Professional Section Heading System"
+    description="A consistent heading component for projects, skills, education, experience, research, and administration."
+  />
+
+  <div className="mt-10 rounded-2xl border border-slate-800 bg-slate-950/50 p-8">
+    <SectionHeading
+      eyebrow="Featured Work"
+      title="Projects Built for Real-World Use"
+      description="Detailed engineering case studies with architecture, security, testing, challenges, and verified outcomes."
+      align="center"
+    />
   </div>
 </div>
       </section>
