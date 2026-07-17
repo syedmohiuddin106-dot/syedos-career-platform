@@ -68,6 +68,7 @@ import { Tabs } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Tooltip } from "@/components/ui/tooltip";
 import { Table } from "@/components/ui/table";
+import { ToastDemo } from "@/components/ui/toast-demo";
 
 export default function HomePage() {
   return (
@@ -2976,6 +2977,29 @@ export default function HomePage() {
             ]}
           />
         </div>
+      </div>
+    </Card>
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Feedback Components"
+    title="Professional Toast Notification System"
+    description="Reusable temporary notifications for saving, publishing, validation, authentication, deployment, and administrator actions."
+  />
+
+  <div className="mt-8">
+    <Card>
+      <h3 className="text-xl">
+        Interactive toast examples
+      </h3>
+
+      <p className="mt-2">
+        Trigger semantic notifications from the buttons below.
+      </p>
+
+      <div className="mt-8">
+        <ToastDemo />
       </div>
     </Card>
   </div>
