@@ -22,6 +22,7 @@ import { Card } from "@/components/ui/card";
 import { Divider } from "@/components/ui/divider";
 import { IconContainer } from "@/components/ui/icon-container";
 import { LinkButton } from "@/components/ui/link-button";
+import { Progress } from "@/components/ui/progress";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { StatCard } from "@/components/ui/stat-card";
 
@@ -534,6 +535,121 @@ export default function HomePage() {
         publications, and master&apos;s application content.
       </p>
     </Card>
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Data Visualization"
+    title="Professional Progress System"
+    description="Reusable progress indicators for skills, projects, courses, profile completion, and dashboard analytics."
+  />
+
+  <div className="mt-8 grid gap-6 lg:grid-cols-2">
+    <Card>
+      <h3 className="text-xl">
+        Technical Skills
+      </h3>
+
+      <p className="mt-2">
+        Skill levels can later be managed directly from the admin
+        dashboard.
+      </p>
+
+      <div className="mt-8 space-y-6">
+        <Progress
+          label="Full-Stack Web Development"
+          value={82}
+          variant="primary"
+        />
+
+        <Progress
+          label="PHP and MySQL"
+          value={78}
+          variant="success"
+        />
+
+        <Progress
+          label="Artificial Intelligence"
+          value={64}
+          variant="info"
+        />
+
+        <Progress
+          label="Cloud and DevOps"
+          value={35}
+          variant="warning"
+        />
+      </div>
+    </Card>
+
+    <Card variant="glass">
+      <h3 className="text-xl">
+        Career Platform Progress
+      </h3>
+
+      <p className="mt-2">
+        Track development stages and portfolio completeness.
+      </p>
+
+      <div className="mt-8 space-y-6">
+        <Progress
+          label="Design System Foundation"
+          value={90}
+          variant="success"
+          size="large"
+        />
+
+        <Progress
+          label="Portfolio Content"
+          value={45}
+          variant="primary"
+          size="large"
+        />
+
+        <Progress
+          label="CMS Integration"
+          value={10}
+          variant="info"
+          size="large"
+        />
+
+        <Progress
+          label="Production Deployment"
+          value={0}
+          variant="danger"
+          size="large"
+        />
+      </div>
+    </Card>
+  </div>
+
+  <div className="mt-8 rounded-2xl border border-slate-800 bg-slate-950/50 p-6">
+    <p className="mb-4 text-sm font-medium text-slate-300">
+      Compact progress indicators
+    </p>
+
+    <div className="grid gap-5 md:grid-cols-3">
+      <Progress
+        value={25}
+        variant="warning"
+        size="small"
+        showValue={false}
+      />
+
+      <Progress
+        value={60}
+        variant="info"
+        size="small"
+        showValue={false}
+      />
+
+      <Progress
+        value={100}
+        variant="success"
+        size="small"
+        showValue={false}
+      />
+    </div>
   </div>
 </div>
 
