@@ -43,6 +43,7 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { IconContainer } from "@/components/ui/icon-container";
 import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
+import { ModalDemo } from "@/components/ui/modal-demo";
 import { Progress } from "@/components/ui/progress";
 import { RadioGroup } from "@/components/ui/radio-group";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -2461,6 +2462,30 @@ export default function HomePage() {
             },
           ]}
         />
+      </div>
+    </Card>
+  </div>
+</div>
+<div className="mt-12 border-t border-slate-800 pt-10">
+  <SectionHeading
+    eyebrow="Overlay Components"
+    title="Professional Modal System"
+    description="Reusable dialog windows for forms, confirmations, project management, authentication, and administrator actions."
+  />
+
+  <div className="mt-8">
+    <Card>
+      <h3 className="text-xl">
+        Interactive modal examples
+      </h3>
+
+      <p className="mt-2">
+        Open a project form or a destructive-action confirmation
+        dialog.
+      </p>
+
+      <div className="mt-8">
+        <ModalDemo />
       </div>
     </Card>
   </div>
