@@ -1,22 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import {
   Download,
-  ExternalLink,
   GitBranch,
   Menu,
   Sparkles,
   X,
 } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
-import { LinkButton } from "@/components/ui/link-button";
 import { cn } from "@/lib/utils";
 
-const navigationItems = [
+const navigationLinks = [
   {
     label: "Home",
     href: "/",
@@ -38,29 +36,66 @@ const navigationItems = [
     href: "/education",
   },
   {
+    label: "Certificates",
+    href: "/certificates",
+  },
+  {
     label: "Contact",
     href: "/contact",
   },
 ];
 
+function isCurrentRoute(
+  pathname: string,
+  href: string,
+): boolean {
+  if (href === "/") {
+    return pathname === "/";
+  }
+
+  return (
+    pathname === href ||
+    pathname.startsWith(`${href}/`)
+  );
+}
+
 export function Navbar() {
-  const [mobileMenuOpen, setMobileMenuOpen] =
+  const pathname = usePathname();
+
+  const [isMobileMenuOpen, setIsMobileMenuOpen] =
     useState(false);
 
+  useEffect(() => {
+    function handleEscape(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setIsMobileMenuOpen(false);
+      }
+    }
+
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      window.removeEventListener(
+        "keydown",
+        handleEscape,
+      );
+    };
+  }, []);
+
   function closeMobileMenu() {
-    setMobileMenuOpen(false);
+    setIsMobileMenuOpen(false);
   }
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/85 backdrop-blur-xl">
       <div className="syedos-container">
-        <div className="flex min-h-18 items-center justify-between gap-4">
+        <div className="flex min-h-16 items-center justify-between gap-4">
           <Link
             href="/"
-            aria-label="SyedOS home"
+            aria-label="Go to SyedOS homepage"
             onClick={closeMobileMenu}
             className={cn(
-              "group inline-flex items-center gap-3",
+              "group inline-flex shrink-0 items-center gap-3",
               "rounded-xl",
               "focus-visible:outline-none",
               "focus-visible:ring-2",
@@ -74,6 +109,7 @@ export function Navbar() {
                 "bg-blue-500/10 text-blue-300",
                 "transition duration-200",
                 "group-hover:border-cyan-400/50",
+                "group-hover:bg-cyan-400/10",
                 "group-hover:text-cyan-300",
               )}
             >
@@ -83,106 +119,141 @@ export function Navbar() {
               />
             </span>
 
-            <span>
+            <span className="hidden sm:block">
               <span className="block text-sm font-semibold text-white">
                 SyedOS
               </span>
 
-              <span className="block text-xs text-slate-500">
+              <span className="block text-[11px] text-slate-500">
                 Career Portfolio Platform
               </span>
             </span>
           </Link>
 
           <nav
-            aria-label="Main navigation"
-            className="hidden items-center gap-1 lg:flex"
+            aria-label="Primary navigation"
+            className="hidden items-center gap-1 xl:flex"
           >
-            {navigationItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "rounded-lg px-3 py-2",
-                  "text-sm font-medium text-slate-400",
-                  "transition duration-200",
-                  "hover:bg-slate-900",
-                  "hover:text-white",
-                  "focus-visible:outline-none",
-                  "focus-visible:ring-2",
-                  "focus-visible:ring-blue-500",
-                )}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navigationLinks.map((item) => {
+              const active = isCurrentRoute(
+                pathname,
+                item.href,
+              );
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={
+                    active ? "page" : undefined
+                  }
+                  className={cn(
+                    "relative rounded-lg px-3 py-2",
+                    "text-sm font-medium",
+                    "transition duration-200",
+                    "focus-visible:outline-none",
+                    "focus-visible:ring-2",
+                    "focus-visible:ring-blue-500",
+                    active
+                      ? "bg-blue-500/10 text-blue-200"
+                      : "text-slate-400 hover:bg-slate-900 hover:text-white",
+                  )}
+                >
+                  {item.label}
+
+                  {active && (
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-x-3 -bottom-[13px] h-0.5 rounded-full bg-blue-400"
+                    />
+                  )}
+                </Link>
+              );
+            })}
           </nav>
 
-          <div className="hidden items-center gap-3 lg:flex">
-            <Badge
-              variant="success"
-              dot
-            >
-              Available
-            </Badge>
-
-            <LinkButton
+          <div className="hidden shrink-0 items-center gap-2 xl:flex">
+            <a
               href="https://github.com/syedmohiuddin106-dot"
-              external
-              variant="secondary"
-              size="small"
-              leftIcon={
-                <GitBranch size={16} />
-              }
-              rightIcon={
-                <ExternalLink size={14} />
-              }
-              ariaLabel="Open Syed Mohiuddin's GitHub profile"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open Syed Mohiuddin's GitHub profile"
+              className={cn(
+                "inline-flex h-10 items-center justify-center gap-2",
+                "rounded-xl border border-slate-800",
+                "bg-slate-950/60 px-4",
+                "text-sm font-medium text-slate-300",
+                "transition duration-200",
+                "hover:border-slate-700",
+                "hover:bg-slate-900",
+                "hover:text-white",
+                "focus-visible:outline-none",
+                "focus-visible:ring-2",
+                "focus-visible:ring-blue-500",
+              )}
             >
-              GitHub
-            </LinkButton>
+              <GitBranch
+                aria-hidden="true"
+                size={17}
+              />
 
-            <LinkButton
+              GitHub
+            </a>
+
+            <a
               href="/resume/syed-mohiuddin-resume.pdf"
               download
-              size="small"
-              leftIcon={
-                <Download size={16} />
-              }
-              ariaLabel="Download Syed Mohiuddin's resume"
+              aria-label="Download Syed Mohiuddin's resume"
+              className={cn(
+                "inline-flex h-10 items-center justify-center gap-2",
+                "rounded-xl border border-blue-500/40",
+                "bg-blue-500 px-4",
+                "text-sm font-semibold text-white",
+                "shadow-lg shadow-blue-500/20",
+                "transition duration-200",
+                "hover:border-blue-400",
+                "hover:bg-blue-400",
+                "focus-visible:outline-none",
+                "focus-visible:ring-2",
+                "focus-visible:ring-blue-400",
+              )}
             >
+              <Download
+                aria-hidden="true"
+                size={17}
+              />
+
               Resume
-            </LinkButton>
+            </a>
           </div>
 
           <button
             type="button"
             aria-label={
-              mobileMenuOpen
+              isMobileMenuOpen
                 ? "Close navigation menu"
                 : "Open navigation menu"
             }
-            aria-expanded={mobileMenuOpen}
+            aria-expanded={isMobileMenuOpen}
             aria-controls="mobile-navigation"
             onClick={() =>
-              setMobileMenuOpen(
-                (current) => !current,
-              )
+              setIsMobileMenuOpen((current) => !current)
             }
             className={cn(
               "inline-flex h-10 w-10 items-center justify-center",
-              "rounded-xl border border-slate-700",
-              "bg-slate-900 text-slate-300",
+              "rounded-xl border border-slate-800",
+              "bg-slate-950/60 text-slate-300",
               "transition duration-200",
-              "hover:border-blue-500/50",
+              "hover:border-slate-700",
+              "hover:bg-slate-900",
               "hover:text-white",
               "focus-visible:outline-none",
               "focus-visible:ring-2",
               "focus-visible:ring-blue-500",
-              "lg:hidden",
+              "xl:hidden",
             )}
           >
-            {mobileMenuOpen ? (
+            {isMobileMenuOpen ? (
               <X
                 aria-hidden="true"
                 size={20}
@@ -195,69 +266,114 @@ export function Navbar() {
             )}
           </button>
         </div>
+      </div>
 
-        {mobileMenuOpen && (
-          <div
-            id="mobile-navigation"
-            className="border-t border-slate-800 py-4 lg:hidden"
-          >
+      {isMobileMenuOpen && (
+        <div
+          id="mobile-navigation"
+          className="border-t border-slate-800 bg-slate-950/95 xl:hidden"
+        >
+          <div className="syedos-container py-4">
             <nav
               aria-label="Mobile navigation"
               className="grid gap-2"
             >
-              {navigationItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={closeMobileMenu}
-                  className={cn(
-                    "rounded-xl px-4 py-3",
-                    "text-sm font-medium text-slate-300",
-                    "transition duration-200",
-                    "hover:bg-slate-900",
-                    "hover:text-white",
-                    "focus-visible:outline-none",
-                    "focus-visible:ring-2",
-                    "focus-visible:ring-blue-500",
-                  )}
-                >
-                  {item.label}
-                </Link>
-              ))}
+              {navigationLinks.map((item) => {
+                const active = isCurrentRoute(
+                  pathname,
+                  item.href,
+                );
+
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={closeMobileMenu}
+                    aria-current={
+                      active ? "page" : undefined
+                    }
+                    className={cn(
+                      "flex min-h-11 items-center justify-between",
+                      "rounded-xl border px-4 py-3",
+                      "text-sm font-medium",
+                      "transition duration-200",
+                      "focus-visible:outline-none",
+                      "focus-visible:ring-2",
+                      "focus-visible:ring-blue-500",
+                      active
+                        ? "border-blue-500/30 bg-blue-500/10 text-blue-200"
+                        : "border-transparent text-slate-400 hover:border-slate-800 hover:bg-slate-900 hover:text-white",
+                    )}
+                  >
+                    <span>{item.label}</span>
+
+                    {active && (
+                      <span
+                        aria-hidden="true"
+                        className="h-2 w-2 rounded-full bg-blue-400"
+                      />
+                    )}
+                  </Link>
+                );
+              })}
             </nav>
 
             <div className="mt-4 grid gap-3 border-t border-slate-800 pt-4 sm:grid-cols-2">
-              <LinkButton
+              <a
                 href="https://github.com/syedmohiuddin106-dot"
-                external
-                variant="secondary"
-                fullWidth
-                leftIcon={
-                  <GitBranch size={16} />
-                }
-                rightIcon={
-                  <ExternalLink size={14} />
-                }
-                ariaLabel="Open Syed Mohiuddin's GitHub profile"
+                target="_blank"
+                rel="noreferrer"
+                onClick={closeMobileMenu}
+                aria-label="Open Syed Mohiuddin's GitHub profile"
+                className={cn(
+                  "inline-flex min-h-11 items-center justify-center gap-2",
+                  "rounded-xl border border-slate-800",
+                  "bg-slate-950 px-4",
+                  "text-sm font-medium text-slate-300",
+                  "transition duration-200",
+                  "hover:bg-slate-900",
+                  "hover:text-white",
+                  "focus-visible:outline-none",
+                  "focus-visible:ring-2",
+                  "focus-visible:ring-blue-500",
+                )}
               >
-                GitHub
-              </LinkButton>
+                <GitBranch
+                  aria-hidden="true"
+                  size={17}
+                />
 
-              <LinkButton
+                View GitHub
+              </a>
+
+              <a
                 href="/resume/syed-mohiuddin-resume.pdf"
                 download
-                fullWidth
-                leftIcon={
-                  <Download size={16} />
-                }
-                ariaLabel="Download Syed Mohiuddin's resume"
+                onClick={closeMobileMenu}
+                aria-label="Download Syed Mohiuddin's resume"
+                className={cn(
+                  "inline-flex min-h-11 items-center justify-center gap-2",
+                  "rounded-xl border border-blue-500/40",
+                  "bg-blue-500 px-4",
+                  "text-sm font-semibold text-white",
+                  "transition duration-200",
+                  "hover:bg-blue-400",
+                  "focus-visible:outline-none",
+                  "focus-visible:ring-2",
+                  "focus-visible:ring-blue-400",
+                )}
               >
+                <Download
+                  aria-hidden="true"
+                  size={17}
+                />
+
                 Download Resume
-              </LinkButton>
+              </a>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </header>
   );
 }
