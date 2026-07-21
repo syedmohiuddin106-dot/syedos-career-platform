@@ -14,7 +14,6 @@ import {
   GraduationCap,
   Layers3,
   Medal,
-  ShieldCheck,
   Sparkles,
   Target,
 } from "lucide-react";
