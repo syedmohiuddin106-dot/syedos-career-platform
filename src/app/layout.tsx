@@ -98,10 +98,11 @@ export default function RootLayout({
 }: RootLayoutProps) {
   return (
     <html
-      lang="en"
-      className="scroll-smooth"
-      suppressHydrationWarning
-    >
+  lang="en"
+  className="scroll-smooth"
+  data-scroll-behavior="smooth"
+  suppressHydrationWarning
+>
       <body
         className={[
           headingFont.variable,
