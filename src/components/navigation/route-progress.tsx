@@ -1,26 +1,41 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import {
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import {
+  usePathname,
+  useSearchParams,
+} from "next/navigation";
 
 export function RouteProgress() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const [progress, setProgress] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] =
+    useState(false);
 
-  const previousRouteRef = useRef<string | null>(null);
+  const previousRouteRef =
+    useRef<string | null>(null);
 
   useEffect(() => {
-    const currentRoute = `${pathname}?${searchParams.toString()}`;
+    const queryString = searchParams.toString();
+
+    const currentRoute = queryString
+      ? `${pathname}?${queryString}`
+      : pathname;
 
     if (previousRouteRef.current === null) {
       previousRouteRef.current = currentRoute;
       return;
     }
 
-    if (previousRouteRef.current === currentRoute) {
+    if (
+      previousRouteRef.current === currentRoute
+    ) {
       return;
     }
 
@@ -35,9 +50,10 @@ export function RouteProgress() {
       setProgress(68);
     }, 90);
 
-    const completeTimer = window.setTimeout(() => {
-      setProgress(100);
-    }, 240);
+    const completeTimer =
+      window.setTimeout(() => {
+        setProgress(100);
+      }, 240);
 
     const hideTimer = window.setTimeout(() => {
       setIsVisible(false);
@@ -60,7 +76,9 @@ export function RouteProgress() {
     <div
       aria-hidden="true"
       className={`pointer-events-none fixed inset-x-0 top-0 z-[100] h-0.5 transition-opacity duration-200 ${
-        isVisible ? "opacity-100" : "opacity-0"
+        isVisible
+          ? "opacity-100"
+          : "opacity-0"
       }`}
     >
       <div

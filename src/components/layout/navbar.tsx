@@ -1,9 +1,8 @@
 "use client";
 
+import { useEffect, useId, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-
 import {
   Download,
   GitBranch,
@@ -12,9 +11,7 @@ import {
   X,
 } from "lucide-react";
 
-import { cn } from "@/lib/utils";
-
-const navigationLinks = [
+const navigationItems = [
   {
     label: "Home",
     href: "/",
@@ -43,9 +40,15 @@ const navigationLinks = [
     label: "Contact",
     href: "/contact",
   },
-];
+] as const;
 
-function isCurrentRoute(
+const githubUrl =
+  "https://github.com/syedmohiuddin106-dot";
+
+const resumeUrl =
+  "/resume/syed-mohiuddin-resume.pdf";
+
+function isActiveRoute(
   pathname: string,
   href: string,
 ): boolean {
@@ -61,81 +64,73 @@ function isCurrentRoute(
 
 export function Navbar() {
   const pathname = usePathname();
+  const mobileNavigationId = useId();
 
-  const [isMobileMenuOpen, setIsMobileMenuOpen] =
+  const [isMenuOpen, setIsMenuOpen] =
     useState(false);
+
+  function closeMenu() {
+    setIsMenuOpen(false);
+  }
+
+  function toggleMenu() {
+    setIsMenuOpen((currentState) => !currentState);
+  }
 
   useEffect(() => {
     function handleEscape(event: KeyboardEvent) {
       if (event.key === "Escape") {
-        setIsMobileMenuOpen(false);
+        setIsMenuOpen(false);
       }
     }
 
-    window.addEventListener("keydown", handleEscape);
+    document.addEventListener(
+      "keydown",
+      handleEscape,
+    );
 
     return () => {
-      window.removeEventListener(
+      document.removeEventListener(
         "keydown",
         handleEscape,
       );
     };
   }, []);
 
-  function closeMobileMenu() {
-    setIsMobileMenuOpen(false);
-  }
-
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/85 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-slate-800/90 bg-slate-950/85 backdrop-blur-xl">
       <div className="syedos-container">
         <div className="flex min-h-16 items-center justify-between gap-4">
           <Link
             href="/"
-            aria-label="Go to SyedOS homepage"
-            onClick={closeMobileMenu}
-            className={cn(
-              "group inline-flex shrink-0 items-center gap-3",
-              "rounded-xl",
-              "focus-visible:outline-none",
-              "focus-visible:ring-2",
-              "focus-visible:ring-blue-500",
-            )}
+            onClick={closeMenu}
+            aria-label="SyedOS homepage"
+            className="group inline-flex shrink-0 items-center gap-3 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
           >
             <span
-              className={cn(
-                "inline-flex h-10 w-10 items-center justify-center",
-                "rounded-xl border border-blue-500/30",
-                "bg-blue-500/10 text-blue-300",
-                "transition duration-200",
-                "group-hover:border-cyan-400/50",
-                "group-hover:bg-cyan-400/10",
-                "group-hover:text-cyan-300",
-              )}
+              aria-hidden="true"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-blue-500/40 bg-blue-500/10 text-cyan-300 transition group-hover:border-cyan-400/60 group-hover:bg-cyan-400/10"
             >
-              <Sparkles
-                aria-hidden="true"
-                size={19}
-              />
+              <Sparkles size={21} />
             </span>
 
             <span className="hidden sm:block">
-              <span className="block text-sm font-semibold text-white">
+              <span className="block text-sm font-bold tracking-tight text-white">
                 SyedOS
               </span>
 
-              <span className="block text-[11px] text-slate-500">
-                Career Portfolio Platform
+              <span className="block text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+                Career Platform
               </span>
             </span>
           </Link>
 
           <nav
             aria-label="Primary navigation"
-            className="hidden items-center gap-1 xl:flex"
+            className="hidden items-center gap-1 lg:flex"
           >
-            {navigationLinks.map((item) => {
-              const active = isCurrentRoute(
+            {navigationItems.map((item) => {
+              const isActive = isActiveRoute(
                 pathname,
                 item.href,
               );
@@ -145,52 +140,27 @@ export function Navbar() {
                   key={item.href}
                   href={item.href}
                   aria-current={
-                    active ? "page" : undefined
+                    isActive ? "page" : undefined
                   }
-                  className={cn(
-                    "relative rounded-lg px-3 py-2",
-                    "text-sm font-medium",
-                    "transition duration-200",
-                    "focus-visible:outline-none",
-                    "focus-visible:ring-2",
-                    "focus-visible:ring-blue-500",
-                    active
-                      ? "bg-blue-500/10 text-blue-200"
-                      : "text-slate-400 hover:bg-slate-900 hover:text-white",
-                  )}
+                  className={`rounded-lg px-3 py-2 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 ${
+                    isActive
+                      ? "bg-slate-800/80 text-white"
+                      : "text-slate-400 hover:bg-slate-900 hover:text-white"
+                  }`}
                 >
                   {item.label}
-
-                  {active && (
-                    <span
-                      aria-hidden="true"
-                      className="absolute inset-x-3 -bottom-[13px] h-0.5 rounded-full bg-blue-400"
-                    />
-                  )}
                 </Link>
               );
             })}
           </nav>
 
-          <div className="hidden shrink-0 items-center gap-2 xl:flex">
+          <div className="flex items-center gap-2">
             <a
-              href="https://github.com/syedmohiuddin106-dot"
+              href={githubUrl}
               target="_blank"
-              rel="noreferrer"
-              aria-label="Open Syed Mohiuddin's GitHub profile"
-              className={cn(
-                "inline-flex h-10 items-center justify-center gap-2",
-                "rounded-xl border border-slate-800",
-                "bg-slate-950/60 px-4",
-                "text-sm font-medium text-slate-300",
-                "transition duration-200",
-                "hover:border-slate-700",
-                "hover:bg-slate-900",
-                "hover:text-white",
-                "focus-visible:outline-none",
-                "focus-visible:ring-2",
-                "focus-visible:ring-blue-500",
-              )}
+              rel="noopener noreferrer"
+              aria-label="Open Syed Mohiuddin's GitHub profile in a new tab"
+              className="hidden min-h-11 items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-950/60 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:border-slate-600 hover:bg-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 md:inline-flex"
             >
               <GitBranch
                 aria-hidden="true"
@@ -201,22 +171,11 @@ export function Navbar() {
             </a>
 
             <a
-              href="/resume/syed-mohiuddin-resume.pdf"
-              download
-              aria-label="Download Syed Mohiuddin's resume"
-              className={cn(
-                "inline-flex h-10 items-center justify-center gap-2",
-                "rounded-xl border border-blue-500/40",
-                "bg-blue-500 px-4",
-                "text-sm font-semibold text-white",
-                "shadow-lg shadow-blue-500/20",
-                "transition duration-200",
-                "hover:border-blue-400",
-                "hover:bg-blue-400",
-                "focus-visible:outline-none",
-                "focus-visible:ring-2",
-                "focus-visible:ring-blue-400",
-              )}
+              href={resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open Syed Mohiuddin's resume PDF in a new tab"
+              className="hidden min-h-11 items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:inline-flex"
             >
               <Download
                 aria-hidden="true"
@@ -225,61 +184,46 @@ export function Navbar() {
 
               Resume
             </a>
-          </div>
 
-          <button
-            type="button"
-            aria-label={
-              isMobileMenuOpen
-                ? "Close navigation menu"
-                : "Open navigation menu"
-            }
-            aria-expanded={isMobileMenuOpen}
-            aria-controls="mobile-navigation"
-            onClick={() =>
-              setIsMobileMenuOpen((current) => !current)
-            }
-            className={cn(
-              "inline-flex h-10 w-10 items-center justify-center",
-              "rounded-xl border border-slate-800",
-              "bg-slate-950/60 text-slate-300",
-              "transition duration-200",
-              "hover:border-slate-700",
-              "hover:bg-slate-900",
-              "hover:text-white",
-              "focus-visible:outline-none",
-              "focus-visible:ring-2",
-              "focus-visible:ring-blue-500",
-              "xl:hidden",
-            )}
-          >
-            {isMobileMenuOpen ? (
-              <X
-                aria-hidden="true"
-                size={20}
-              />
-            ) : (
-              <Menu
-                aria-hidden="true"
-                size={20}
-              />
-            )}
-          </button>
-        </div>
-      </div>
-
-      {isMobileMenuOpen && (
-        <div
-          id="mobile-navigation"
-          className="border-t border-slate-800 bg-slate-950/95 xl:hidden"
-        >
-          <div className="syedos-container py-4">
-            <nav
-              aria-label="Mobile navigation"
-              className="grid gap-2"
+            <button
+              type="button"
+              onClick={toggleMenu}
+              aria-label={
+                isMenuOpen
+                  ? "Close navigation menu"
+                  : "Open navigation menu"
+              }
+              aria-expanded={isMenuOpen}
+              aria-controls={mobileNavigationId}
+              className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-800 bg-slate-900/70 text-slate-200 transition hover:border-slate-700 hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 lg:hidden"
             >
-              {navigationLinks.map((item) => {
-                const active = isCurrentRoute(
+              {isMenuOpen ? (
+                <X
+                  aria-hidden="true"
+                  size={22}
+                />
+              ) : (
+                <Menu
+                  aria-hidden="true"
+                  size={22}
+                />
+              )}
+            </button>
+          </div>
+        </div>
+
+        <div
+          id={mobileNavigationId}
+          hidden={!isMenuOpen}
+          className="lg:hidden"
+        >
+          <nav
+            aria-label="Mobile navigation"
+            className="border-t border-slate-800 py-4"
+          >
+            <div className="grid gap-2">
+              {navigationItems.map((item) => {
+                const isActive = isActiveRoute(
                   pathname,
                   item.href,
                 );
@@ -288,55 +232,32 @@ export function Navbar() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    onClick={closeMobileMenu}
+                    onClick={closeMenu}
                     aria-current={
-                      active ? "page" : undefined
+                      isActive
+                        ? "page"
+                        : undefined
                     }
-                    className={cn(
-                      "flex min-h-11 items-center justify-between",
-                      "rounded-xl border px-4 py-3",
-                      "text-sm font-medium",
-                      "transition duration-200",
-                      "focus-visible:outline-none",
-                      "focus-visible:ring-2",
-                      "focus-visible:ring-blue-500",
-                      active
-                        ? "border-blue-500/30 bg-blue-500/10 text-blue-200"
-                        : "border-transparent text-slate-400 hover:border-slate-800 hover:bg-slate-900 hover:text-white",
-                    )}
+                    className={`rounded-xl px-4 py-3 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 ${
+                      isActive
+                        ? "border border-blue-500/30 bg-blue-500/10 text-blue-200"
+                        : "border border-transparent text-slate-300 hover:border-slate-800 hover:bg-slate-900 hover:text-white"
+                    }`}
                   >
-                    <span>{item.label}</span>
-
-                    {active && (
-                      <span
-                        aria-hidden="true"
-                        className="h-2 w-2 rounded-full bg-blue-400"
-                      />
-                    )}
+                    {item.label}
                   </Link>
                 );
               })}
-            </nav>
+            </div>
 
             <div className="mt-4 grid gap-3 border-t border-slate-800 pt-4 sm:grid-cols-2">
               <a
-                href="https://github.com/syedmohiuddin106-dot"
+                href={githubUrl}
                 target="_blank"
-                rel="noreferrer"
-                onClick={closeMobileMenu}
-                aria-label="Open Syed Mohiuddin's GitHub profile"
-                className={cn(
-                  "inline-flex min-h-11 items-center justify-center gap-2",
-                  "rounded-xl border border-slate-800",
-                  "bg-slate-950 px-4",
-                  "text-sm font-medium text-slate-300",
-                  "transition duration-200",
-                  "hover:bg-slate-900",
-                  "hover:text-white",
-                  "focus-visible:outline-none",
-                  "focus-visible:ring-2",
-                  "focus-visible:ring-blue-500",
-                )}
+                rel="noopener noreferrer"
+                onClick={closeMenu}
+                aria-label="Open Syed Mohiuddin's GitHub profile in a new tab"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:border-slate-600 hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
               >
                 <GitBranch
                   aria-hidden="true"
@@ -347,33 +268,24 @@ export function Navbar() {
               </a>
 
               <a
-                href="/resume/syed-mohiuddin-resume.pdf"
-                download
-                onClick={closeMobileMenu}
-                aria-label="Download Syed Mohiuddin's resume"
-                className={cn(
-                  "inline-flex min-h-11 items-center justify-center gap-2",
-                  "rounded-xl border border-blue-500/40",
-                  "bg-blue-500 px-4",
-                  "text-sm font-semibold text-white",
-                  "transition duration-200",
-                  "hover:bg-blue-400",
-                  "focus-visible:outline-none",
-                  "focus-visible:ring-2",
-                  "focus-visible:ring-blue-400",
-                )}
+                href={resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={closeMenu}
+                aria-label="Open Syed Mohiuddin's resume PDF in a new tab"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
               >
                 <Download
                   aria-hidden="true"
                   size={17}
                 />
 
-                Download Resume
+                Open Resume
               </a>
             </div>
-          </div>
+          </nav>
         </div>
-      )}
+      </div>
     </header>
   );
 }
