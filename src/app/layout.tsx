@@ -5,6 +5,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
 import { siteConfig } from "@/config/site";
+import { NavigationFeedback } from "@/components/navigation/navigation-feedback";
 
 import "./globals.css";
 
@@ -118,6 +119,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-slate-950 text-slate-50 antialiased`}
       >
+        <NavigationFeedback />
+        
         <div className="flex min-h-screen flex-col">
           <Navbar />
 
