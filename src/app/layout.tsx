@@ -4,8 +4,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
-import { siteConfig } from "@/config/site";
 import { NavigationFeedback } from "@/components/navigation/navigation-feedback";
+import { siteConfig } from "@/config/site";
 
 import "./globals.css";
 
@@ -97,7 +97,6 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
-
 };
 
 export const viewport: Viewport = {
@@ -120,11 +119,13 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-slate-950 text-slate-50 antialiased`}
       >
         <NavigationFeedback />
-        
+
         <div className="flex min-h-screen flex-col">
           <Navbar />
 
-          <div className="flex-1">{children}</div>
+          <div className="flex-1">
+  {children}
+</div>
 
           <Footer />
         </div>
