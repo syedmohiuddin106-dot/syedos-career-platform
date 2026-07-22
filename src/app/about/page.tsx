@@ -88,7 +88,7 @@ const engineeringValues = [
 export default function AboutPage() {
   return (
     <main className="min-w-0 overflow-hidden">
-      <section className="relative overflow-hidden border-b border-slate-800/80">
+      <section className="relative overflow-hidden border-b border-slate-800/80" aria-label="About Syed Mohiuddin">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 overflow-hidden"
@@ -115,7 +115,7 @@ export default function AboutPage() {
                 About Syed Mohiuddin
               </p>
 
-              <h1 className="mt-4 max-w-4xl text-4xl leading-[1.06] sm:text-5xl lg:text-6xl">
+              <h1 id="about-page-title" className="mt-4 max-w-4xl text-4xl leading-[1.06] sm:text-5xl lg:text-6xl">
                 Building the skills and experience required for modern
                 software engineering.
               </h1>
@@ -260,7 +260,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="border-b border-slate-800/80">
+      <section className="border-b border-slate-800/80" aria-label="Professional journey">
         <div className="syedos-container py-16 sm:py-20 lg:py-24">
           <SectionHeading
             eyebrow="My Story"
@@ -341,7 +341,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="border-b border-slate-800/80">
+      <section className="border-b border-slate-800/80" aria-label="Technical focus areas">
         <div className="syedos-container py-16 sm:py-20 lg:py-24">
           <SectionHeading
             eyebrow="Career Focus"
@@ -378,7 +378,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section>
+      <section aria-label="Software engineering values">
         <div className="syedos-container py-16 sm:py-20 lg:py-24">
           <SectionHeading
             eyebrow="Engineering Values"

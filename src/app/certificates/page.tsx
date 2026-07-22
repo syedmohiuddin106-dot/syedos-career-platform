@@ -231,7 +231,7 @@ const futureCredentials = [
 export default function CertificatesPage() {
   return (
     <main className="min-w-0 overflow-hidden">
-      <section className="relative overflow-hidden border-b border-slate-800/80">
+      <section className="relative overflow-hidden border-b border-slate-800/80" aria-label="Certificates and credentials overview">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 overflow-hidden"
@@ -266,7 +266,7 @@ export default function CertificatesPage() {
                 Certificates and Credentials
               </p>
 
-              <h1 className="mt-4 max-w-4xl text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">
+              <h1 id="certificates-page-title" className="mt-4 max-w-4xl text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">
                 Building verified credentials around practical
                 software engineering skills.
               </h1>
@@ -421,7 +421,7 @@ export default function CertificatesPage() {
       <section
         id="learning-pathways"
         className="border-b border-slate-800/80"
-      >
+       aria-label="Certification pathways">
         <div className="syedos-container py-16 sm:py-20 lg:py-24">
           <SectionHeading
             eyebrow="Learning Pathways"
@@ -489,7 +489,7 @@ export default function CertificatesPage() {
         </div>
       </section>
 
-      <section className="border-b border-slate-800/80">
+      <section className="border-b border-slate-800/80" aria-label="Certificate verification standards">
         <div className="syedos-container py-16 sm:py-20 lg:py-24">
           <SectionHeading
             eyebrow="Credential Standards"
@@ -525,7 +525,7 @@ export default function CertificatesPage() {
         </div>
       </section>
 
-      <section className="border-b border-slate-800/80">
+      <section className="border-b border-slate-800/80" aria-label="Project-based evidence">
         <div className="syedos-container py-16 sm:py-20 lg:py-24">
           <SectionHeading
             eyebrow="Current Technical Evidence"
@@ -588,7 +588,7 @@ export default function CertificatesPage() {
         </div>
       </section>
 
-      <section className="border-b border-slate-800/80">
+      <section className="border-b border-slate-800/80" aria-label="Credential learning strategy">
         <div className="syedos-container py-16 sm:py-20 lg:py-24">
           <SectionHeading
             eyebrow="Professional Development"
@@ -624,7 +624,7 @@ export default function CertificatesPage() {
         </div>
       </section>
 
-      <section className="border-b border-slate-800/80">
+      <section className="border-b border-slate-800/80" aria-label="Future credentials">
         <div className="syedos-container py-16 sm:py-20 lg:py-24">
           <SectionHeading
             eyebrow="Future Credentials"
@@ -676,7 +676,7 @@ export default function CertificatesPage() {
         </div>
       </section>
 
-      <section>
+      <section aria-label="Certificates call to action">
         <div className="syedos-container py-16 sm:py-20 lg:py-24">
           <div className="rounded-[2rem] border border-blue-500/25 bg-gradient-to-br from-blue-500/15 via-slate-950/70 to-cyan-500/10 p-7 sm:p-10">
             <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-center">

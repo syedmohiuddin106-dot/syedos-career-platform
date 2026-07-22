@@ -116,7 +116,7 @@ const responseExpectations = [
 export default function ContactPage() {
   return (
     <main className="min-w-0 overflow-hidden">
-      <section className="relative overflow-hidden border-b border-slate-800/80">
+      <section className="relative overflow-hidden border-b border-slate-800/80" aria-label="Contact overview">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 overflow-hidden"
@@ -151,7 +151,7 @@ export default function ContactPage() {
                 Contact
               </p>
 
-              <h1 className="mt-4 max-w-4xl text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">
+              <h1 id="contact-page-title" className="mt-4 max-w-4xl text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">
                 Let&apos;s discuss software opportunities, projects,
                 and technical collaborations.
               </h1>
@@ -297,7 +297,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="border-b border-slate-800/80">
+      <section className="border-b border-slate-800/80" aria-label="Contact methods">
         <div className="syedos-container py-16 sm:py-20 lg:py-24">
           <SectionHeading
             eyebrow="Contact Methods"
@@ -367,7 +367,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="border-b border-slate-800/80">
+      <section className="border-b border-slate-800/80" aria-label="Professional opportunities">
         <div className="syedos-container py-16 sm:py-20 lg:py-24">
           <SectionHeading
             eyebrow="Opportunity Interests"
@@ -415,7 +415,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="border-b border-slate-800/80">
+      <section className="border-b border-slate-800/80" aria-label="Response expectations">
         <div className="syedos-container py-16 sm:py-20 lg:py-24">
           <SectionHeading
             eyebrow="Professional Communication"
@@ -489,7 +489,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section>
+      <section aria-label="Contact call to action">
         <div className="syedos-container py-16 sm:py-20 lg:py-24">
           <div className="rounded-[2rem] border border-blue-500/25 bg-gradient-to-br from-blue-500/15 via-slate-950/70 to-cyan-500/10 p-7 sm:p-10">
             <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-center">

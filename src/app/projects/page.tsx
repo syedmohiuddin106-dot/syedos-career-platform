@@ -237,7 +237,7 @@ const projectPrinciples = [
 export default function ProjectsPage() {
   return (
     <main className="min-w-0 overflow-hidden">
-      <section className="relative overflow-hidden border-b border-slate-800/80">
+      <section className="relative overflow-hidden border-b border-slate-800/80" aria-label="Projects overview">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 overflow-hidden"
@@ -271,7 +271,7 @@ export default function ProjectsPage() {
               Project Portfolio
             </p>
 
-            <h1 className="mt-4 text-4xl leading-[1.06] sm:text-5xl lg:text-6xl">
+            <h1 id="projects-page-title" className="mt-4 text-4xl leading-[1.06] sm:text-5xl lg:text-6xl">
               Software projects built to solve practical problems.
             </h1>
 
@@ -340,7 +340,7 @@ export default function ProjectsPage() {
       <section
         id="featured-projects"
         className="relative border-b border-slate-800/80"
-      >
+       aria-label="Featured software projects">
         <div className="syedos-container py-16 sm:py-20 lg:py-24">
           <SectionHeading
             eyebrow="Featured Work"
@@ -522,7 +522,7 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      <section className="border-b border-slate-800/80">
+      <section className="border-b border-slate-800/80" aria-label="Project engineering principles">
         <div className="syedos-container py-16 sm:py-20 lg:py-24">
           <SectionHeading
             eyebrow="Engineering Approach"
@@ -559,7 +559,7 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      <section>
+      <section aria-label="Projects call to action">
         <div className="syedos-container py-16 sm:py-20 lg:py-24">
           <div className="rounded-[2rem] border border-blue-500/25 bg-gradient-to-br from-blue-500/15 via-slate-950/70 to-cyan-500/10 p-7 sm:p-10">
             <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-center">

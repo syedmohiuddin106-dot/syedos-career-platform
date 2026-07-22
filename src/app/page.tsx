@@ -25,7 +25,10 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <main className="min-w-0 overflow-hidden">
+    <main
+      aria-label="Syed Mohiuddin professional portfolio"
+      className="min-w-0 overflow-hidden"
+    >
       <HomeHero />
       <HomeAbout />
       <HomeProjects />
