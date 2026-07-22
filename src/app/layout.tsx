@@ -97,10 +97,6 @@ export const metadata: Metadata = {
     },
   },
 
-  icons: {
-  icon: "/icon",
-  apple: "/apple-icon",
-},
 };
 
 export const viewport: Viewport = {

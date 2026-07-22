@@ -19,7 +19,6 @@ export default function Icon() {
           justifyContent: "center",
           position: "relative",
           overflow: "hidden",
-          borderRadius: 112,
           background:
             "linear-gradient(145deg, #020617 0%, #0b1d45 55%, #073347 100%)",
         }}
@@ -31,6 +30,7 @@ export default function Icon() {
             left: -75,
             width: 330,
             height: 330,
+            display: "flex",
             borderRadius: "999px",
             background:
               "radial-gradient(circle, rgba(37,99,235,0.58) 0%, rgba(37,99,235,0) 72%)",
@@ -44,6 +44,7 @@ export default function Icon() {
             bottom: -120,
             width: 360,
             height: 360,
+            display: "flex",
             borderRadius: "999px",
             background:
               "radial-gradient(circle, rgba(6,182,212,0.38) 0%, rgba(6,182,212,0) 72%)",
@@ -64,14 +65,14 @@ export default function Icon() {
 
         <div
           style={{
+            width: 292,
+            height: 292,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            width: 292,
-            height: 292,
             borderRadius: 78,
             border: "4px solid rgba(103,232,249,0.55)",
-            background: "rgba(15,23,42,0.72)",
+            background: "rgba(15,23,42,0.78)",
             color: "#67e8f9",
             fontSize: 206,
             lineHeight: 1,
