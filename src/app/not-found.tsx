@@ -10,6 +10,15 @@ import { Card } from "@/components/ui/card";
 import { IconContainer } from "@/components/ui/icon-container";
 import { LinkButton } from "@/components/ui/link-button";
 
+const suggestedRoutes = [
+  "/about",
+  "/projects",
+  "/skills",
+  "/education",
+  "/certificates",
+  "/contact",
+] as const;
+
 export default function NotFoundPage() {
   return (
     <main className="relative flex min-h-[75vh] items-center overflow-hidden border-b border-slate-800/80">
@@ -30,7 +39,7 @@ export default function NotFoundPage() {
             variant="glass"
             className="overflow-hidden p-0 text-center"
           >
-            <div className="border-b border-slate-800 px-6 py-8 sm:px-10">
+            <section className="border-b border-slate-800 px-6 py-8 sm:px-10 sm:py-10">
               <div className="flex justify-center">
                 <IconContainer
                   variant="primary"
@@ -49,10 +58,10 @@ export default function NotFoundPage() {
               </div>
 
               <p className="syedos-code-text mt-6 text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400">
-                Page Not Found
+                Page not found
               </p>
 
-              <h1 className="mt-4 text-4xl sm:text-5xl">
+              <h1 className="mt-4 text-4xl font-bold tracking-tight text-slate-50 sm:text-5xl">
                 This route does not exist in SyedOS.
               </h1>
 
@@ -61,10 +70,10 @@ export default function NotFoundPage() {
                 address may have been entered incorrectly. Use one of
                 the options below to continue exploring the portfolio.
               </p>
-            </div>
+            </section>
 
-            <div className="p-6 sm:p-8">
-              <div className="flex flex-col justify-center gap-3 sm:flex-row">
+            <section className="p-6 sm:p-8">
+              <div className="flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">
                 <LinkButton
                   href="/"
                   leftIcon={<Home size={18} />}
@@ -94,19 +103,35 @@ export default function NotFoundPage() {
                   Try visiting:
                 </p>
 
-                <div className="mt-3 flex flex-wrap justify-center gap-2 text-sm text-slate-300">
-                  <span>/about</span>
-                  <span>•</span>
-                  <span>/projects</span>
-                  <span>•</span>
-                  <span>/skills</span>
-                  <span>•</span>
-                  <span>/education</span>
-                  <span>•</span>
-                  <span>/contact</span>
-                </div>
+                <nav
+                  aria-label="Suggested pages"
+                  className="mt-3 flex flex-wrap justify-center gap-x-3 gap-y-2 text-sm text-slate-300"
+                >
+                  {suggestedRoutes.map((route, index) => (
+                    <span
+                      key={route}
+                      className="flex items-center gap-3"
+                    >
+                      <a
+                        href={route}
+                        className="transition-colors hover:text-cyan-300"
+                      >
+                        {route}
+                      </a>
+
+                      {index < suggestedRoutes.length - 1 && (
+                        <span
+                          aria-hidden="true"
+                          className="text-slate-600"
+                        >
+                          •
+                        </span>
+                      )}
+                    </span>
+                  ))}
+                </nav>
               </div>
-            </div>
+            </section>
           </Card>
         </div>
       </div>
