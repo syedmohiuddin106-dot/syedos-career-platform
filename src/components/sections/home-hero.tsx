@@ -56,8 +56,8 @@ export function HomeHero() {
         <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(148,163,184,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.25)_1px,transparent_1px)] [background-size:48px_48px]" />
       </div>
 
-      <div className="syedos-container relative pb-14 pt-6 sm:py-16 lg:py-20 xl:py-24">
-        <div className="grid min-w-0 items-start gap-9 xl:grid-cols-[1.08fr_0.92fr] xl:gap-12">
+      <div className="syedos-container relative pb-14 pt-6 sm:py-14 lg:py-14 xl:pb-18 xl:pt-8">
+        <div className="grid min-w-0 items-start gap-9 xl:grid-cols-[1fr_0.95fr] xl:gap-14">
           <div className="min-w-0">
             <div className="space-y-3">
               <div className="flex flex-wrap items-center gap-2">
@@ -84,7 +84,7 @@ export function HomeHero() {
 
             <h1
               id="home-hero-heading"
-              className="mt-3 max-w-4xl text-[2rem] font-bold leading-[1.08] tracking-[-0.035em] text-white min-[430px]:text-[2.65rem] sm:text-5xl sm:leading-[1.07] lg:text-6xl xl:text-[4.5rem]"
+              className="mt-3 max-w-[13ch] text-[2rem] font-bold leading-[1.08] tracking-[-0.035em] text-white min-[430px]:text-[2.65rem] sm:max-w-4xl sm:text-5xl sm:leading-[1.07] lg:text-[3.75rem] xl:text-[4rem] 2xl:text-[4.25rem]"
             >
               Building intelligent software that solves real problems.
             </h1>

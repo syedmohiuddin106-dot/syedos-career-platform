@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 
 import {
   ArrowRight,
@@ -245,7 +245,7 @@ export default function CertificatesPage() {
           <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(148,163,184,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.25)_1px,transparent_1px)] [background-size:48px_48px]" />
         </div>
 
-        <div className="syedos-container relative pb-14 pt-6 sm:py-16 lg:py-20 xl:py-24">
+        <div className="syedos-container relative pb-14 pt-6 sm:py-14 lg:py-14 xl:pb-18 xl:pt-8">
           <div className="grid min-w-0 gap-9 xl:grid-cols-[1.08fr_0.92fr] xl:items-center xl:gap-12">
             <div className="min-w-0">
               <div className="space-y-4">
@@ -702,7 +702,7 @@ export default function CertificatesPage() {
                 </Badge>
 
                 <h2 className="mt-5 text-3xl sm:text-4xl">
-                  Credentials will support—not replace—practical
+                  Credentials will supportâ€”not replaceâ€”practical
                   project experience.
                 </h2>
 

@@ -94,7 +94,7 @@ const engineeringValues = [
 export function HomeAbout() {
   return (
     <section className="relative border-b border-slate-800/80">
-      <div className="syedos-container py-12 sm:py-16 lg:py-24">
+      <div className="syedos-container relative pb-14 pt-6 sm:py-14 lg:py-14 xl:pb-18 xl:pt-8">
         <SectionHeading
           eyebrow="About and Career Direction"
           title="A developer focused on practical, intelligent, and scalable software"
