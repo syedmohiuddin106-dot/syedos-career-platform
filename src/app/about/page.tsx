@@ -237,7 +237,7 @@ export default function AboutPage() {
                     </p>
 
                     <p className="mt-1 text-sm text-slate-500">
-                      B.Tech IT Â· 2023â€“2027
+                      B.Tech IT · 2023–2027
                     </p>
                   </div>
 
@@ -251,7 +251,7 @@ export default function AboutPage() {
                     </p>
 
                     <p className="mt-1 text-sm text-slate-500">
-                      Full-stack Â· AI Â· Cloud
+                      Full-stack · AI · Cloud
                     </p>
                   </div>
                 </div>

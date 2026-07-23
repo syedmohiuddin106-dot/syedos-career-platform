@@ -702,7 +702,7 @@ export default function CertificatesPage() {
                 </Badge>
 
                 <h2 className="mt-5 text-3xl sm:text-4xl">
-                  Credentials will supportâ€”not replaceâ€”practical
+                  Credentials will support—not replace—practical
                   project experience.
                 </h2>
 

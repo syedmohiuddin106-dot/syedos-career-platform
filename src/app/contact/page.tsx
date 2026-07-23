@@ -281,7 +281,7 @@ export default function ContactPage() {
                     </p>
 
                     <p className="mt-2 font-semibold text-white">
-                      Full-Stack Â· AI Â· Cloud
+                      Full-Stack · AI · Cloud
                     </p>
                   </div>
                 </div>

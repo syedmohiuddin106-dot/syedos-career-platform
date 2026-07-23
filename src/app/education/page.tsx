@@ -40,7 +40,7 @@ export const metadata: Metadata = {
 
 const educationTimeline = [
   {
-    period: "2023 â€“ 2027",
+    period: "2023 – 2027",
     level: "Undergraduate Degree",
     title: "B.Tech in Information Technology",
     institution:
@@ -297,7 +297,7 @@ export default function EducationPage() {
                     size={17}
                     className="shrink-0 text-cyan-400"
                   />
-                  2023â€“2027
+                  2023–2027
                 </span>
 
                 <span className="inline-flex items-center gap-2">
