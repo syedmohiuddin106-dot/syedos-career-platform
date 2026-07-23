@@ -100,7 +100,7 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-slate-800/90 bg-slate-950/85 backdrop-blur-xl">
       <div className="syedos-container">
-        <div className="flex min-h-16 items-center justify-between gap-4">
+        <div className="flex min-h-16 items-center justify-between gap-3">
           <Link
             href="/"
             onClick={closeMenu}
@@ -219,9 +219,9 @@ export function Navbar() {
         >
           <nav
             aria-label="Mobile navigation"
-            className="border-t border-slate-800 py-4"
+            className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-slate-800 py-3 overscroll-contain"
           >
-            <div className="grid gap-2">
+            <div className="grid gap-1">
               {navigationItems.map((item) => {
                 const isActive = isActiveRoute(
                   pathname,
@@ -238,7 +238,7 @@ export function Navbar() {
                         ? "page"
                         : undefined
                     }
-                    className={`rounded-xl px-4 py-3 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 ${
+                    className={`rounded-xl px-4 py-2.5 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 ${
                       isActive
                         ? "border border-blue-500/30 bg-blue-500/10 text-blue-200"
                         : "border border-transparent text-slate-300 hover:border-slate-800 hover:bg-slate-900 hover:text-white"
@@ -250,14 +250,14 @@ export function Navbar() {
               })}
             </div>
 
-            <div className="mt-4 grid gap-3 border-t border-slate-800 pt-4 sm:grid-cols-2">
+            <div className="mt-3 grid gap-2.5 border-t border-slate-800 pt-3 sm:grid-cols-2">
               <a
                 href={githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={closeMenu}
                 aria-label="Open Syed Mohiuddin's GitHub profile in a new tab"
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:border-slate-600 hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:border-slate-600 hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
               >
                 <GitBranch
                   aria-hidden="true"
@@ -273,7 +273,7 @@ export function Navbar() {
                 rel="noopener noreferrer"
                 onClick={closeMenu}
                 aria-label="Open Syed Mohiuddin's resume PDF in a new tab"
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
               >
                 <Download
                   aria-hidden="true"

@@ -98,41 +98,53 @@ export default function AboutPage() {
           <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(148,163,184,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.25)_1px,transparent_1px)] [background-size:48px_48px]" />
         </div>
 
-        <div className="syedos-container relative py-16 sm:py-20 lg:py-28">
-          <div className="grid items-center gap-10 xl:grid-cols-[1.08fr_0.92fr]">
-            <div>
-              <div className="flex flex-wrap gap-3">
-                <Badge variant="success" dot>
-                  Available for opportunities
-                </Badge>
+        <div className="syedos-container relative pb-14 pt-6 sm:py-16 lg:py-20 xl:py-24">
+          <div className="grid min-w-0 items-start gap-9 xl:grid-cols-[1.08fr_0.92fr] xl:items-center xl:gap-12">
+            <div className="min-w-0">
+              <div className="space-y-3">
+                <div className="flex flex-wrap items-center gap-2">
+                  <Badge
+                    variant="success"
+                    dot
+                    className="whitespace-nowrap text-[0.72rem] sm:text-sm"
+                  >
+                    Available for opportunities
+                  </Badge>
 
-                <Badge variant="outline">
-                  Final-year IT student
-                </Badge>
+                  <Badge
+                    variant="outline"
+                    className="whitespace-nowrap text-[0.72rem] sm:text-sm"
+                  >
+                    Final-year IT student
+                  </Badge>
+                </div>
+
+                <p className="syedos-code-text text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-cyan-400 sm:text-sm sm:tracking-[0.2em]">
+                  About Syed Mohiuddin
+                </p>
               </div>
 
-              <p className="syedos-code-text mt-7 text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400">
-                About Syed Mohiuddin
-              </p>
-
-              <h1 id="about-page-title" className="mt-4 max-w-4xl text-4xl leading-[1.06] sm:text-5xl lg:text-6xl">
+              <h1
+                id="about-page-title"
+                className="mt-3 max-w-4xl text-[2rem] font-bold leading-[1.08] tracking-[-0.035em] text-white min-[430px]:text-[2.65rem] sm:text-5xl sm:leading-[1.07] lg:text-6xl"
+              >
                 Building the skills and experience required for modern
                 software engineering.
               </h1>
 
-              <p className="mt-6 max-w-3xl text-base leading-8 text-slate-400 sm:text-lg">
+              <p className="mt-5 max-w-3xl text-[0.98rem] leading-7 text-slate-400 sm:mt-6 sm:text-lg sm:leading-8">
                 I am a B.Tech Information Technology student focused on
                 full-stack development, artificial intelligence, cloud
                 technologies, and building practical software products
                 that solve real problems.
               </p>
 
-              <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-slate-500">
+              <div className="mt-7 flex flex-col items-start gap-3 text-sm text-slate-500 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-5 sm:gap-y-3">
                 <span className="inline-flex items-center gap-2">
                   <MapPin
                     aria-hidden="true"
                     size={17}
-                    className="text-cyan-400"
+                    className="shrink-0 text-cyan-400"
                   />
                   Hanamkonda, Telangana
                 </span>
@@ -141,7 +153,7 @@ export default function AboutPage() {
                   <GraduationCap
                     aria-hidden="true"
                     size={17}
-                    className="text-blue-400"
+                    className="shrink-0 text-blue-400"
                   />
                   B.Tech Information Technology
                 </span>
@@ -150,16 +162,17 @@ export default function AboutPage() {
                   <BriefcaseBusiness
                     aria-hidden="true"
                     size={17}
-                    className="text-green-400"
+                    className="shrink-0 text-green-400"
                   />
                   Open to internships and fresher roles
                 </span>
               </div>
 
-              <div className="mt-8 flex flex-wrap gap-4">
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
                 <LinkButton
                   href="/projects"
-                  rightIcon={<ArrowRight size={18} />}
+                  rightIcon={<ArrowRight aria-hidden="true" size={18} />}
+                  className="w-full justify-center sm:w-auto"
                 >
                   Explore Projects
                 </LinkButton>
@@ -167,7 +180,8 @@ export default function AboutPage() {
                 <LinkButton
                   href="/contact"
                   variant="secondary"
-                  rightIcon={<ArrowRight size={17} />}
+                  rightIcon={<ArrowRight aria-hidden="true" size={17} />}
+                  className="w-full justify-center sm:w-auto"
                 >
                   Contact Me
                 </LinkButton>

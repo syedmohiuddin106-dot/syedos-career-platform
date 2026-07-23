@@ -134,8 +134,8 @@ export function HomeProjects() {
         <div className="absolute bottom-[-10rem] right-[-8rem] h-96 w-96 rounded-full bg-blue-600/10 blur-3xl" />
       </div>
 
-      <div className="syedos-container relative py-16 sm:py-20 lg:py-24">
-        <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+      <div className="syedos-container relative py-12 sm:py-16 lg:py-24">
+        <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
           <SectionHeading
             eyebrow="Featured Projects"
             title="Software products built around complete real-world workflows"
@@ -153,7 +153,7 @@ export function HomeProjects() {
           </div>
         </div>
 
-        <div className="mt-10 grid gap-7">
+        <div className="mt-8 grid gap-6">
           {featuredProjects.map((project, index) => (
             <Card
               key={project.title}
@@ -167,7 +167,7 @@ export function HomeProjects() {
               className="overflow-hidden p-0"
             >
               <div className="grid lg:grid-cols-[0.78fr_1.22fr]">
-                <div className="relative border-b border-slate-800 bg-slate-950/45 p-6 sm:p-8 lg:border-b-0 lg:border-r">
+                <div className="relative border-b border-slate-800 bg-slate-950/45 p-5 sm:p-8 lg:border-b-0 lg:border-r">
                   <div
                     aria-hidden="true"
                     className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.16),transparent_45%)]"
@@ -196,7 +196,7 @@ export function HomeProjects() {
                       {project.category}
                     </p>
 
-                    <h3 className="mt-3 text-3xl">
+                    <h3 className="mt-3 text-2xl leading-tight sm:text-3xl">
                       {project.title}
                     </h3>
 
@@ -217,7 +217,7 @@ export function HomeProjects() {
                   </div>
                 </div>
 
-                <div className="p-6 sm:p-8">
+                <div className="p-5 sm:p-8">
                   <div className="flex items-center gap-3">
                     <IconContainer
                       variant="default"
@@ -238,7 +238,7 @@ export function HomeProjects() {
                     </div>
                   </div>
 
-                  <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                  <div className="mt-5 grid gap-3 sm:grid-cols-2">
                     {project.highlights.map((highlight) => (
                       <div
                         key={highlight}
@@ -278,14 +278,14 @@ export function HomeProjects() {
           ))}
         </div>
 
-        <div className="mt-12">
+        <div className="mt-10 sm:mt-12">
           <SectionHeading
             eyebrow="Project Approach"
             title="Projects designed as complete systems"
             description="Each application is used to strengthen technical depth, architecture decisions, security awareness, user experience, and software engineering discipline."
           />
 
-          <div className="mt-8 grid gap-6 lg:grid-cols-3">
+          <div className="mt-7 grid gap-5 lg:grid-cols-3">
             {projectCapabilities.map((capability) => (
               <Card
                 key={capability.title}
@@ -299,7 +299,7 @@ export function HomeProjects() {
                   {capability.icon}
                 </IconContainer>
 
-                <h3 className="mt-5 text-xl">
+                <h3 className="mt-4 text-lg leading-tight sm:mt-5 sm:text-xl">
                   {capability.title}
                 </h3>
 
@@ -311,14 +311,14 @@ export function HomeProjects() {
           </div>
         </div>
 
-        <div className="mt-12 rounded-[2rem] border border-blue-500/20 bg-blue-500/10 p-6 sm:p-8">
-          <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-center">
+        <div className="mt-10 rounded-3xl sm:mt-12 sm:rounded-[2rem] border border-blue-500/20 bg-blue-500/10 p-5 sm:p-8">
+          <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-center">
             <div>
               <p className="syedos-code-text text-xs font-semibold uppercase tracking-[0.18em] text-blue-300">
                 Project Portfolio
               </p>
 
-              <h3 className="mt-3 text-2xl">
+              <h3 className="mt-3 text-xl leading-tight sm:text-2xl">
                 Detailed case studies will include architecture,
                 security, challenges, testing, and outcomes.
               </h3>

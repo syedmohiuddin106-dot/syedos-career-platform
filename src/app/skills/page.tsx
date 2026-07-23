@@ -338,43 +338,58 @@ export default function SkillsPage() {
           <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(148,163,184,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.25)_1px,transparent_1px)] [background-size:48px_48px]" />
         </div>
 
-        <div className="syedos-container relative py-16 sm:py-20 lg:py-28">
-          <div className="grid gap-12 xl:grid-cols-[1.08fr_0.92fr] xl:items-center">
-            <div>
-              <div className="flex flex-wrap gap-3">
-                <Badge variant="primary">
-                  Full-Stack Development
-                </Badge>
+        <div className="syedos-container relative pb-14 pt-6 sm:py-16 lg:py-20 xl:py-24">
+          <div className="grid min-w-0 items-start gap-9 xl:grid-cols-[1.08fr_0.92fr] xl:items-center xl:gap-12">
+            <div className="min-w-0">
+              <div className="space-y-4">
+                <div className="grid grid-cols-[1.15fr_1.25fr_0.8fr] items-center gap-1.5 sm:flex sm:flex-wrap sm:gap-3">
+                  <Badge
+                    variant="primary"
+                    className="w-full justify-center whitespace-nowrap px-1.5 py-1 text-[0.58rem] tracking-tight sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm"
+                  >
+                    Full-Stack Development
+                  </Badge>
 
-                <Badge variant="info">
-                  Artificial Intelligence
-                </Badge>
+                  <Badge
+                    variant="info"
+                    className="w-full justify-center whitespace-nowrap px-1.5 py-1 text-[0.58rem] tracking-tight sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm"
+                  >
+                    Artificial Intelligence
+                  </Badge>
 
-                <Badge variant="success">
-                  Cloud Learning
-                </Badge>
+                  <Badge
+                    variant="success"
+                    className="w-full justify-center whitespace-nowrap px-1.5 py-1 text-[0.58rem] tracking-tight sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm"
+                  >
+                    Cloud Learning
+                  </Badge>
+                </div>
+
+                <p className="syedos-code-text text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-cyan-400 sm:text-sm sm:tracking-[0.2em]">
+                  Technical Skills
+                </p>
               </div>
 
-              <p className="syedos-code-text mt-7 text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400">
-                Technical Skills
-              </p>
-
-              <h1 id="skills-page-title" className="mt-4 max-w-4xl text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">
-                A practical software engineering skill set built
-                through complete projects.
+              <h1
+                id="skills-page-title"
+                className="mt-3 max-w-4xl text-[2rem] font-bold leading-[1.08] tracking-[-0.035em] text-white min-[430px]:text-[2.65rem] sm:text-5xl sm:leading-[1.07] lg:text-6xl"
+              >
+                A practical software engineering skill set built through
+                complete projects.
               </h1>
 
-              <p className="mt-6 max-w-3xl text-base leading-8 text-slate-400 sm:text-lg">
+              <p className="mt-5 max-w-3xl text-[0.98rem] leading-7 text-slate-400 sm:mt-6 sm:text-lg sm:leading-8">
                 My technical foundation includes frontend development,
                 backend systems, databases, artificial intelligence,
                 security, cloud learning, DevOps fundamentals, and
                 modern software development tools.
               </p>
 
-              <div className="mt-8 flex flex-wrap gap-4">
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
                 <LinkButton
                   href="/projects"
-                  rightIcon={<ArrowRight size={18} />}
+                  rightIcon={<ArrowRight aria-hidden="true" size={18} />}
+                  className="w-full justify-center sm:w-auto"
                 >
                   View Project Evidence
                 </LinkButton>
@@ -382,14 +397,15 @@ export default function SkillsPage() {
                 <LinkButton
                   href="/contact"
                   variant="secondary"
-                  rightIcon={<ArrowRight size={17} />}
+                  rightIcon={<ArrowRight aria-hidden="true" size={17} />}
+                  className="w-full justify-center sm:w-auto"
                 >
                   Contact Me
                 </LinkButton>
               </div>
 
-              <div className="mt-10 grid max-w-3xl gap-4 sm:grid-cols-3">
-                <div className="rounded-2xl border border-slate-800 bg-slate-950/55 p-5 backdrop-blur-sm">
+              <div className="mt-9 grid max-w-3xl gap-3 sm:grid-cols-3 sm:gap-4">
+                <div className="rounded-2xl border border-slate-800 bg-slate-950/55 p-4 backdrop-blur-sm sm:p-5">
                   <p className="text-2xl font-bold text-white">
                     8
                   </p>
@@ -399,7 +415,7 @@ export default function SkillsPage() {
                   </p>
                 </div>
 
-                <div className="rounded-2xl border border-slate-800 bg-slate-950/55 p-5 backdrop-blur-sm">
+                <div className="rounded-2xl border border-slate-800 bg-slate-950/55 p-4 backdrop-blur-sm sm:p-5">
                   <p className="text-2xl font-bold text-white">
                     3
                   </p>
@@ -409,7 +425,7 @@ export default function SkillsPage() {
                   </p>
                 </div>
 
-                <div className="rounded-2xl border border-slate-800 bg-slate-950/55 p-5 backdrop-blur-sm">
+                <div className="rounded-2xl border border-slate-800 bg-slate-950/55 p-4 backdrop-blur-sm sm:p-5">
                   <p className="text-2xl font-bold text-white">
                     Ongoing
                   </p>

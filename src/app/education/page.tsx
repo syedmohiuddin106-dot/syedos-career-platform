@@ -234,45 +234,59 @@ export default function EducationPage() {
           <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(148,163,184,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.25)_1px,transparent_1px)] [background-size:48px_48px]" />
         </div>
 
-        <div className="syedos-container relative py-16 sm:py-20 lg:py-28">
-          <div className="grid gap-12 xl:grid-cols-[1.08fr_0.92fr] xl:items-center">
-            <div>
-              <div className="flex flex-wrap gap-3">
-                <Badge variant="primary">
-                  B.Tech Information Technology
-                </Badge>
+        <div className="syedos-container relative pb-14 pt-6 sm:py-16 lg:py-20 xl:py-24">
+          <div className="grid min-w-0 items-start gap-9 xl:grid-cols-[1.08fr_0.92fr] xl:items-center xl:gap-12">
+            <div className="min-w-0">
+              <div className="space-y-4">
+                <div className="grid grid-cols-[1.28fr_1.15fr_1fr] items-center gap-1 sm:flex sm:flex-wrap sm:gap-3">
+                  <Badge
+                    variant="primary"
+                    className="w-full justify-center whitespace-nowrap px-1.5 py-1 text-[0.54rem] tracking-tight sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm"
+                  >
+                    B.Tech Information Technology
+                  </Badge>
 
-                <Badge variant="success">
-                  Expected Graduation 2027
-                </Badge>
+                  <Badge
+                    variant="success"
+                    className="w-full justify-center whitespace-nowrap px-1.5 py-1 text-[0.54rem] tracking-tight sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm"
+                  >
+                    Expected Graduation 2027
+                  </Badge>
 
-                <Badge variant="outline">
-                  Project-Based Learning
-                </Badge>
+                  <Badge
+                    variant="outline"
+                    className="w-full justify-center whitespace-nowrap px-1.5 py-1 text-[0.54rem] tracking-tight sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm"
+                  >
+                    Project-Based Learning
+                  </Badge>
+                </div>
+
+                <p className="syedos-code-text text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-cyan-400 sm:text-sm sm:tracking-[0.2em]">
+                  Education
+                </p>
               </div>
 
-              <p className="syedos-code-text mt-7 text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400">
-                Education
-              </p>
-
-              <h1 id="education-page-title" className="mt-4 max-w-4xl text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">
+              <h1
+                id="education-page-title"
+                className="mt-3 max-w-4xl text-[2rem] font-bold leading-[1.08] tracking-[-0.035em] text-white min-[430px]:text-[2.65rem] sm:text-5xl sm:leading-[1.07] lg:text-6xl"
+              >
                 Academic knowledge strengthened through practical
                 software development.
               </h1>
 
-              <p className="mt-6 max-w-3xl text-base leading-8 text-slate-400 sm:text-lg">
+              <p className="mt-5 max-w-3xl text-[0.98rem] leading-7 text-slate-400 sm:mt-6 sm:text-lg sm:leading-8">
                 I am pursuing a B.Tech in Information Technology while
                 building real software projects that connect academic
                 concepts with full-stack development, databases,
                 artificial intelligence, security, and cloud learning.
               </p>
 
-              <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-slate-500">
+              <div className="mt-7 flex flex-col items-start gap-3 text-sm text-slate-500 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-5 sm:gap-y-3">
                 <span className="inline-flex items-center gap-2">
                   <GraduationCap
                     aria-hidden="true"
                     size={17}
-                    className="text-blue-400"
+                    className="shrink-0 text-blue-400"
                   />
                   KITS Warangal
                 </span>
@@ -281,7 +295,7 @@ export default function EducationPage() {
                   <CalendarDays
                     aria-hidden="true"
                     size={17}
-                    className="text-cyan-400"
+                    className="shrink-0 text-cyan-400"
                   />
                   2023–2027
                 </span>
@@ -290,16 +304,17 @@ export default function EducationPage() {
                   <MapPin
                     aria-hidden="true"
                     size={17}
-                    className="text-green-400"
+                    className="shrink-0 text-green-400"
                   />
                   Warangal, Telangana
                 </span>
               </div>
 
-              <div className="mt-8 flex flex-wrap gap-4">
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
                 <LinkButton
                   href="/projects"
-                  rightIcon={<ArrowRight size={18} />}
+                  rightIcon={<ArrowRight aria-hidden="true" size={18} />}
+                  className="w-full justify-center sm:w-auto"
                 >
                   View Practical Projects
                 </LinkButton>
@@ -307,7 +322,8 @@ export default function EducationPage() {
                 <LinkButton
                   href="/skills"
                   variant="secondary"
-                  rightIcon={<ArrowRight size={17} />}
+                  rightIcon={<ArrowRight aria-hidden="true" size={17} />}
+                  className="w-full justify-center sm:w-auto"
                 >
                   Explore Skills
                 </LinkButton>

@@ -73,14 +73,14 @@ export function HomeContact() {
         <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(148,163,184,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.25)_1px,transparent_1px)] [background-size:52px_52px]" />
       </div>
 
-      <div className="syedos-container relative py-16 sm:py-20 lg:py-24">
+      <div className="syedos-container relative py-12 sm:py-16 lg:py-24">
         <SectionHeading
           eyebrow="Contact and Opportunities"
           title="Let’s connect and build meaningful software"
           description="I am open to internships, fresher software roles, project collaborations, technical discussions, and opportunities where I can contribute while continuing to grow as a software engineer."
         />
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-3">
+        <div className="mt-8 grid gap-5 lg:grid-cols-3">
           {contactOptions.map((option) => (
             <Card
               key={option.title}
@@ -106,7 +106,7 @@ export function HomeContact() {
                 )}
               </div>
 
-              <h3 className="mt-5 text-xl">
+              <h3 className="mt-4 text-lg leading-tight sm:mt-5 sm:text-xl">
                 {option.title}
               </h3>
 
@@ -114,7 +114,7 @@ export function HomeContact() {
                 {option.value}
               </p>
 
-              <p className="mt-3 flex-1 text-sm leading-7 text-slate-500">
+              <p className="mt-3 flex-1 text-sm leading-6 sm:leading-7 text-slate-500">
                 {option.description}
               </p>
 
@@ -140,7 +140,7 @@ export function HomeContact() {
           ))}
         </div>
 
-        <div className="mt-12 grid gap-6 xl:grid-cols-[1.08fr_0.92fr]">
+        <div className="mt-10 grid gap-5 sm:mt-12 xl:grid-cols-[1.08fr_0.92fr]">
           <Card
             variant="glass"
             className="overflow-hidden"
@@ -160,7 +160,7 @@ export function HomeContact() {
                   </p>
                 </div>
 
-                <h3 className="mt-5 text-3xl">
+                <h3 className="mt-4 text-2xl leading-tight sm:mt-5 sm:text-3xl">
                   Open to opportunities where I can learn, contribute,
                   and grow
                 </h3>
@@ -223,7 +223,7 @@ export function HomeContact() {
             </div>
           </Card>
 
-          <div className="grid gap-6">
+          <div className="grid gap-5">
             <Card variant="editorial">
               <div className="flex items-center gap-3">
                 <IconContainer
@@ -238,13 +238,13 @@ export function HomeContact() {
                     Availability
                   </p>
 
-                  <h3 className="mt-1 text-xl">
+                  <h3 className="mt-1 text-lg leading-tight sm:text-xl">
                     Open for professional conversations
                   </h3>
                 </div>
               </div>
 
-              <div className="mt-6 rounded-2xl border border-green-500/25 bg-green-500/10 p-5">
+              <div className="mt-5 rounded-2xl border border-green-500/25 bg-green-500/10 p-4 sm:mt-6 sm:p-5">
                 <div className="flex items-start gap-3">
                   <span className="relative mt-1 flex h-3 w-3 shrink-0">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-50" />
@@ -290,7 +290,7 @@ export function HomeContact() {
                 Response
               </p>
 
-              <h3 className="mt-3 text-xl">
+              <h3 className="mt-3 text-lg leading-tight sm:text-xl">
                 Best way to reach me
               </h3>
 
@@ -313,7 +313,7 @@ export function HomeContact() {
           </div>
         </div>
 
-        <div className="mt-12 rounded-[2rem] border border-blue-500/25 bg-gradient-to-br from-blue-500/15 via-slate-950/70 to-cyan-500/10 p-7 backdrop-blur-xl sm:p-10">
+        <div className="mt-10 rounded-3xl sm:mt-12 sm:rounded-[2rem] border border-blue-500/25 bg-gradient-to-br from-blue-500/15 via-slate-950/70 to-cyan-500/10 p-5 backdrop-blur-xl sm:p-10">
           <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-center">
             <div className="max-w-3xl">
               <Badge
@@ -323,7 +323,7 @@ export function HomeContact() {
                 Available for opportunities
               </Badge>
 
-              <h2 className="mt-5 text-3xl sm:text-4xl">
+              <h2 className="mt-4 text-2xl leading-tight sm:mt-5 sm:text-4xl">
                 Looking for a motivated developer with practical
                 full-stack and AI project experience?
               </h2>

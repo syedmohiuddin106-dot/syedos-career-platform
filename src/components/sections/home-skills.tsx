@@ -193,14 +193,14 @@ export function HomeSkills() {
         <div className="absolute bottom-[-12rem] left-[-10rem] h-96 w-96 rounded-full bg-blue-600/10 blur-3xl" />
       </div>
 
-      <div className="syedos-container relative py-16 sm:py-20 lg:py-24">
+      <div className="syedos-container relative py-12 sm:py-16 lg:py-24">
         <SectionHeading
           eyebrow="Skills and Technologies"
           title="A growing full-stack skill set supported by practical project experience"
           description="My current technical foundation spans frontend development, backend systems, databases, artificial intelligence, cloud learning, deployment, and modern engineering tools."
         />
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-8 grid gap-5 lg:grid-cols-2 xl:grid-cols-3">
           {skillGroups.map((group) => (
             <Card
               key={group.title}
@@ -216,15 +216,15 @@ export function HomeSkills() {
                 {group.icon}
               </IconContainer>
 
-              <h3 className="mt-5 text-xl">
+              <h3 className="mt-4 text-lg leading-tight sm:mt-5 sm:text-xl">
                 {group.title}
               </h3>
 
-              <p className="mt-3 text-sm leading-7 text-slate-400">
+              <p className="mt-3 text-sm leading-6 sm:leading-7 text-slate-400">
                 {group.description}
               </p>
 
-              <div className="mt-6 flex flex-wrap gap-2">
+              <div className="mt-5 flex flex-wrap gap-2">
                 {group.skills.map((skill) => (
                   <Badge
                     key={skill}
@@ -238,7 +238,7 @@ export function HomeSkills() {
           ))}
         </div>
 
-        <div className="mt-12 grid gap-6 xl:grid-cols-[0.92fr_1.08fr]">
+        <div className="mt-10 grid gap-5 sm:mt-12 xl:grid-cols-[0.92fr_1.08fr]">
           <Card variant="glass">
             <div className="flex items-center gap-3">
               <IconContainer
@@ -253,7 +253,7 @@ export function HomeSkills() {
                   Current Capability
                 </p>
 
-                <h3 className="mt-1 text-xl">
+                <h3 className="mt-1 text-lg leading-tight sm:text-xl">
                   Practical development progress
                 </h3>
               </div>
@@ -266,7 +266,7 @@ export function HomeSkills() {
               deployments are completed.
             </p>
 
-            <div className="mt-7 space-y-6">
+            <div className="mt-6 space-y-5">
               {capabilityProgress.map((capability) => (
                 <Progress
                   key={capability.label}
@@ -283,11 +283,11 @@ export function HomeSkills() {
               Engineering Strengths
             </p>
 
-            <h3 className="mt-3 text-2xl">
+            <h3 className="mt-3 text-xl leading-tight sm:text-2xl">
               Skills beyond programming syntax
             </h3>
 
-            <p className="mt-3 text-sm leading-7 text-slate-400">
+            <p className="mt-3 text-sm leading-6 sm:leading-7 text-slate-400">
               Strong software development also requires architecture,
               security, debugging, version control, documentation, and
               the ability to improve systems over time.
@@ -297,7 +297,7 @@ export function HomeSkills() {
               {engineeringStrengths.map((strength) => (
                 <div
                   key={strength.title}
-                  className="rounded-2xl border border-slate-800 bg-slate-950/45 p-5"
+                  className="rounded-2xl border border-slate-800 bg-slate-950/45 p-4 sm:p-5"
                 >
                   <IconContainer
                     variant={strength.variant}
@@ -320,18 +320,18 @@ export function HomeSkills() {
           </Card>
         </div>
 
-        <div className="mt-12 rounded-[2rem] border border-slate-800 bg-slate-950/55 p-6 backdrop-blur-xl sm:p-8">
+        <div className="mt-10 rounded-3xl sm:mt-12 sm:rounded-[2rem] border border-slate-800 bg-slate-950/55 p-5 backdrop-blur-xl sm:p-8">
           <div className="grid gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-center">
             <div>
               <p className="syedos-code-text text-xs font-semibold uppercase tracking-[0.18em] text-blue-300">
                 Learning Strategy
               </p>
 
-              <h3 className="mt-3 text-2xl">
+              <h3 className="mt-3 text-xl leading-tight sm:text-2xl">
                 Learning by building complete software systems
               </h3>
 
-              <p className="mt-3 text-sm leading-7 text-slate-400">
+              <p className="mt-3 text-sm leading-6 sm:leading-7 text-slate-400">
                 I strengthen technical skills by applying them inside
                 real projects, solving errors, improving architecture,
                 testing features, and documenting the complete
@@ -340,8 +340,8 @@ export function HomeSkills() {
             </div>
 
             <div className="grid gap-4 sm:grid-cols-3">
-              <div className="rounded-2xl border border-slate-800 bg-slate-950/50 p-5">
-                <p className="text-2xl font-bold text-white">
+              <div className="rounded-2xl border border-slate-800 bg-slate-950/50 p-4 sm:p-5">
+                <p className="text-xl font-bold text-white sm:text-2xl">
                   3
                 </p>
 
@@ -350,8 +350,8 @@ export function HomeSkills() {
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-slate-800 bg-slate-950/50 p-5">
-                <p className="text-2xl font-bold text-white">
+              <div className="rounded-2xl border border-slate-800 bg-slate-950/50 p-4 sm:p-5">
+                <p className="text-xl font-bold text-white sm:text-2xl">
                   6
                 </p>
 
@@ -360,8 +360,8 @@ export function HomeSkills() {
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-slate-800 bg-slate-950/50 p-5">
-                <p className="text-2xl font-bold text-white">
+              <div className="rounded-2xl border border-slate-800 bg-slate-950/50 p-4 sm:p-5">
+                <p className="text-xl font-bold text-white sm:text-2xl">
                   Ongoing
                 </p>
 

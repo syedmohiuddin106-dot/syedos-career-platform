@@ -251,38 +251,49 @@ export default function ProjectsPage() {
           <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(148,163,184,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.25)_1px,transparent_1px)] [background-size:48px_48px]" />
         </div>
 
-        <div className="syedos-container relative py-16 sm:py-20 lg:py-28">
-          <div className="max-w-4xl">
-            <div className="flex flex-wrap gap-3">
-              <Badge variant="primary">
-                Full-Stack Projects
-              </Badge>
+        <div className="syedos-container relative pb-14 pt-6 sm:py-16 lg:py-20 xl:py-24">
+          <div className="min-w-0 max-w-4xl">
+            <div className="space-y-4">
+              <div className="grid w-full grid-cols-[1.16fr_0.86fr_1.2fr] items-center gap-1.5 sm:flex sm:flex-wrap sm:gap-2">
+                <Badge
+                  variant="primary"
+                  className="w-full justify-center whitespace-nowrap px-1.5 py-1 text-[0.6rem] tracking-[-0.02em] sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm sm:tracking-normal"
+                >
+                  Full-Stack Projects
+                </Badge>
 
-              <Badge variant="info">
-                AI Integration
-              </Badge>
+                <Badge
+                  variant="info"
+                  className="w-full justify-center whitespace-nowrap px-1.5 py-1 text-[0.6rem] tracking-[-0.02em] sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm sm:tracking-normal"
+                >
+                  AI Integration
+                </Badge>
 
-              <Badge variant="success">
-                Real User Workflows
-              </Badge>
+                <Badge
+                  variant="success"
+                  className="w-full justify-center whitespace-nowrap px-1.5 py-1 text-[0.6rem] tracking-[-0.02em] sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm sm:tracking-normal"
+                >
+                  Real User Workflows
+                </Badge>
+              </div>
+
+              <p className="syedos-code-text text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-cyan-400 sm:text-sm sm:tracking-[0.2em]">
+                Project Portfolio
+              </p>
             </div>
 
-            <p className="syedos-code-text mt-7 text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400">
-              Project Portfolio
-            </p>
-
-            <h1 id="projects-page-title" className="mt-4 text-4xl leading-[1.06] sm:text-5xl lg:text-6xl">
+            <h1 id="projects-page-title" className="mt-3 max-w-4xl text-[2rem] font-bold leading-[1.08] tracking-[-0.035em] text-white min-[430px]:text-[2.65rem] sm:text-5xl sm:leading-[1.07] lg:text-6xl">
               Software projects built to solve practical problems.
             </h1>
 
-            <p className="mt-6 max-w-3xl text-base leading-8 text-slate-400 sm:text-lg">
+            <p className="mt-5 max-w-3xl text-[0.98rem] leading-7 text-slate-400 sm:mt-6 sm:text-lg sm:leading-8">
               These projects demonstrate full-stack development,
               database design, artificial intelligence integration,
               authentication, role-based systems, secure engineering,
               reusable architecture, and complete user workflows.
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
               <LinkButton
                 href="#featured-projects"
                 rightIcon={<ArrowRight size={18} />}

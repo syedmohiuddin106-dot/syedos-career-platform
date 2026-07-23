@@ -103,14 +103,14 @@ export function HomeEducation() {
         <div className="absolute -right-36 bottom-[-8rem] h-96 w-96 rounded-full bg-violet-600/10 blur-3xl" />
       </div>
 
-      <div className="syedos-container relative py-16 sm:py-20 lg:py-24">
+      <div className="syedos-container relative py-12 sm:py-16 lg:py-24">
         <SectionHeading
           eyebrow="Education and Achievements"
           title="Academic foundation strengthened through practical software development"
           description="My education provides the theoretical base, while projects, debugging, structured learning, and technical experimentation build the practical engineering skills required for professional software roles."
         />
 
-        <div className="mt-10 grid gap-6 xl:grid-cols-[1.08fr_0.92fr]">
+        <div className="mt-8 grid gap-5 xl:grid-cols-[1.08fr_0.92fr]">
           <Card
             variant="glass"
             className="overflow-hidden"
@@ -119,12 +119,12 @@ export function HomeEducation() {
               Education Timeline
             </p>
 
-            <div className="mt-7 space-y-6">
+            <div className="mt-6 space-y-5">
               {educationTimeline.map(
                 (education, index) => (
                   <div
                     key={education.title}
-                    className="relative grid gap-5 rounded-2xl border border-slate-800 bg-slate-950/45 p-5 sm:grid-cols-[auto_1fr]"
+                    className="relative grid gap-5 rounded-2xl border border-slate-800 bg-slate-950/45 p-4 sm:p-5 sm:grid-cols-[auto_1fr]"
                   >
                     {index <
                       educationTimeline.length - 1 && (
@@ -152,7 +152,7 @@ export function HomeEducation() {
                             {education.period}
                           </p>
 
-                          <h3 className="mt-1 text-xl">
+                          <h3 className="mt-1 text-lg leading-tight sm:text-xl">
                             {education.title}
                           </h3>
                         </div>
@@ -189,7 +189,7 @@ export function HomeEducation() {
             </div>
           </Card>
 
-          <div className="grid gap-6">
+          <div className="grid gap-5">
             <Card variant="editorial">
               <div className="flex items-center gap-3">
                 <IconContainer
@@ -204,7 +204,7 @@ export function HomeEducation() {
                     Current Academic Status
                   </p>
 
-                  <h3 className="mt-1 text-xl">
+                  <h3 className="mt-1 text-lg leading-tight sm:text-xl">
                     B.Tech Information Technology
                   </h3>
                 </div>
@@ -278,7 +278,7 @@ export function HomeEducation() {
                     Communication
                   </p>
 
-                  <h3 className="mt-1 text-xl">
+                  <h3 className="mt-1 text-lg leading-tight sm:text-xl">
                     Languages
                   </h3>
                 </div>
@@ -299,14 +299,14 @@ export function HomeEducation() {
           </div>
         </div>
 
-        <div className="mt-12">
+        <div className="mt-10 sm:mt-12">
           <SectionHeading
             eyebrow="Development Achievements"
             title="Progress built through projects and consistent technical practice"
             description="My strongest achievements currently come from building substantial software systems, solving implementation problems, and continuously improving technical depth."
           />
 
-          <div className="mt-8 grid gap-6 lg:grid-cols-3">
+          <div className="mt-7 grid gap-5 lg:grid-cols-3">
             {achievementAreas.map((achievement) => (
               <Card
                 key={achievement.title}
@@ -321,7 +321,7 @@ export function HomeEducation() {
                   {achievement.icon}
                 </IconContainer>
 
-                <h3 className="mt-5 text-xl">
+                <h3 className="mt-4 text-lg leading-tight sm:mt-5 sm:text-xl">
                   {achievement.title}
                 </h3>
 
@@ -333,14 +333,14 @@ export function HomeEducation() {
           </div>
         </div>
 
-        <div className="mt-12 rounded-[2rem] border border-green-500/20 bg-green-500/10 p-6 sm:p-8">
+        <div className="mt-10 rounded-3xl sm:mt-12 sm:rounded-[2rem] border border-green-500/20 bg-green-500/10 p-5 sm:p-8">
           <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-center">
             <div>
               <p className="syedos-code-text text-xs font-semibold uppercase tracking-[0.18em] text-green-300">
                 Academic and Career Development
               </p>
 
-              <h3 className="mt-3 text-2xl">
+              <h3 className="mt-3 text-xl leading-tight sm:text-2xl">
                 Education provides the foundation; projects prove the ability.
               </h3>
 

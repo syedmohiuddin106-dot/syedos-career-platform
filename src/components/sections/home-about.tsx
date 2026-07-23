@@ -94,19 +94,19 @@ const engineeringValues = [
 export function HomeAbout() {
   return (
     <section className="relative border-b border-slate-800/80">
-      <div className="syedos-container py-16 sm:py-20 lg:py-24">
+      <div className="syedos-container py-12 sm:py-16 lg:py-24">
         <SectionHeading
           eyebrow="About and Career Direction"
           title="A developer focused on practical, intelligent, and scalable software"
           description="My goal is to become a strong software engineer by combining full-stack development, artificial intelligence, cloud technologies, secure engineering, and real-world project experience."
         />
 
-        <div className="mt-10 grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
+        <div className="mt-8 grid gap-5 xl:grid-cols-[1.05fr_0.95fr]">
           <Card
             variant="glass"
             className="overflow-hidden"
           >
-            <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-start">
               <IconContainer
                 variant="primary"
                 size="large"
@@ -121,7 +121,7 @@ export function HomeAbout() {
                   Developer Profile
                 </p>
 
-                <h3 className="mt-3 text-2xl">
+                <h3 className="mt-3 text-xl leading-tight sm:text-2xl">
                   Building a strong foundation for modern software
                   engineering
                 </h3>
@@ -185,13 +185,13 @@ export function HomeAbout() {
                   Career Readiness
                 </p>
 
-                <h3 className="mt-1 text-xl">
+                <h3 className="mt-1 text-lg leading-tight sm:text-xl">
                   Current development progress
                 </h3>
               </div>
             </div>
 
-            <div className="mt-7 space-y-6">
+            <div className="mt-6 space-y-5">
               <Progress
                 label="Full-Stack Web Development"
                 value={82}
@@ -217,7 +217,7 @@ export function HomeAbout() {
               />
             </div>
 
-            <div className="mt-7 rounded-2xl border border-slate-800 bg-slate-950/45 p-5">
+            <div className="mt-6 rounded-2xl border border-slate-800 bg-slate-950/45 p-4 sm:p-5">
               <div className="flex items-start gap-3">
                 <IconContainer
                   variant="info"
@@ -243,14 +243,14 @@ export function HomeAbout() {
           </Card>
         </div>
 
-        <div className="mt-12">
+        <div className="mt-10 sm:mt-12">
           <SectionHeading
             eyebrow="Career Focus"
             title="Three technical areas shaping my career"
             description="These areas support my goal of becoming a versatile software engineer capable of building and deploying complete intelligent applications."
           />
 
-          <div className="mt-8 grid gap-6 lg:grid-cols-3">
+          <div className="mt-7 grid gap-5 lg:grid-cols-3">
             {careerFocusAreas.map((area) => (
               <Card
                 key={area.title}
@@ -265,7 +265,7 @@ export function HomeAbout() {
                   {area.icon}
                 </IconContainer>
 
-                <h3 className="mt-5 text-xl">
+                <h3 className="mt-4 text-lg leading-tight sm:mt-5 sm:text-xl">
                   {area.title}
                 </h3>
 
@@ -288,7 +288,7 @@ export function HomeAbout() {
           </div>
         </div>
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="mt-10 grid gap-5 sm:mt-12 lg:grid-cols-[0.9fr_1.1fr]">
           <Card>
             <div className="flex items-center gap-3">
               <IconContainer
@@ -303,7 +303,7 @@ export function HomeAbout() {
                   Academic Foundation
                 </p>
 
-                <h3 className="mt-1 text-xl">
+                <h3 className="mt-1 text-lg leading-tight sm:text-xl">
                   B.Tech Information Technology
                 </h3>
               </div>
@@ -363,7 +363,7 @@ export function HomeAbout() {
               Engineering Values
             </p>
 
-            <h3 className="mt-3 text-2xl">
+            <h3 className="mt-3 text-xl leading-tight sm:text-2xl">
               How I approach software projects
             </h3>
 
@@ -371,7 +371,7 @@ export function HomeAbout() {
               {engineeringValues.map((value) => (
                 <div
                   key={value.title}
-                  className="rounded-2xl border border-slate-800 bg-slate-950/45 p-5"
+                  className="rounded-2xl border border-slate-800 bg-slate-950/45 p-4 sm:p-5"
                 >
                   <IconContainer
                     variant={value.variant}

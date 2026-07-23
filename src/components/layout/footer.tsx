@@ -68,8 +68,8 @@ export function Footer() {
 
   return (
     <footer className="border-t border-slate-800/90 bg-slate-950">
-      <div className="syedos-container py-12 sm:py-16">
-        <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-4">
+      <div className="syedos-container py-9 sm:py-14">
+        <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-4 lg:gap-10">
           <section
             aria-labelledby="footer-profile-heading"
             className="sm:col-span-2 md:col-span-1"
@@ -96,14 +96,14 @@ export function Footer() {
               </div>
             </div>
 
-            <p className="mt-5 max-w-sm text-sm leading-7 text-slate-400">
+            <p className="mt-4 max-w-sm text-sm leading-6 sm:leading-7 text-slate-400">
               The professional portfolio and intelligent career platform
               of Syed Mohiuddin, focused on full-stack development,
               artificial intelligence, cloud technologies, and practical
               software engineering.
             </p>
 
-            <p className="mt-5 inline-flex items-center gap-2 text-sm text-slate-500">
+            <p className="mt-4 inline-flex items-center gap-2 text-sm text-slate-500">
               <MapPin
                 aria-hidden="true"
                 size={16}
@@ -117,12 +117,12 @@ export function Footer() {
           <nav aria-labelledby="footer-navigation-heading">
             <h2
               id="footer-navigation-heading"
-              className="text-sm font-bold uppercase tracking-[0.16em] text-white"
+              className="text-xs font-bold uppercase tracking-[0.16em] text-white sm:text-sm"
             >
               Navigation
             </h2>
 
-            <ul className="mt-5 space-y-3">
+            <ul className="mt-4 space-y-2.5">
               {quickLinks.map((item) => (
                 <li key={item.href}>
                   <Link
@@ -139,12 +139,12 @@ export function Footer() {
           <nav aria-labelledby="footer-projects-heading">
             <h2
               id="footer-projects-heading"
-              className="text-sm font-bold uppercase tracking-[0.16em] text-white"
+              className="text-xs font-bold uppercase tracking-[0.16em] text-white sm:text-sm"
             >
               Projects
             </h2>
 
-            <ul className="mt-5 space-y-3">
+            <ul className="mt-4 space-y-2.5">
               {projectLinks.map((item) => (
                 <li key={item.href}>
                   <Link
@@ -161,12 +161,12 @@ export function Footer() {
           <section aria-labelledby="footer-connect-heading">
             <h2
               id="footer-connect-heading"
-              className="text-sm font-bold uppercase tracking-[0.16em] text-white"
+              className="text-xs font-bold uppercase tracking-[0.16em] text-white sm:text-sm"
             >
               Connect
             </h2>
 
-            <div className="mt-5 space-y-3">
+            <div className="mt-4 space-y-2.5">
               <a
                 href={emailUrl}
                 aria-label="Send an email to Syed Mohiuddin"
@@ -238,7 +238,7 @@ export function Footer() {
           </section>
         </div>
 
-        <div className="mt-10 flex flex-col gap-4 border-t border-slate-800 pt-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-8 flex flex-col gap-3 border-t border-slate-800 pt-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {currentYear} Syed Mohiuddin. All rights reserved.
           </p>

@@ -130,45 +130,59 @@ export default function ContactPage() {
           <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(148,163,184,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.25)_1px,transparent_1px)] [background-size:48px_48px]" />
         </div>
 
-        <div className="syedos-container relative py-16 sm:py-20 lg:py-28">
-          <div className="grid gap-12 xl:grid-cols-[1.08fr_0.92fr] xl:items-center">
-            <div>
-              <div className="flex flex-wrap gap-3">
-                <Badge variant="success" dot>
-                  Available for opportunities
-                </Badge>
+        <div className="syedos-container relative pb-14 pt-6 sm:py-16 lg:py-20 xl:py-24">
+          <div className="grid min-w-0 gap-9 xl:grid-cols-[1.08fr_0.92fr] xl:items-center xl:gap-12">
+            <div className="min-w-0">
+              <div className="space-y-4">
+                <div className="grid grid-cols-[1.35fr_0.95fr_1fr] items-center gap-1.5 sm:flex sm:flex-wrap sm:gap-3">
+                  <Badge
+                    variant="success"
+                    dot
+                    className="w-full justify-center whitespace-nowrap px-2 py-1 text-[0.58rem] tracking-tight sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm"
+                  >
+                    Available for opportunities
+                  </Badge>
 
-                <Badge variant="primary">
-                  Software Engineering
-                </Badge>
+                  <Badge
+                    variant="primary"
+                    className="w-full justify-center whitespace-nowrap px-2 py-1 text-[0.58rem] tracking-tight sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm"
+                  >
+                    Software Engineering
+                  </Badge>
 
-                <Badge variant="outline">
-                  Professional Contact
-                </Badge>
+                  <Badge
+                    variant="outline"
+                    className="w-full justify-center whitespace-nowrap px-2 py-1 text-[0.58rem] tracking-tight sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm"
+                  >
+                    Professional Contact
+                  </Badge>
+                </div>
+
+                <p className="syedos-code-text text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-cyan-400 sm:text-sm sm:tracking-[0.2em]">
+                  Contact
+                </p>
               </div>
 
-              <p className="syedos-code-text mt-7 text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400">
-                Contact
-              </p>
-
-              <h1 id="contact-page-title" className="mt-4 max-w-4xl text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">
-                Let&apos;s discuss software opportunities, projects,
-                and technical collaborations.
+              <h1
+                id="contact-page-title"
+                className="mt-3 max-w-4xl text-[2rem] font-bold leading-[1.08] tracking-[-0.035em] text-white min-[430px]:text-[2.65rem] sm:text-5xl sm:leading-[1.07] lg:text-6xl"
+              >
+                Let&apos;s discuss software opportunities, projects, and
+                technical collaborations.
               </h1>
 
-              <p className="mt-6 max-w-3xl text-base leading-8 text-slate-400 sm:text-lg">
-                I am open to suitable internships, fresher software
-                roles, full-stack development opportunities,
-                AI-integrated projects, and professional technical
-                conversations.
+              <p className="mt-5 max-w-3xl text-[0.98rem] leading-7 text-slate-400 sm:mt-6 sm:text-lg sm:leading-8">
+                I am open to suitable internships, fresher software roles,
+                full-stack development opportunities, AI-integrated projects,
+                and professional technical conversations.
               </p>
 
-              <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-slate-500">
+              <div className="mt-7 flex flex-col items-start gap-3 text-sm text-slate-500 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-5 sm:gap-y-3">
                 <span className="inline-flex items-center gap-2">
                   <MapPin
                     aria-hidden="true"
                     size={17}
-                    className="text-cyan-400"
+                    className="shrink-0 text-cyan-400"
                   />
                   Hanamkonda, Telangana, India
                 </span>
@@ -177,16 +191,17 @@ export default function ContactPage() {
                   <BriefcaseBusiness
                     aria-hidden="true"
                     size={17}
-                    className="text-green-400"
+                    className="shrink-0 text-green-400"
                   />
                   Open to remote, hybrid, and suitable onsite roles
                 </span>
               </div>
 
-              <div className="mt-8 flex flex-wrap gap-4">
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
                 <LinkButton
                   href="mailto:syedmohiuddin106@gmail.com"
-                  leftIcon={<Send size={18} />}
+                  leftIcon={<Send aria-hidden="true" size={18} />}
+                  className="w-full justify-center sm:w-auto"
                 >
                   Send an Email
                 </LinkButton>
@@ -195,9 +210,10 @@ export default function ContactPage() {
                   href="https://www.linkedin.com/in/syedmohiuddin106"
                   external
                   variant="secondary"
-                  leftIcon={<LinkIcon size={18} />}
-                  rightIcon={<ExternalLink size={14} />}
+                  leftIcon={<LinkIcon aria-hidden="true" size={18} />}
+                  rightIcon={<ExternalLink aria-hidden="true" size={14} />}
                   ariaLabel="Open Syed Mohiuddin's LinkedIn profile"
+                  className="w-full justify-center sm:w-auto"
                 >
                   Connect on LinkedIn
                 </LinkButton>

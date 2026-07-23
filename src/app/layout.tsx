@@ -1,11 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import type { ReactNode } from "react";
+import { Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
-import { NavigationFeedback } from "@/components/navigation/navigation-feedback";
-import { siteConfig } from "@/config/site";
+import { RouteProgress } from "@/components/navigation/route-progress";
 
 import "./globals.css";
 
@@ -22,48 +21,45 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  ),
 
   title: {
-    default: "Syed Mohiuddin | Full-Stack Developer & AI Builder",
-    template: "%s | SyedOS",
+    default: "Syed Mohiuddin | Full-Stack Developer and AI Builder",
+    template: "%s | Syed Mohiuddin",
   },
 
   description:
-    "Professional portfolio of Syed Mohiuddin, a final-year Information Technology student building full-stack, AI-integrated, and cloud-ready software products.",
+    "The professional portfolio of Syed Mohiuddin, an Information Technology student focused on full-stack development, artificial intelligence, cloud technologies, and practical software engineering.",
 
-  applicationName: siteConfig.name,
+  applicationName: "SyedOS",
 
   authors: [
     {
-      name: siteConfig.creator,
-      url: siteConfig.url,
+      name: "Syed Mohiuddin",
     },
   ],
 
-  creator: siteConfig.creator,
-  publisher: siteConfig.creator,
+  creator: "Syed Mohiuddin",
+  publisher: "Syed Mohiuddin",
 
   keywords: [
     "Syed Mohiuddin",
-    "SyedOS",
     "Full-Stack Developer",
-    "Software Developer",
+    "Software Engineer",
+    "Information Technology Student",
     "Next.js Developer",
-    "React Developer",
     "TypeScript Developer",
     "PHP Developer",
     "MySQL Developer",
-    "AI Developer",
-    "AI Builder",
-    "Software Engineering Portfolio",
-    "Information Technology Student",
-    "Web Developer India",
+    "Artificial Intelligence",
     "Cloud Computing",
     "DevOps",
+    "SyedOS",
+    "SyedAI Assistant",
+    "CampusHire",
   ],
-
-  category: "technology",
 
   alternates: {
     canonical: "/",
@@ -73,17 +69,41 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_IN",
     url: "/",
-    siteName: siteConfig.name,
-    title: "Syed Mohiuddin | Full-Stack Developer & AI Builder",
+    siteName: "SyedOS",
+    title: "Syed Mohiuddin | Full-Stack Developer and AI Builder",
     description:
-      "Explore Syed Mohiuddin's full-stack, AI-integrated, and cloud-ready software projects, skills, education, and professional journey.",
+      "Explore Syed Mohiuddin's software projects, technical skills, education, certificates, AI work, and professional career journey.",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "SyedOS — Syed Mohiuddin's professional career platform",
+      },
+    ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Syed Mohiuddin | Full-Stack Developer & AI Builder",
+    title: "Syed Mohiuddin | Full-Stack Developer and AI Builder",
     description:
-      "Explore Syed Mohiuddin's advanced full-stack and AI software portfolio.",
+      "Explore full-stack projects, artificial-intelligence work, technical skills, education, and career achievements.",
+    images: ["/twitter-image"],
+  },
+
+  icons: {
+    icon: [
+      {
+        url: "/icon",
+        type: "image/png",
+      },
+    ],
+    apple: [
+      {
+        url: "/apple-icon",
+        type: "image/png",
+      },
+    ],
   },
 
   robots: {
@@ -97,35 +117,44 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
+
+  category: "technology",
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  maximumScale: 5,
   colorScheme: "dark",
   themeColor: "#020617",
 };
 
-type RootLayoutProps = Readonly<{
-  children: ReactNode;
-}>;
+interface RootLayoutProps {
+  children: React.ReactNode;
+}
 
 export default function RootLayout({
   children,
-}: RootLayoutProps) {
+}: Readonly<RootLayoutProps>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+    >
       <body
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-slate-950 text-slate-50 antialiased`}
       >
-        <NavigationFeedback />
+        <Suspense fallback={null}>
+          <RouteProgress />
+        </Suspense>
 
         <div className="flex min-h-screen flex-col">
           <Navbar />
 
-          <div className="flex-1">
-  {children}
-</div>
+          <div className="min-w-0 flex-1">
+            {children}
+          </div>
 
           <Footer />
         </div>
