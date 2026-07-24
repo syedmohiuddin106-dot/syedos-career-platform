@@ -1,0 +1,45 @@
+name: syedos-development
+
+services:
+  postgres:
+    image: postgres:18-alpine
+    container_name: syedos-postgres-dev
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-syedos}
+      POSTGRES_USER: ${POSTGRES_USER:-syedos_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+      PGDATA: /var/lib/postgresql/data/pgdata
+
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+
+    volumes:
+      - syedos_postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+    networks:
+      - syedos_network
+
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  syedos_postgres_data:
+    name: syedos-postgres-dev-data
+
+networks:
+  syedos_network:
+    name: syedos-development-network
+    driver: bridge
