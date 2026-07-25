@@ -3,6 +3,7 @@ import { buildConfig } from "payload";
 
 import { Users } from "./src/collections/Users";
 import { Projects } from "./src/collections/Projects";
+import { Skills } from "./src/collections/Skills";
 
 const databaseURL = process.env.DATABASE_URL;
 const payloadSecret = process.env.PAYLOAD_SECRET;
@@ -51,7 +52,7 @@ export default buildConfig({
     },
   },
 
-  collections: [Users, Projects],
+  collections: [Users, Projects, Skills],
 
   db: postgresAdapter({
     pool: {

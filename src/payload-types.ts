@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     users: User;
     projects: Project;
+    skills: Skill;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,6 +79,7 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
+    skills: SkillsSelect<false> | SkillsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -231,6 +233,108 @@ export interface Project {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Manage the technical skills displayed throughout the SyedOS professional portfolio.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "skills".
+ */
+export interface Skill {
+  id: number;
+  _order?: string | null;
+  /**
+   * The professional technology or skill name displayed across the portfolio.
+   */
+  name: string;
+  /**
+   * Automatically generated from the skill name. Example: next-js
+   */
+  slug: string;
+  category:
+    | 'programming-language'
+    | 'frontend'
+    | 'backend'
+    | 'database'
+    | 'ai'
+    | 'cloud'
+    | 'devops'
+    | 'testing'
+    | 'cybersecurity'
+    | 'tool'
+    | 'soft-skill'
+    | 'other';
+  proficiency: 'beginner' | 'intermediate' | 'advanced' | 'professional';
+  /**
+   * Used for skill indicators. Enter a value from 0 to 100.
+   */
+  proficiencyPercentage: number;
+  /**
+   * Approximate practical experience with this skill.
+   */
+  yearsOfExperience?: number | null;
+  /**
+   * A concise explanation of how this skill is used in your work.
+   */
+  shortDescription: string;
+  /**
+   * Optional icon identifier, such as nextjs, typescript, docker, or postgres.
+   */
+  iconName?: string | null;
+  capabilities?:
+    | {
+        title: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Connect this skill to projects that demonstrate practical experience.
+   */
+  relatedProjects?: (number | Project)[] | null;
+  learningSources?:
+    | {
+        title: string;
+        provider?: string | null;
+        url?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  highlights?:
+    | {
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Display this skill prominently on the homepage or skills overview.
+   */
+  featured?: boolean | null;
+  /**
+   * Lower values appear before higher values.
+   */
+  displayOrder: number;
+  /**
+   * Controls the visual accent used for this skill in the portfolio.
+   */
+  accentStyle?: ('blue' | 'cyan' | 'teal' | 'violet' | 'amber' | 'emerald') | null;
+  /**
+   * Examples: Core Skill, Currently Learning, Certified, or Advanced.
+   */
+  badgeLabel?: string | null;
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+    keywords?:
+      | {
+          keyword: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -261,6 +365,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'projects';
         value: number | Project;
+      } | null)
+    | ({
+        relationTo: 'skills';
+        value: number | Skill;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -367,6 +475,62 @@ export interface ProjectsSelect<T extends boolean = true> {
   coverImageAlt?: T;
   featured?: T;
   displayOrder?: T;
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        keywords?:
+          | T
+          | {
+              keyword?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "skills_select".
+ */
+export interface SkillsSelect<T extends boolean = true> {
+  _order?: T;
+  name?: T;
+  slug?: T;
+  category?: T;
+  proficiency?: T;
+  proficiencyPercentage?: T;
+  yearsOfExperience?: T;
+  shortDescription?: T;
+  iconName?: T;
+  capabilities?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  relatedProjects?: T;
+  learningSources?:
+    | T
+    | {
+        title?: T;
+        provider?: T;
+        url?: T;
+        id?: T;
+      };
+  highlights?:
+    | T
+    | {
+        description?: T;
+        id?: T;
+      };
+  featured?: T;
+  displayOrder?: T;
+  accentStyle?: T;
+  badgeLabel?: T;
   seo?:
     | T
     | {
