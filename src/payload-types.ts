@@ -71,6 +71,7 @@ export interface Config {
     projects: Project;
     skills: Skill;
     education: Education;
+    certifications: Certification;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -82,6 +83,7 @@ export interface Config {
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     skills: SkillsSelect<false> | SkillsSelect<true>;
     education: EducationSelect<false> | EducationSelect<true>;
+    certifications: CertificationsSelect<false> | CertificationsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -456,6 +458,114 @@ export interface Education {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Manage professional certifications, course credentials, verification details, skills, and presentation settings displayed on SyedOS.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "certifications".
+ */
+export interface Certification {
+  id: number;
+  _order?: string | null;
+  /**
+   * Enter the official certification, professional credential, course, or programme title.
+   */
+  title: string;
+  /**
+   * Automatically generated from the certification title.
+   */
+  slug: string;
+  issuer: string;
+  certificationType:
+    | 'professional-certification'
+    | 'professional-certificate'
+    | 'course-certificate'
+    | 'specialization'
+    | 'skill-badge'
+    | 'workshop'
+    | 'internship'
+    | 'participation'
+    | 'other';
+  issuerWebsite?: string | null;
+  /**
+   * Summarize the programme, skills covered, assessment, practical work, and professional relevance.
+   */
+  description: string;
+  /**
+   * Optional official credential or certificate identifier.
+   */
+  credentialID?: string | null;
+  /**
+   * Public verification URL supplied by the issuing organization.
+   */
+  credentialURL?: string | null;
+  issueDate: string;
+  expiryDate?: string | null;
+  doesNotExpire?: boolean | null;
+  credentialStatus: 'completed' | 'in-progress' | 'expired' | 'planned';
+  /**
+   * Enter the current progress percentage from 0 to 100.
+   */
+  completionProgress?: number | null;
+  estimatedHours?: number | null;
+  score?: string | null;
+  /**
+   * Connect the credential to relevant skills already stored in SyedOS.
+   */
+  skillsCovered?: (number | Skill)[] | null;
+  /**
+   * Connect projects that demonstrate knowledge gained from this certification.
+   */
+  relatedProjects?: (number | Project)[] | null;
+  learningOutcomes?:
+    | {
+        title: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Describe quizzes, examinations, graded assignments, projects, or practical assessments.
+   */
+  assessmentDetails?: string | null;
+  instructors?:
+    | {
+        name: string;
+        role?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Feature this credential prominently on the homepage or certifications page.
+   */
+  featured?: boolean | null;
+  /**
+   * Lower values appear before higher values.
+   */
+  displayOrder: number;
+  certificateImagePath?: string | null;
+  /**
+   * Describe the certificate image for accessibility and search engines.
+   */
+  certificateImageAlt?: string | null;
+  issuerLogoPath?: string | null;
+  issuerLogoAlt?: string | null;
+  badgeLabel?: string | null;
+  accentStyle?: ('blue' | 'cyan' | 'teal' | 'violet' | 'amber' | 'emerald') | null;
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+    keywords?:
+      | {
+          keyword: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -494,6 +604,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'education';
         value: number | Education;
+      } | null)
+    | ({
+        relationTo: 'certifications';
+        value: number | Certification;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -726,6 +840,68 @@ export interface EducationSelect<T extends boolean = true> {
   logoAlt?: T;
   certificateURL?: T;
   badgeLabel?: T;
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        keywords?:
+          | T
+          | {
+              keyword?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "certifications_select".
+ */
+export interface CertificationsSelect<T extends boolean = true> {
+  _order?: T;
+  title?: T;
+  slug?: T;
+  issuer?: T;
+  certificationType?: T;
+  issuerWebsite?: T;
+  description?: T;
+  credentialID?: T;
+  credentialURL?: T;
+  issueDate?: T;
+  expiryDate?: T;
+  doesNotExpire?: T;
+  credentialStatus?: T;
+  completionProgress?: T;
+  estimatedHours?: T;
+  score?: T;
+  skillsCovered?: T;
+  relatedProjects?: T;
+  learningOutcomes?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  assessmentDetails?: T;
+  instructors?:
+    | T
+    | {
+        name?: T;
+        role?: T;
+        id?: T;
+      };
+  featured?: T;
+  displayOrder?: T;
+  certificateImagePath?: T;
+  certificateImageAlt?: T;
+  issuerLogoPath?: T;
+  issuerLogoAlt?: T;
+  badgeLabel?: T;
+  accentStyle?: T;
   seo?:
     | T
     | {
