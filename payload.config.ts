@@ -2,6 +2,7 @@ import { postgresAdapter } from "@payloadcms/db-postgres";
 import { buildConfig } from "payload";
 
 import { Users } from "./src/collections/Users";
+import { Projects } from "./src/collections/Projects";
 
 const databaseURL = process.env.DATABASE_URL;
 const payloadSecret = process.env.PAYLOAD_SECRET;
@@ -50,7 +51,7 @@ export default buildConfig({
     },
   },
 
-  collections: [Users],
+  collections: [Users, Projects],
 
   db: postgresAdapter({
     pool: {

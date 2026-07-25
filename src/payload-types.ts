@@ -68,6 +68,7 @@ export interface Config {
   blocks: {};
   collections: {
     users: User;
+    projects: Project;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -76,6 +77,7 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
+    projects: ProjectsSelect<false> | ProjectsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -151,6 +153,84 @@ export interface User {
   collection: 'users';
 }
 /**
+ * Manage the projects displayed across the SyedOS professional portfolio.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects".
+ */
+export interface Project {
+  id: number;
+  _order?: string | null;
+  /**
+   * The professional name displayed on project cards and detail pages.
+   */
+  title: string;
+  /**
+   * Automatically generated from the project title. Example: syedai-assistant
+   */
+  slug: string;
+  projectType: 'full-stack' | 'ai' | 'cloud-devops' | 'frontend' | 'backend' | 'academic' | 'other';
+  developmentStatus: 'planning' | 'in-development' | 'completed' | 'maintained' | 'archived';
+  /**
+   * A concise project summary used on portfolio cards and previews.
+   */
+  shortDescription: string;
+  /**
+   * A detailed professional explanation of the project, its purpose, and its outcome.
+   */
+  fullDescription: string;
+  technologies: {
+    name: string;
+    category: 'frontend' | 'backend' | 'database' | 'ai' | 'cloud' | 'devops' | 'testing' | 'tool' | 'other';
+    id?: string | null;
+  }[];
+  features?:
+    | {
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  responsibilities?:
+    | {
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  githubURL?: string | null;
+  liveURL?: string | null;
+  documentationURL?: string | null;
+  /**
+   * Temporary image path field. It will later be upgraded to Payload Media uploads.
+   */
+  coverImageURL?: string | null;
+  /**
+   * Describe the image for accessibility and search engines.
+   */
+  coverImageAlt?: string | null;
+  /**
+   * Display this project prominently on the homepage.
+   */
+  featured?: boolean | null;
+  /**
+   * Lower numbers appear before higher numbers.
+   */
+  displayOrder?: number | null;
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+    keywords?:
+      | {
+          keyword: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -173,10 +253,15 @@ export interface PayloadKv {
  */
 export interface PayloadLockedDocument {
   id: number;
-  document?: {
-    relationTo: 'users';
-    value: number | User;
-  } | null;
+  document?:
+    | ({
+        relationTo: 'users';
+        value: number | User;
+      } | null)
+    | ({
+        relationTo: 'projects';
+        value: number | Project;
+      } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
@@ -242,6 +327,61 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects_select".
+ */
+export interface ProjectsSelect<T extends boolean = true> {
+  _order?: T;
+  title?: T;
+  slug?: T;
+  projectType?: T;
+  developmentStatus?: T;
+  shortDescription?: T;
+  fullDescription?: T;
+  technologies?:
+    | T
+    | {
+        name?: T;
+        category?: T;
+        id?: T;
+      };
+  features?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  responsibilities?:
+    | T
+    | {
+        description?: T;
+        id?: T;
+      };
+  githubURL?: T;
+  liveURL?: T;
+  documentationURL?: T;
+  coverImageURL?: T;
+  coverImageAlt?: T;
+  featured?: T;
+  displayOrder?: T;
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        keywords?:
+          | T
+          | {
+              keyword?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
