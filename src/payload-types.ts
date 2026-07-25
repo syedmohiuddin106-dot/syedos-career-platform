@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     projects: Project;
     skills: Skill;
+    education: Education;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,6 +81,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     skills: SkillsSelect<false> | SkillsSelect<true>;
+    education: EducationSelect<false> | EducationSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -335,6 +337,125 @@ export interface Skill {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Manage academic qualifications, institutions, achievements, coursework, and education details displayed on SyedOS.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "education".
+ */
+export interface Education {
+  id: number;
+  _order?: string | null;
+  /**
+   * Enter the complete official name of the school, college, university, or training institution.
+   */
+  institution: string;
+  /**
+   * Automatically generated from the qualification and institution.
+   */
+  slug: string;
+  educationLevel:
+    | 'secondary-school'
+    | 'higher-secondary'
+    | 'diploma'
+    | 'undergraduate'
+    | 'postgraduate'
+    | 'doctorate'
+    | 'professional-certification'
+    | 'other';
+  qualification: string;
+  fieldOfStudy?: string | null;
+  /**
+   * Optional specialization, concentration, branch, or major.
+   */
+  specialization?: string | null;
+  /**
+   * Enter the university name when the institution is an affiliated college.
+   */
+  university?: string | null;
+  location?: string | null;
+  institutionWebsite?: string | null;
+  startYear: number;
+  endYear?: number | null;
+  /**
+   * Enable this when the qualification is still in progress.
+   */
+  currentlyStudying?: boolean | null;
+  expectedCompletion?: string | null;
+  resultType?: ('cgpa' | 'gpa' | 'percentage' | 'grade' | 'pass' | 'not-applicable') | null;
+  result?: string | null;
+  /**
+   * Optional grading scale used by the institution.
+   */
+  resultScale?: string | null;
+  academicStanding?:
+    ('distinction' | 'first-class' | 'second-class' | 'pass' | 'in-progress' | 'not-applicable') | null;
+  /**
+   * Explain the programme, academic focus, practical work, and its relevance to your professional goals.
+   */
+  summary: string;
+  coursework?:
+    | {
+        courseName: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  achievements?:
+    | {
+        title: string;
+        description?: string | null;
+        year?: number | null;
+        id?: string | null;
+      }[]
+    | null;
+  activities?:
+    | {
+        title: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Connect this education record to relevant technical and professional skills.
+   */
+  relatedSkills?: (number | Skill)[] | null;
+  /**
+   * Connect academic projects completed during this qualification.
+   */
+  relatedProjects?: (number | Project)[] | null;
+  /**
+   * Feature this qualification prominently on the portfolio.
+   */
+  featured?: boolean | null;
+  /**
+   * Lower values appear before higher values.
+   */
+  displayOrder: number;
+  logoPath?: string | null;
+  /**
+   * Describe the logo for accessibility and search engines.
+   */
+  logoAlt?: string | null;
+  /**
+   * Optional public URL for the certificate, marks memo, credential, or verification page.
+   */
+  certificateURL?: string | null;
+  badgeLabel?: string | null;
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+    keywords?:
+      | {
+          keyword: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -369,6 +490,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'skills';
         value: number | Skill;
+      } | null)
+    | ({
+        relationTo: 'education';
+        value: number | Education;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -530,6 +655,76 @@ export interface SkillsSelect<T extends boolean = true> {
   featured?: T;
   displayOrder?: T;
   accentStyle?: T;
+  badgeLabel?: T;
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        keywords?:
+          | T
+          | {
+              keyword?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "education_select".
+ */
+export interface EducationSelect<T extends boolean = true> {
+  _order?: T;
+  institution?: T;
+  slug?: T;
+  educationLevel?: T;
+  qualification?: T;
+  fieldOfStudy?: T;
+  specialization?: T;
+  university?: T;
+  location?: T;
+  institutionWebsite?: T;
+  startYear?: T;
+  endYear?: T;
+  currentlyStudying?: T;
+  expectedCompletion?: T;
+  resultType?: T;
+  result?: T;
+  resultScale?: T;
+  academicStanding?: T;
+  summary?: T;
+  coursework?:
+    | T
+    | {
+        courseName?: T;
+        description?: T;
+        id?: T;
+      };
+  achievements?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        year?: T;
+        id?: T;
+      };
+  activities?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  relatedSkills?: T;
+  relatedProjects?: T;
+  featured?: T;
+  displayOrder?: T;
+  logoPath?: T;
+  logoAlt?: T;
+  certificateURL?: T;
   badgeLabel?: T;
   seo?:
     | T
