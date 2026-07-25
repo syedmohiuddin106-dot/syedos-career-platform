@@ -19,8 +19,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
-    }
+  "@/*": ["./src/*"],
+  "@payload-config": ["./payload.config.ts"]
+}
   },
   "include": [
     "next-env.d.ts",

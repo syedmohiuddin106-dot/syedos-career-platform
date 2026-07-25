@@ -28,6 +28,26 @@ export default buildConfig({
 
   admin: {
     user: "users",
+
+    routes: {
+      createFirstUser: "/setup",
+    },
+
+    components: {
+      views: {
+        dashboard: {
+          Component:
+            "/src/components/admin/dashboard/syedos-dashboard",
+        },
+
+        syedosFirstUserSetup: {
+          Component:
+            "/src/components/admin/setup/first-user-view",
+          path: "/setup",
+          exact: true,
+        },
+      },
+    },
   },
 
   collections: [Users],

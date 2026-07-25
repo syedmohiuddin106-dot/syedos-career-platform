@@ -1,0 +1,649 @@
+.page {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+
+  display: grid;
+  width: 100vw;
+  min-width: 100%;
+  height: 100vh;
+  min-height: 100vh;
+  grid-template-columns:
+    minmax(380px, 0.9fr)
+    minmax(560px, 1.1fr);
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  background:
+    radial-gradient(
+      circle at 12% 16%,
+      rgb(37 99 235 / 22%),
+      transparent 34rem
+    ),
+    radial-gradient(
+      circle at 88% 82%,
+      rgb(14 165 233 / 15%),
+      transparent 30rem
+    ),
+    #020617;
+
+  color: #f8fafc;
+}
+
+.page::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+
+  background-image:
+    linear-gradient(rgb(148 163 184 / 5%) 1px, transparent 1px),
+    linear-gradient(
+      90deg,
+      rgb(148 163 184 / 5%) 1px,
+      transparent 1px
+    );
+
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, black, transparent 90%);
+}
+
+.brandPanel,
+.formPanel {
+  position: relative;
+  z-index: 1;
+}
+
+.brandPanel {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
+
+  border-right: 1px solid rgb(148 163 184 / 14%);
+  padding: clamp(2rem, 5vw, 5rem);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgb(15 23 42 / 96%),
+      rgb(2 6 23 / 88%)
+    );
+}
+
+.brandHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.brandMark {
+  display: grid;
+  width: 3.25rem;
+  height: 3.25rem;
+  flex: 0 0 auto;
+  place-items: center;
+
+  border: 1px solid rgb(56 189 248 / 42%);
+  border-radius: 1rem;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgb(37 99 235 / 38%),
+      rgb(14 165 233 / 12%)
+    );
+
+  box-shadow:
+    0 18px 55px rgb(2 132 199 / 20%),
+    inset 0 1px 0 rgb(255 255 255 / 12%);
+
+  color: #67e8f9;
+}
+
+.brandIdentity {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.brandName {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.brandLabel {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 0.73rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.brandContent {
+  width: 100%;
+  max-width: 38rem;
+  margin-block: auto;
+  padding-block: 4rem;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0 0 1.4rem;
+
+  color: #67e8f9;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  width: 1.8rem;
+  height: 1px;
+  content: "";
+  background: currentColor;
+}
+
+.heading {
+  max-width: 36rem;
+  margin: 0;
+
+  font-size: clamp(2.75rem, 5vw, 5.4rem);
+  font-weight: 850;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+}
+
+.headingAccent {
+  display: block;
+  margin-top: 0.18em;
+
+  background: linear-gradient(90deg, #60a5fa, #67e8f9);
+  background-clip: text;
+  color: transparent;
+}
+
+.introduction {
+  max-width: 34rem;
+  margin: 1.65rem 0 0;
+
+  color: #a8b5c8;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.featureList {
+  display: grid;
+  gap: 0.85rem;
+  margin: 2.2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  color: #d8e1ee;
+  font-size: 0.9rem;
+}
+
+.featureIcon {
+  display: grid;
+  width: 1.8rem;
+  height: 1.8rem;
+  flex: 0 0 auto;
+  place-items: center;
+
+  border: 1px solid rgb(45 212 191 / 22%);
+  border-radius: 999px;
+  background: rgb(13 148 136 / 12%);
+  color: #5eead4;
+}
+
+.brandFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  color: #64748b;
+  font-size: 0.75rem;
+}
+
+.securityStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.securityDot {
+  width: 0.48rem;
+  height: 0.48rem;
+  border-radius: 999px;
+
+  background: #34d399;
+  box-shadow: 0 0 0 5px rgb(52 211 153 / 10%);
+}
+
+.formPanel {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+
+  padding: clamp(1.5rem, 4vw, 4rem);
+}
+
+.card {
+  width: min(100%, 43rem);
+
+  border: 1px solid rgb(148 163 184 / 16%);
+  border-radius: 1.75rem;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgb(15 23 42 / 92%),
+      rgb(2 6 23 / 96%)
+    );
+
+  box-shadow:
+    0 40px 100px rgb(0 0 0 / 40%),
+    inset 0 1px 0 rgb(255 255 255 / 6%);
+
+  backdrop-filter: blur(22px);
+}
+
+.cardHeader {
+  padding: clamp(1.75rem, 4vw, 2.8rem);
+  padding-bottom: 1.5rem;
+
+  border-bottom: 1px solid rgb(148 163 184 / 12%);
+}
+
+.stepBadge {
+  display: inline-flex;
+  min-height: 2rem;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding-inline: 0.75rem;
+
+  border: 1px solid rgb(59 130 246 / 26%);
+  border-radius: 999px;
+  background: rgb(37 99 235 / 10%);
+
+  color: #93c5fd;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.cardTitle {
+  margin: 1.15rem 0 0;
+
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 820;
+  letter-spacing: -0.045em;
+}
+
+.cardDescription {
+  max-width: 36rem;
+  margin: 0.75rem 0 0;
+
+  color: #94a3b8;
+  font-size: 0.93rem;
+  line-height: 1.7;
+}
+
+.form {
+  display: grid;
+  gap: 1.3rem;
+
+  padding: clamp(1.75rem, 4vw, 2.8rem);
+  padding-top: 1.8rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.field label {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  color: #e2e8f0;
+  font-size: 0.82rem;
+  font-weight: 750;
+}
+
+.field label span {
+  color: #fb7185;
+}
+
+.inputShell {
+  display: flex;
+  min-height: 3.35rem;
+  align-items: center;
+  gap: 0.8rem;
+
+  border: 1px solid rgb(148 163 184 / 20%);
+  border-radius: 0.9rem;
+
+  background: rgb(15 23 42 / 76%);
+  padding-inline: 1rem;
+
+  color: #64748b;
+
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease;
+}
+
+.inputShell:focus-within {
+  border-color: rgb(56 189 248 / 72%);
+  background: rgb(15 23 42 / 96%);
+
+  box-shadow:
+    0 0 0 4px rgb(14 165 233 / 10%),
+    0 12px 36px rgb(2 132 199 / 10%);
+
+  color: #67e8f9;
+}
+
+.inputShell input,
+.inputShell select {
+  width: 100%;
+  min-width: 0;
+
+  border: 0;
+  outline: 0;
+  background: transparent;
+
+  color: #f8fafc;
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+.inputShell input::placeholder {
+  color: #64748b;
+}
+
+.inputShell select {
+  cursor: pointer;
+}
+
+.inputShell option {
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+.visibilityButton {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+
+  border: 0;
+  background: transparent;
+  padding: 0.35rem;
+
+  color: #94a3b8;
+  cursor: pointer;
+
+  transition:
+    color 150ms ease,
+    transform 150ms ease;
+}
+
+.visibilityButton:hover {
+  color: #67e8f9;
+}
+
+.visibilityButton:active {
+  transform: scale(0.94);
+}
+
+.passwordMeter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  color: #64748b;
+  font-size: 0.72rem;
+}
+
+.passwordMeterTrack {
+  width: 7.5rem;
+  height: 0.28rem;
+  overflow: hidden;
+
+  border-radius: 999px;
+  background: rgb(148 163 184 / 14%);
+}
+
+.passwordMeterTrack span {
+  display: block;
+  height: 100%;
+
+  border-radius: inherit;
+  background: linear-gradient(90deg, #f43f5e, #f59e0b, #34d399);
+
+  transition: width 220ms ease;
+}
+
+.passwordMeter strong {
+  margin-left: 0.3rem;
+  color: #cbd5e1;
+}
+
+.helpText {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.74rem;
+  line-height: 1.5;
+}
+
+.errorMessage,
+.successMessage {
+  border-radius: 0.85rem;
+  padding: 0.9rem 1rem;
+
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+.errorMessage {
+  border: 1px solid rgb(251 113 133 / 28%);
+  background: rgb(190 18 60 / 12%);
+  color: #fda4af;
+}
+
+.successMessage {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  border: 1px solid rgb(52 211 153 / 26%);
+  background: rgb(5 150 105 / 12%);
+  color: #6ee7b7;
+}
+
+.submitButton {
+  display: inline-flex;
+  min-height: 3.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+
+  margin-top: 0.2rem;
+
+  border: 1px solid rgb(96 165 250 / 36%);
+  border-radius: 0.95rem;
+
+  background: linear-gradient(135deg, #2563eb, #0284c7);
+
+  box-shadow:
+    0 18px 42px rgb(37 99 235 / 22%),
+    inset 0 1px 0 rgb(255 255 255 / 18%);
+
+  color: white;
+  font-size: 0.88rem;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease,
+    opacity 150ms ease;
+}
+
+.submitButton:hover:not(:disabled) {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 22px 48px rgb(37 99 235 / 30%),
+    inset 0 1px 0 rgb(255 255 255 / 20%);
+}
+
+.submitButton:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.submitButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.68;
+}
+
+.spinner {
+  animation: spin 800ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 1100px) {
+  .page {
+    position: fixed;
+    inset: 0;
+
+    width: 100vw;
+    min-width: 100vw;
+    height: 100vh;
+    min-height: 100vh;
+
+    grid-template-columns: 1fr;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .brandPanel {
+    width: 100%;
+    min-height: auto;
+
+    border-right: 0;
+    border-bottom: 1px solid rgb(148 163 184 / 14%);
+
+    padding: clamp(1.5rem, 6vw, 3rem);
+  }
+
+  .brandContent {
+    width: 100%;
+    max-width: 46rem;
+    margin: 0;
+
+    padding-block: 4rem 2.5rem;
+  }
+
+  .heading {
+    max-width: 42rem;
+  }
+
+  .introduction {
+    max-width: 42rem;
+  }
+
+  .formPanel {
+    width: 100%;
+    min-height: auto;
+
+    padding: clamp(2rem, 6vw, 4rem);
+  }
+
+  .card {
+    width: min(100%, 44rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .brandPanel,
+  .formPanel {
+    padding: 1rem;
+  }
+
+  .brandContent {
+    padding-block: 3rem 1.5rem;
+  }
+
+  .heading {
+    font-size: 2.65rem;
+  }
+
+  .brandFooter {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .card {
+    border-radius: 1.2rem;
+  }
+
+  .cardHeader,
+  .form {
+    padding: 1.35rem;
+  }
+
+  .passwordMeter {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .passwordMeterTrack {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .visibilityButton,
+  .submitButton,
+  .inputShell,
+  .passwordMeterTrack span {
+    transition: none;
+  }
+
+  .spinner {
+    animation-duration: 1.5s;
+  }
+}
