@@ -72,6 +72,7 @@ export interface Config {
     skills: Skill;
     education: Education;
     certifications: Certification;
+    experience: Experience;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -84,6 +85,7 @@ export interface Config {
     skills: SkillsSelect<false> | SkillsSelect<true>;
     education: EducationSelect<false> | EducationSelect<true>;
     certifications: CertificationsSelect<false> | CertificationsSelect<true>;
+    experience: ExperienceSelect<false> | ExperienceSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -566,6 +568,118 @@ export interface Certification {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Manage internships, employment, freelance work, academic experience, leadership roles, and professional responsibilities displayed on SyedOS.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "experience".
+ */
+export interface Experience {
+  id: number;
+  _order?: string | null;
+  /**
+   * Enter the official role, internship title, job title, leadership position, or responsibility.
+   */
+  role: string;
+  /**
+   * Automatically generated from the role and organization.
+   */
+  slug: string;
+  organization: string;
+  experienceType:
+    | 'internship'
+    | 'full-time'
+    | 'part-time'
+    | 'freelance'
+    | 'contract'
+    | 'academic-project'
+    | 'leadership'
+    | 'volunteer'
+    | 'training'
+    | 'other';
+  location?: string | null;
+  workMode?: ('onsite' | 'remote' | 'hybrid') | null;
+  organizationWebsite?: string | null;
+  /**
+   * Summarize the role, major responsibilities, technologies used, and professional relevance.
+   */
+  summary: string;
+  startDate: string;
+  endDate?: string | null;
+  currentlyWorking?: boolean | null;
+  /**
+   * Optional human-readable duration shown on the public portfolio.
+   */
+  durationLabel?: string | null;
+  responsibilities?:
+    | {
+        title: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  achievements?:
+    | {
+        title: string;
+        description?: string | null;
+        metric?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Connect this experience to the relevant skills stored in SyedOS.
+   */
+  technologies?: (number | Skill)[] | null;
+  /**
+   * Connect projects completed or developed during this experience.
+   */
+  relatedProjects?: (number | Project)[] | null;
+  teamSize?: number | null;
+  supervisor?: {
+    name?: string | null;
+    role?: string | null;
+    organization?: string | null;
+  };
+  /**
+   * Optional public certificate, internship letter, or verification link.
+   */
+  certificateURL?: string | null;
+  projectURL?: string | null;
+  organizationLogoPath?: string | null;
+  organizationLogoAlt?: string | null;
+  supportingDocuments?:
+    | {
+        title: string;
+        url: string;
+        documentType?:
+          ('certificate' | 'offer-letter' | 'completion-letter' | 'recommendation' | 'project-report' | 'other') | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Feature this experience prominently on the homepage or experience page.
+   */
+  featured?: boolean | null;
+  /**
+   * Lower values appear before higher values.
+   */
+  displayOrder: number;
+  badgeLabel?: string | null;
+  accentStyle?: ('blue' | 'cyan' | 'teal' | 'violet' | 'amber' | 'emerald') | null;
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+    keywords?:
+      | {
+          keyword: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -608,6 +722,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'certifications';
         value: number | Certification;
+      } | null)
+    | ({
+        relationTo: 'experience';
+        value: number | Experience;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -900,6 +1018,81 @@ export interface CertificationsSelect<T extends boolean = true> {
   certificateImageAlt?: T;
   issuerLogoPath?: T;
   issuerLogoAlt?: T;
+  badgeLabel?: T;
+  accentStyle?: T;
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        keywords?:
+          | T
+          | {
+              keyword?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "experience_select".
+ */
+export interface ExperienceSelect<T extends boolean = true> {
+  _order?: T;
+  role?: T;
+  slug?: T;
+  organization?: T;
+  experienceType?: T;
+  location?: T;
+  workMode?: T;
+  organizationWebsite?: T;
+  summary?: T;
+  startDate?: T;
+  endDate?: T;
+  currentlyWorking?: T;
+  durationLabel?: T;
+  responsibilities?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  achievements?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        metric?: T;
+        id?: T;
+      };
+  technologies?: T;
+  relatedProjects?: T;
+  teamSize?: T;
+  supervisor?:
+    | T
+    | {
+        name?: T;
+        role?: T;
+        organization?: T;
+      };
+  certificateURL?: T;
+  projectURL?: T;
+  organizationLogoPath?: T;
+  organizationLogoAlt?: T;
+  supportingDocuments?:
+    | T
+    | {
+        title?: T;
+        url?: T;
+        documentType?: T;
+        id?: T;
+      };
+  featured?: T;
+  displayOrder?: T;
   badgeLabel?: T;
   accentStyle?: T;
   seo?:
