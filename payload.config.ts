@@ -9,6 +9,7 @@ import { Certifications } from "./src/collections/Certifications";
 import { Experience } from "./src/collections/Experience";
 import { Media } from "./src/collections/Media";
 import { Profile } from "./src/collections/Profile";
+import { ContactSubmissions } from "./src/collections/ContactSubmissions";
 
 const databaseURL = process.env.DATABASE_URL;
 const payloadSecret = process.env.PAYLOAD_SECRET;
@@ -57,7 +58,7 @@ export default buildConfig({
     },
   },
 
-  collections: [Users, Projects, Skills, Education, Certifications, Experience, Media, Profile],
+  collections: [Users, Projects, Skills, Education, Certifications, Experience, Media, Profile, ContactSubmissions],
 
   db: postgresAdapter({
     pool: {

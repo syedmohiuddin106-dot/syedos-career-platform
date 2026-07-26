@@ -75,6 +75,7 @@ export interface Config {
     experience: Experience;
     media: Media;
     profile: Profile;
+    'contact-submissions': ContactSubmission;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -90,6 +91,7 @@ export interface Config {
     experience: ExperienceSelect<false> | ExperienceSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     profile: ProfileSelect<false> | ProfileSelect<true>;
+    'contact-submissions': ContactSubmissionsSelect<false> | ContactSubmissionsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -935,6 +937,49 @@ export interface Profile {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Review and manage messages submitted through the public SyedOS contact form.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-submissions".
+ */
+export interface ContactSubmission {
+  id: number;
+  name: string;
+  email: string;
+  company?: string | null;
+  phone?: string | null;
+  subject: string;
+  message: string;
+  inquiryType: 'internship' | 'job' | 'freelance' | 'collaboration' | 'academic' | 'general' | 'other';
+  preferredContactMethod?: ('email' | 'phone' | 'linkedin') | null;
+  submissionStatus: 'new' | 'reviewed' | 'replied' | 'archived' | 'spam';
+  priority: 'low' | 'normal' | 'high' | 'urgent';
+  /**
+   * Private notes visible only inside the administration dashboard.
+   */
+  adminNotes?: string | null;
+  /**
+   * Optional summary of the response or follow-up action taken.
+   */
+  responseSummary?: string | null;
+  reviewedAt?: string | null;
+  repliedAt?: string | null;
+  /**
+   * Assign the submission to an administrator for follow-up.
+   */
+  assignedTo?: (number | null) | User;
+  sourcePage?: string | null;
+  referrer?: string | null;
+  userAgent?: string | null;
+  ipAddress?: string | null;
+  /**
+   * Confirms that the sender agreed to be contacted regarding the submitted message.
+   */
+  consentAccepted: boolean;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -989,6 +1034,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'profile';
         value: number | Profile;
+      } | null)
+    | ({
+        relationTo: 'contact-submissions';
+        value: number | ContactSubmission;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1552,6 +1601,34 @@ export interface ProfileSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-submissions_select".
+ */
+export interface ContactSubmissionsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  company?: T;
+  phone?: T;
+  subject?: T;
+  message?: T;
+  inquiryType?: T;
+  preferredContactMethod?: T;
+  submissionStatus?: T;
+  priority?: T;
+  adminNotes?: T;
+  responseSummary?: T;
+  reviewedAt?: T;
+  repliedAt?: T;
+  assignedTo?: T;
+  sourcePage?: T;
+  referrer?: T;
+  userAgent?: T;
+  ipAddress?: T;
+  consentAccepted?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
