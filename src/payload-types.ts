@@ -101,8 +101,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'site-settings': SiteSetting;
+  };
+  globalsSelect: {
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -1669,6 +1673,167 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * Manage global branding, navigation, footer, contact, SEO, and platform-wide settings used across SyedOS.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: number;
+  siteName: string;
+  siteTagline: string;
+  /**
+   * A platform-wide summary used in metadata, footer content, and general presentation.
+   */
+  siteDescription: string;
+  logo?: (number | null) | Media;
+  favicon?: (number | null) | Media;
+  /**
+   * Fallback initials shown when no logo image is available.
+   */
+  brandInitials?: string | null;
+  navigationItems?:
+    | {
+        label: string;
+        url: string;
+        openInNewTab?: boolean | null;
+        highlighted?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  showResumeButton?: boolean | null;
+  resumeButtonLabel?: string | null;
+  footerDescription: string;
+  footerLinks?:
+    | {
+        label: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  copyrightText: string;
+  showBuiltWith?: boolean | null;
+  builtWithText?: string | null;
+  contactHeading: string;
+  contactDescription: string;
+  contactEmail: string;
+  responseTime?: string | null;
+  acceptedInquiryTypes?:
+    | {
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  defaultSEO: {
+    title: string;
+    description: string;
+    keywords?:
+      | {
+          keyword: string;
+          id?: string | null;
+        }[]
+      | null;
+    socialImage?: (number | null) | Media;
+  };
+  socialLinks?:
+    | {
+        platform: 'linkedin' | 'github' | 'youtube' | 'x' | 'instagram' | 'email' | 'other';
+        label: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Enable this only when temporarily hiding the public portfolio.
+   */
+  maintenanceMode?: boolean | null;
+  maintenanceMessage?: string | null;
+  enableContactForm?: boolean | null;
+  enableResumeDownload?: boolean | null;
+  enableAnalytics?: boolean | null;
+  analyticsProvider?: ('vercel' | 'google' | 'plausible' | 'other') | null;
+  analyticsID?: string | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  siteName?: T;
+  siteTagline?: T;
+  siteDescription?: T;
+  logo?: T;
+  favicon?: T;
+  brandInitials?: T;
+  navigationItems?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        openInNewTab?: T;
+        highlighted?: T;
+        id?: T;
+      };
+  showResumeButton?: T;
+  resumeButtonLabel?: T;
+  footerDescription?: T;
+  footerLinks?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        id?: T;
+      };
+  copyrightText?: T;
+  showBuiltWith?: T;
+  builtWithText?: T;
+  contactHeading?: T;
+  contactDescription?: T;
+  contactEmail?: T;
+  responseTime?: T;
+  acceptedInquiryTypes?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  defaultSEO?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        keywords?:
+          | T
+          | {
+              keyword?: T;
+              id?: T;
+            };
+        socialImage?: T;
+      };
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        label?: T;
+        url?: T;
+        id?: T;
+      };
+  maintenanceMode?: T;
+  maintenanceMessage?: T;
+  enableContactForm?: T;
+  enableResumeDownload?: T;
+  enableAnalytics?: T;
+  analyticsProvider?: T;
+  analyticsID?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
