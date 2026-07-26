@@ -74,6 +74,7 @@ export interface Config {
     certifications: Certification;
     experience: Experience;
     media: Media;
+    profile: Profile;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -88,6 +89,7 @@ export interface Config {
     certifications: CertificationsSelect<false> | CertificationsSelect<true>;
     experience: ExperienceSelect<false> | ExperienceSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    profile: ProfileSelect<false> | ProfileSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -778,6 +780,161 @@ export interface Media {
   };
 }
 /**
+ * Manage the main professional identity, biography, contact details, career preferences, social links, and personal presentation used across SyedOS.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "profile".
+ */
+export interface Profile {
+  id: number;
+  /**
+   * Enter the professional name displayed throughout the portfolio.
+   */
+  fullName: string;
+  /**
+   * Automatically generated from the full name.
+   */
+  slug: string;
+  professionalTitle: string;
+  /**
+   * A shorter title for compact cards, metadata, and navigation.
+   */
+  shortTitle?: string | null;
+  /**
+   * A concise professional introduction for the homepage hero section.
+   */
+  headline: string;
+  /**
+   * A brief professional summary for cards, homepage sections, and metadata.
+   */
+  shortBio: string;
+  /**
+   * A detailed biography for the About page, including education, interests, projects, and career direction.
+   */
+  fullBio: string;
+  location?: string | null;
+  nationality?: string | null;
+  languages?:
+    | {
+        language: string;
+        proficiency: 'basic' | 'conversational' | 'professional' | 'native-bilingual';
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Describe the type of opportunities, responsibilities, technologies, and professional growth you are pursuing.
+   */
+  careerObjective: string;
+  careerInterests?:
+    | {
+        title: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  preferredRoles?:
+    | {
+        role: string;
+        id?: string | null;
+      }[]
+    | null;
+  availabilityStatus:
+    'open-to-internships' | 'open-to-part-time' | 'open-to-full-time' | 'open-to-freelance' | 'not-available';
+  preferredWorkModes?: ('remote' | 'hybrid' | 'onsite')[] | null;
+  preferredLocations?:
+    | {
+        location: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Optional plans related to postgraduate education, specialization, or international study.
+   */
+  higherEducationGoal?: string | null;
+  /**
+   * Connect the profile to the most important skills currently being developed.
+   */
+  focusAreas?: (number | Skill)[] | null;
+  /**
+   * The professional email displayed publicly for recruiters and collaborators.
+   */
+  publicEmail: string;
+  /**
+   * Optional public phone number. Leave blank when you prefer email contact only.
+   */
+  phone?: string | null;
+  socialLinks?:
+    | {
+        platform: 'linkedin' | 'github' | 'portfolio' | 'email' | 'youtube' | 'x' | 'instagram' | 'other';
+        label: string;
+        url: string;
+        featured?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  contactPreferences?:
+    | {
+        preference: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Select the primary professional profile photo from the Media collection.
+   */
+  profilePhoto?: (number | null) | Media;
+  /**
+   * Select the current downloadable resume from the Media collection.
+   */
+  resume?: (number | null) | Media;
+  resumeLabel?: string | null;
+  resumeLastUpdated?: string | null;
+  /**
+   * Optional professional introduction or portfolio walkthrough video.
+   */
+  introVideoURL?: string | null;
+  professionalHighlights?:
+    | {
+        title: string;
+        value: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  personalStrengths?:
+    | {
+        title: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Mark this as the active profile used throughout the public portfolio.
+   */
+  featured?: boolean | null;
+  heroBadge?: string | null;
+  primaryCallToAction?: {
+    label?: string | null;
+    url?: string | null;
+  };
+  secondaryCallToAction?: {
+    label?: string | null;
+    url?: string | null;
+  };
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+    keywords?:
+      | {
+          keyword: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -828,6 +985,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'profile';
+        value: number | Profile;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1279,6 +1440,118 @@ export interface MediaSelect<T extends boolean = true> {
               filename?: T;
             };
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "profile_select".
+ */
+export interface ProfileSelect<T extends boolean = true> {
+  fullName?: T;
+  slug?: T;
+  professionalTitle?: T;
+  shortTitle?: T;
+  headline?: T;
+  shortBio?: T;
+  fullBio?: T;
+  location?: T;
+  nationality?: T;
+  languages?:
+    | T
+    | {
+        language?: T;
+        proficiency?: T;
+        id?: T;
+      };
+  careerObjective?: T;
+  careerInterests?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  preferredRoles?:
+    | T
+    | {
+        role?: T;
+        id?: T;
+      };
+  availabilityStatus?: T;
+  preferredWorkModes?: T;
+  preferredLocations?:
+    | T
+    | {
+        location?: T;
+        id?: T;
+      };
+  higherEducationGoal?: T;
+  focusAreas?: T;
+  publicEmail?: T;
+  phone?: T;
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        label?: T;
+        url?: T;
+        featured?: T;
+        id?: T;
+      };
+  contactPreferences?:
+    | T
+    | {
+        preference?: T;
+        id?: T;
+      };
+  profilePhoto?: T;
+  resume?: T;
+  resumeLabel?: T;
+  resumeLastUpdated?: T;
+  introVideoURL?: T;
+  professionalHighlights?:
+    | T
+    | {
+        title?: T;
+        value?: T;
+        description?: T;
+        id?: T;
+      };
+  personalStrengths?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  featured?: T;
+  heroBadge?: T;
+  primaryCallToAction?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+      };
+  secondaryCallToAction?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+      };
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        keywords?:
+          | T
+          | {
+              keyword?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
