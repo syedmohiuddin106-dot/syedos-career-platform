@@ -230,11 +230,17 @@ export async function HomeHero() {
                 >
                   {profile?.heroBadge ?? "Available for opportunities"}
                 </Badge>
-                
+
+                <Badge
+                  variant="outline"
+                  className="whitespace-nowrap text-[0.72rem] sm:text-sm"
+                >
+                  Final-year IT student
+                </Badge>
               </div>
 
               <p className="syedos-code-text text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-cyan-400 sm:text-sm sm:tracking-[0.2em]">
-                {profile?.shortTitle ?? "Full-Stack Developer"}
+                FULL-STACK DEVELOPER · AI BUILDER
               </p>
             </div>
 
