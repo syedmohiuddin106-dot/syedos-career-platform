@@ -73,6 +73,7 @@ export interface Config {
     education: Education;
     certifications: Certification;
     experience: Experience;
+    media: Media;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -86,6 +87,7 @@ export interface Config {
     education: EducationSelect<false> | EducationSelect<true>;
     certifications: CertificationsSelect<false> | CertificationsSelect<true>;
     experience: ExperienceSelect<false> | ExperienceSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -680,6 +682,102 @@ export interface Experience {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Manage project images, profile photos, institution logos, certificates, resume files, and other media used across SyedOS.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  /**
+   * Enter a clear internal title for identifying this file in the CMS.
+   */
+  title: string;
+  /**
+   * Describe the image or document for accessibility and search engines.
+   */
+  alt: string;
+  /**
+   * Optional public caption or supporting context for this media item.
+   */
+  caption?: string | null;
+  mediaType:
+    | 'profile-photo'
+    | 'project-cover'
+    | 'project-screenshot'
+    | 'institution-logo'
+    | 'organization-logo'
+    | 'issuer-logo'
+    | 'certificate'
+    | 'resume'
+    | 'document'
+    | 'general';
+  visibility: 'public' | 'private' | 'unlisted';
+  /**
+   * Mark this as a preferred file for featured sections or primary display.
+   */
+  featured?: boolean | null;
+  /**
+   * Lower values appear before higher values.
+   */
+  displayOrder: number;
+  /**
+   * Optional photographer, creator, institution, or source attribution.
+   */
+  credit?: string | null;
+  /**
+   * Optional ownership or usage-rights information.
+   */
+  copyrightNotice?: string | null;
+  tags?:
+    | {
+        tag: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Private CMS notes for file usage, replacement plans, or verification status.
+   */
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    card?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    hero?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -726,6 +824,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'experience';
         value: number | Experience;
+      } | null)
+    | ({
+        relationTo: 'media';
+        value: number | Media;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1110,6 +1212,73 @@ export interface ExperienceSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  title?: T;
+  alt?: T;
+  caption?: T;
+  mediaType?: T;
+  visibility?: T;
+  featured?: T;
+  displayOrder?: T;
+  credit?: T;
+  copyrightNotice?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        card?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        hero?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
