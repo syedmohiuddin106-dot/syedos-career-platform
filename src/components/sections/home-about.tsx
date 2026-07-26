@@ -16,92 +16,259 @@ import { Card } from "@/components/ui/card";
 import { IconContainer } from "@/components/ui/icon-container";
 import { Progress } from "@/components/ui/progress";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { getHomeHeroData } from "@/lib/cms/get-home-hero-data";
 
-const careerFocusAreas = [
+const fallbackCareerFocusAreas = [
   {
     title: "Full-Stack Development",
     description:
       "Building responsive interfaces, backend systems, secure workflows, database-driven features, and production-ready applications.",
-    icon: <Layers3 size={23} />,
-    variant: "primary" as const,
-    technologies: [
-      "Next.js",
-      "TypeScript",
-      "JavaScript",
-      "PHP",
-      "MySQL",
-    ],
+    technologies: ["Next.js", "TypeScript", "JavaScript", "PHP", "MySQL"],
   },
   {
-    title: "Artificial Intelligence",
+    title: "Cloud Computing and DevOps",
     description:
-      "Integrating AI assistants, structured prompting, validation, automation, and intelligent features into practical software products.",
-    icon: <BrainCircuit size={23} />,
-    variant: "info" as const,
-    technologies: [
-      "Gemini API",
-      "AI Agents",
-      "Prompt Design",
-      "Automation",
-    ],
+      "Learning cloud platforms, containerization, deployment workflows, automation, and reliable application delivery.",
+    technologies: ["AWS", "Docker", "CI/CD", "Cloud Deployment"],
   },
   {
-    title: "Cloud and DevOps",
+    title: "Software Engineering",
     description:
-      "Learning deployment, cloud infrastructure, containerization, environment management, automation, and reliable release workflows.",
-    icon: <CloudCog size={23} />,
-    variant: "success" as const,
-    technologies: [
-      "AWS",
-      "Docker",
-      "CI/CD",
-      "Cloud Deployment",
-    ],
+      "Designing maintainable systems using structured development, testing, documentation, version control, and clean architecture.",
+    technologies: ["Architecture", "Testing", "Git", "Documentation"],
   },
-];
+] as const;
 
-const engineeringValues = [
+const fallbackEngineeringValues = [
   {
     title: "Practical problem solving",
     description:
       "I focus on software that addresses real user needs instead of building features without a clear purpose.",
-    icon: <Rocket size={20} />,
-    variant: "primary" as const,
   },
   {
     title: "Secure development",
     description:
       "Authentication, authorization, validation, safe database access, and responsible data handling are part of the design process.",
-    icon: <ShieldCheck size={20} />,
-    variant: "success" as const,
   },
   {
     title: "Scalable architecture",
     description:
       "Projects are organized into reusable components and modules so they remain maintainable as features grow.",
-    icon: <Code2 size={20} />,
-    variant: "info" as const,
   },
   {
     title: "Continuous learning",
     description:
-      "I actively improve my knowledge of modern frameworks, AI, cloud technologies, testing, and software engineering practices.",
-    icon: <GraduationCap size={20} />,
+      "I actively improve my knowledge of modern frameworks, cloud technologies, testing, and software engineering practices.",
+  },
+] as const;
+
+const focusVisuals = [
+  {
+    icon: <Layers3 aria-hidden="true" size={23} />,
+    variant: "primary" as const,
+  },
+  {
+    icon: <CloudCog aria-hidden="true" size={23} />,
+    variant: "success" as const,
+  },
+  {
+    icon: <BrainCircuit aria-hidden="true" size={23} />,
+    variant: "info" as const,
+  },
+] as const;
+
+const valueVisuals = [
+  {
+    icon: <Rocket aria-hidden="true" size={20} />,
+    variant: "primary" as const,
+  },
+  {
+    icon: <ShieldCheck aria-hidden="true" size={20} />,
+    variant: "success" as const,
+  },
+  {
+    icon: <Code2 aria-hidden="true" size={20} />,
+    variant: "info" as const,
+  },
+  {
+    icon: <GraduationCap aria-hidden="true" size={20} />,
     variant: "warning" as const,
   },
-];
+] as const;
 
-export function HomeAbout() {
+const progressVariants = [
+  "primary",
+  "success",
+  "info",
+  "warning",
+] as const;
+
+function getCompletionYear(
+  expectedCompletion: string | null | undefined,
+  endYear: number | null | undefined,
+): string {
+  if (endYear) {
+    return endYear.toString();
+  }
+
+  if (expectedCompletion) {
+    const year = expectedCompletion.match(/\b\d{4}\b/);
+
+    if (year?.[0]) {
+      return year[0];
+    }
+
+    return expectedCompletion;
+  }
+
+  return "Present";
+}
+
+function getShortInstitutionName(
+  institution: string | null | undefined,
+): string {
+  if (!institution) {
+    return "KITS Warangal";
+  }
+
+  if (
+    institution
+      .toLowerCase()
+      .includes("kakatiya institute of technology and science")
+  ) {
+    return "KITS Warangal";
+  }
+
+  return institution;
+}
+
+export async function HomeAbout() {
+  const { profile, featuredSkills, education } =
+    await getHomeHeroData();
+
+  const careerFocusAreas =
+    profile?.careerInterests && profile.careerInterests.length > 0
+      ? profile.careerInterests.slice(0, 3).map((interest, index) => ({
+          title: interest.title,
+          description:
+            interest.description ??
+            fallbackCareerFocusAreas[index]?.description ??
+            "Developing practical knowledge through projects and continuous learning.",
+          technologies:
+            index === 0
+              ? featuredSkills.map((skill) => skill.name).slice(0, 5)
+              : [...(fallbackCareerFocusAreas[index]?.technologies ?? [])],
+        }))
+      : fallbackCareerFocusAreas.map((area) => ({
+          ...area,
+          technologies: [...area.technologies],
+        }));
+
+  const engineeringValues =
+    profile?.personalStrengths && profile.personalStrengths.length > 0
+      ? profile.personalStrengths.slice(0, 4).map((strength, index) => ({
+          title: strength.title,
+          description:
+            strength.description ??
+            fallbackEngineeringValues[index]?.description ??
+            "A professional strength developed through practical software projects.",
+        }))
+      : fallbackEngineeringValues.map((value) => ({ ...value }));
+
+  const progressSkills =
+    featuredSkills.length > 0
+      ? featuredSkills.slice(0, 4).map((skill, index) => ({
+          label: skill.name,
+          value: skill.proficiencyPercentage ?? 70,
+          variant:
+            progressVariants[index % progressVariants.length] ??
+            "primary",
+        }))
+      : [
+          {
+            label: "Full-Stack Web Development",
+            value: 82,
+            variant: "primary" as const,
+          },
+          {
+            label: "PHP and MySQL",
+            value: 78,
+            variant: "success" as const,
+          },
+          {
+            label: "Cloud and DevOps",
+            value: 40,
+            variant: "info" as const,
+          },
+          {
+            label: "Software Engineering",
+            value: 65,
+            variant: "warning" as const,
+          },
+        ];
+
+  const educationCompletionYear = getCompletionYear(
+    education?.expectedCompletion,
+    education?.endYear,
+  );
+
+  const institutionName = getShortInstitutionName(
+    education?.institution,
+  );
+
+  const programme =
+    education?.fieldOfStudy ?? "Information Technology";
+
+  const qualification =
+    education?.qualification ?? "Bachelor of Technology";
+
+  const aboutTitle =
+    profile?.professionalTitle ??
+    "A developer focused on practical and scalable software";
+
+  const aboutDescription =
+    profile?.careerObjective ??
+    "My goal is to become a strong software engineer by combining full-stack development, cloud technologies, secure engineering, and practical project experience.";
+
+  const fullBiography =
+    profile?.fullBio ??
+    "I am pursuing a B.Tech in Information Technology while developing practical full-stack software projects and strengthening my knowledge of databases, cloud computing, deployment, and software engineering.";
+
+  const biographyParagraphs = fullBiography
+    .split(/\n+/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean)
+    .slice(0, 1);
+
+  const profileBadges =
+    profile?.careerInterests
+      ?.slice(0, 4)
+      .map((interest) => interest.title) ??
+    [
+      "Software Engineering",
+      "Full-Stack Development",
+      "Cloud Computing",
+    ];
+
+  const currentPriority =
+    profile?.higherEducationGoal ??
+    profile?.careerObjective ??
+    "Strengthening advanced web development while building cloud, DevOps, testing, deployment, and software-engineering skills.";
+
+  const academicSummary =
+    education?.summary ??
+    "Academic learning is strengthened through practical applications involving databases, web development, software architecture, and project implementation.";
+
   return (
     <section className="relative border-b border-slate-800/80">
       <div className="syedos-container relative pb-14 pt-6 sm:py-14 lg:py-14 xl:pb-18 xl:pt-8">
         <SectionHeading
           eyebrow="About and Career Direction"
-          title="A developer focused on practical, intelligent, and scalable software"
-          description="My goal is to become a strong software engineer by combining full-stack development, artificial intelligence, cloud technologies, secure engineering, and real-world project experience."
+          title={aboutTitle}
+          description={aboutDescription}
         />
 
-        <div className="mt-8 grid gap-5 xl:grid-cols-[1.05fr_0.95fr]">
+        <div className="mt-8 grid items-start gap-5 xl:grid-cols-[1.05fr_0.95fr]">
           <Card
             variant="glass"
             className="overflow-hidden"
@@ -113,7 +280,10 @@ export function HomeAbout() {
                 rounded="large"
                 label="Developer profile"
               >
-                <Sparkles size={24} />
+                <Sparkles
+                  aria-hidden="true"
+                  size={24}
+                />
               </IconContainer>
 
               <div className="min-w-0">
@@ -122,62 +292,62 @@ export function HomeAbout() {
                 </p>
 
                 <h3 className="mt-3 text-xl leading-tight sm:text-2xl">
-                  Building a strong foundation for modern software
-                  engineering
+                  {profile?.headline ??
+                    "Building a strong foundation for modern software engineering"}
                 </h3>
 
                 <div className="mt-5 space-y-4 text-sm leading-7 text-slate-400">
-                  <p>
-                    I am pursuing a B.Tech in Information Technology
-                    at Kakatiya Institute of Technology and Science,
-                    Warangal, with expected graduation in 2027.
-                  </p>
+                  {biographyParagraphs.map((paragraph) => (
+                    <p key={paragraph}>
+                      {paragraph}
+                    </p>
+                  ))}
 
-                  <p>
-                    My development journey currently focuses on
-                    creating complete software systems rather than
-                    isolated pages. I work across user interfaces,
-                    backend logic, databases, authentication,
-                    validation, project structure, deployment, and
-                    intelligent AI-assisted features.
-                  </p>
-
-                  <p>
-                    Through projects such as SyedOS, SyedAI Assistant,
-                    and CampusHire, I am developing the technical and
-                    problem-solving abilities required for full-stack
-                    and software engineering roles.
-                  </p>
+                  {profile?.fullBio ? (
+                    <a
+                      href="/about"
+                      className="inline-flex font-medium text-cyan-400 transition hover:text-cyan-300"
+                    >
+                      Read the complete biography
+                    </a>
+                  ) : null}
                 </div>
 
                 <div className="mt-6 flex flex-wrap gap-2">
-                  <Badge variant="primary">
-                    Software Engineering
-                  </Badge>
-
-                  <Badge variant="info">
-                    AI Integration
-                  </Badge>
-
-                  <Badge variant="success">
-                    Full-Stack Development
-                  </Badge>
-
-                  <Badge variant="outline">
-                    Cloud Learning
-                  </Badge>
+                  {profileBadges.map((badge, index) => (
+                    <Badge
+                      key={badge}
+                      variant={
+                        index === 0
+                          ? "primary"
+                          : index === 1
+                            ? "success"
+                            : index === 2
+                              ? "info"
+                              : "outline"
+                      }
+                    >
+                      {badge}
+                    </Badge>
+                  ))}
                 </div>
               </div>
             </div>
           </Card>
 
-          <Card variant="editorial">
+          <Card
+            variant="editorial"
+            className="self-start"
+          >
             <div className="flex items-center gap-3">
               <IconContainer
                 variant="success"
                 label="Career readiness"
               >
-                <BriefcaseBusiness size={20} />
+                <BriefcaseBusiness
+                  aria-hidden="true"
+                  size={20}
+                />
               </IconContainer>
 
               <div>
@@ -192,29 +362,14 @@ export function HomeAbout() {
             </div>
 
             <div className="mt-6 space-y-5">
-              <Progress
-                label="Full-Stack Web Development"
-                value={82}
-                variant="primary"
-              />
-
-              <Progress
-                label="PHP and MySQL"
-                value={78}
-                variant="success"
-              />
-
-              <Progress
-                label="Artificial Intelligence"
-                value={64}
-                variant="info"
-              />
-
-              <Progress
-                label="Cloud and DevOps"
-                value={35}
-                variant="warning"
-              />
+              {progressSkills.map((skill) => (
+                <Progress
+                  key={skill.label}
+                  label={skill.label}
+                  value={skill.value}
+                  variant={skill.variant}
+                />
+              ))}
             </div>
 
             <div className="mt-6 rounded-2xl border border-slate-800 bg-slate-950/45 p-4 sm:p-5">
@@ -224,7 +379,10 @@ export function HomeAbout() {
                   size="small"
                   label="Current learning"
                 >
-                  <GraduationCap size={16} />
+                  <GraduationCap
+                    aria-hidden="true"
+                    size={16}
+                  />
                 </IconContainer>
 
                 <div>
@@ -233,9 +391,7 @@ export function HomeAbout() {
                   </p>
 
                   <p className="mt-2 text-sm leading-6 text-slate-500">
-                    Strengthening advanced web development while
-                    building cloud, DevOps, AI integration, testing,
-                    and deployment skills.
+                    {currentPriority}
                   </p>
                 </div>
               </div>
@@ -247,44 +403,51 @@ export function HomeAbout() {
           <SectionHeading
             eyebrow="Career Focus"
             title="Three technical areas shaping my career"
-            description="These areas support my goal of becoming a versatile software engineer capable of building and deploying complete intelligent applications."
+            description="These areas support my goal of becoming a versatile software engineer capable of building, managing, and deploying complete applications."
           />
 
           <div className="mt-7 grid gap-5 lg:grid-cols-3">
-            {careerFocusAreas.map((area) => (
-              <Card
-                key={area.title}
-                variant="elevated"
-                interactive
-              >
-                <IconContainer
-                  variant={area.variant}
-                  size="large"
-                  label={area.title}
+            {careerFocusAreas.map((area, index) => {
+              const visual =
+                focusVisuals[index] ?? focusVisuals[0];
+
+              return (
+                <Card
+                  key={area.title}
+                  variant="elevated"
+                  interactive
                 >
-                  {area.icon}
-                </IconContainer>
+                  <IconContainer
+                    variant={visual.variant}
+                    size="large"
+                    label={area.title}
+                  >
+                    {visual.icon}
+                  </IconContainer>
 
-                <h3 className="mt-4 text-lg leading-tight sm:mt-5 sm:text-xl">
-                  {area.title}
-                </h3>
+                  <h3 className="mt-4 text-lg leading-tight sm:mt-5 sm:text-xl">
+                    {area.title}
+                  </h3>
 
-                <p className="mt-3 text-sm leading-7 text-slate-400">
-                  {area.description}
-                </p>
+                  <p className="mt-3 text-sm leading-7 text-slate-400">
+                    {area.description}
+                  </p>
 
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {area.technologies.map((technology) => (
-                    <Badge
-                      key={technology}
-                      variant="outline"
-                    >
-                      {technology}
-                    </Badge>
-                  ))}
-                </div>
-              </Card>
-            ))}
+                  {area.technologies.length > 0 ? (
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      {area.technologies.map((technology) => (
+                        <Badge
+                          key={technology}
+                          variant="outline"
+                        >
+                          {technology}
+                        </Badge>
+                      ))}
+                    </div>
+                  ) : null}
+                </Card>
+              );
+            })}
           </div>
         </div>
 
@@ -295,7 +458,10 @@ export function HomeAbout() {
                 variant="warning"
                 label="Academic foundation"
               >
-                <GraduationCap size={20} />
+                <GraduationCap
+                  aria-hidden="true"
+                  size={20}
+                />
               </IconContainer>
 
               <div>
@@ -304,7 +470,7 @@ export function HomeAbout() {
                 </p>
 
                 <h3 className="mt-1 text-lg leading-tight sm:text-xl">
-                  B.Tech Information Technology
+                  {qualification} in {programme}
                 </h3>
               </div>
             </div>
@@ -316,7 +482,7 @@ export function HomeAbout() {
                 </p>
 
                 <p className="mt-1 font-semibold text-white">
-                  Kakatiya Institute of Technology and Science
+                  {institutionName}
                 </p>
               </div>
 
@@ -327,7 +493,7 @@ export function HomeAbout() {
                   </p>
 
                   <p className="mt-1 font-semibold text-white">
-                    Information Technology
+                    {programme}
                   </p>
                 </div>
 
@@ -337,7 +503,7 @@ export function HomeAbout() {
                   </p>
 
                   <p className="mt-1 font-semibold text-white">
-                    Expected 2027
+                    Expected {educationCompletionYear}
                   </p>
                 </div>
               </div>
@@ -350,9 +516,7 @@ export function HomeAbout() {
                 />
 
                 <p className="text-sm leading-6 text-blue-100/75">
-                  Academic learning is strengthened through practical
-                  applications involving databases, web development,
-                  software architecture, and project implementation.
+                  {academicSummary}
                 </p>
               </div>
             </div>
@@ -368,28 +532,33 @@ export function HomeAbout() {
             </h3>
 
             <div className="mt-7 grid gap-4 sm:grid-cols-2">
-              {engineeringValues.map((value) => (
-                <div
-                  key={value.title}
-                  className="rounded-2xl border border-slate-800 bg-slate-950/45 p-4 sm:p-5"
-                >
-                  <IconContainer
-                    variant={value.variant}
-                    size="small"
-                    label={value.title}
+              {engineeringValues.map((value, index) => {
+                const visual =
+                  valueVisuals[index] ?? valueVisuals[0];
+
+                return (
+                  <div
+                    key={value.title}
+                    className="rounded-2xl border border-slate-800 bg-slate-950/45 p-4 sm:p-5"
                   >
-                    {value.icon}
-                  </IconContainer>
+                    <IconContainer
+                      variant={visual.variant}
+                      size="small"
+                      label={value.title}
+                    >
+                      {visual.icon}
+                    </IconContainer>
 
-                  <h4 className="mt-4 font-semibold text-white">
-                    {value.title}
-                  </h4>
+                    <h4 className="mt-4 font-semibold text-white">
+                      {value.title}
+                    </h4>
 
-                  <p className="mt-2 text-sm leading-6 text-slate-500">
-                    {value.description}
-                  </p>
-                </div>
-              ))}
+                    <p className="mt-2 text-sm leading-6 text-slate-500">
+                      {value.description}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
           </Card>
         </div>

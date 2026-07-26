@@ -10,6 +10,9 @@ import {
   Sparkles,
   Users,
 } from "lucide-react";
+import { getPayload } from "payload";
+
+import config from "@payload-config";
 
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -17,42 +20,75 @@ import { IconContainer } from "@/components/ui/icon-container";
 import { LinkButton } from "@/components/ui/link-button";
 import { SectionHeading } from "@/components/ui/section-heading";
 
-const featuredProjects = [
+type BadgeVariant =
+  | "primary"
+  | "success"
+  | "warning"
+  | "danger"
+  | "info"
+  | "outline";
+
+type IconVariant =
+  | "default"
+  | "primary"
+  | "success"
+  | "warning"
+  | "danger"
+  | "info";
+
+type ProjectDisplayItem = {
+  title: string;
+  slug: string;
+  category: string;
+  description: string;
+  status: string;
+  statusVariant: BadgeVariant;
+  technologies: string[];
+  highlights: string[];
+  repository: string | null;
+  liveURL: string | null;
+  icon: React.ReactNode;
+  iconVariant: IconVariant;
+};
+
+const fallbackProjects: ProjectDisplayItem[] = [
   {
     title: "SyedOS",
+    slug: "syedos",
     category: "Intelligent Career Portfolio Platform",
     description:
-      "A scalable personal career platform combining audience-adaptive portfolio pages, private administration, structured content, analytics, AI-assisted career intelligence, and future CMS integration.",
-    icon: <Sparkles size={24} />,
-    iconVariant: "primary" as const,
+      "A production-grade personal career platform combining a professional portfolio, secure administration, structured CMS content, PostgreSQL, Docker, REST APIs, and publishing workflows.",
+    icon: <Sparkles aria-hidden="true" size={24} />,
+    iconVariant: "primary",
     status: "In Development",
-    statusVariant: "warning" as const,
+    statusVariant: "warning",
     technologies: [
       "Next.js",
       "TypeScript",
-      "Tailwind CSS",
       "Payload CMS",
       "PostgreSQL",
+      "Docker",
     ],
     highlights: [
       "Responsive reusable design system",
-      "Private administrator architecture",
-      "Audience and career modes",
-      "AI integration roadmap",
+      "Secure Payload CMS administration",
+      "PostgreSQL content architecture",
+      "Draft and publishing workflows",
     ],
     repository:
-      "https://github.com/syedmohiuddin106-dot",
-    projectHref: "/projects/syedos",
+      "https://github.com/syedmohiuddin106-dot/syedos-career-platform",
+    liveURL: null,
   },
   {
     title: "SyedAI Assistant",
+    slug: "syedai-assistant",
     category: "Multi-Skill Artificial Intelligence Assistant",
     description:
       "An AI-powered development and career assistant designed to support programming, database troubleshooting, project work, portfolio improvement, resume preparation, and technical learning.",
-    icon: <Bot size={24} />,
-    iconVariant: "info" as const,
+    icon: <Bot aria-hidden="true" size={24} />,
+    iconVariant: "info",
     status: "Active",
-    statusVariant: "primary" as const,
+    statusVariant: "primary",
     technologies: [
       "PHP",
       "JavaScript",
@@ -68,24 +104,19 @@ const featuredProjects = [
     ],
     repository:
       "https://github.com/syedmohiuddin106-dot/syedai-assistant",
-    projectHref: "/projects/syedai-assistant",
+    liveURL: null,
   },
   {
     title: "CampusHire",
+    slug: "campushire",
     category: "Campus Placement Management System",
     description:
-      "A full-stack placement platform with dedicated student, recruiter, and administrator experiences for profiles, jobs, applications, recruiter approvals, interview scheduling, notifications, and reports.",
-    icon: <BriefcaseBusiness size={24} />,
-    iconVariant: "success" as const,
+      "A full-stack placement platform with dedicated student, recruiter, and administrator experiences for profiles, jobs, applications, approvals, interviews, notifications, and reports.",
+    icon: <BriefcaseBusiness aria-hidden="true" size={24} />,
+    iconVariant: "success",
     status: "Completed",
-    statusVariant: "success" as const,
-    technologies: [
-      "HTML",
-      "CSS",
-      "JavaScript",
-      "PHP",
-      "MySQL",
-    ],
+    statusVariant: "success",
+    technologies: ["HTML", "CSS", "JavaScript", "PHP", "MySQL"],
     highlights: [
       "Student, recruiter, and admin roles",
       "Secure authentication and sessions",
@@ -93,8 +124,8 @@ const featuredProjects = [
       "Recruiter approval and reporting",
     ],
     repository:
-      "https://github.com/syedmohiuddin106-dot",
-    projectHref: "/projects/campushire",
+      "https://github.com/syedmohiuddin106-dot/campushire-campus-placement-system",
+    liveURL: null,
   },
 ];
 
@@ -102,27 +133,214 @@ const projectCapabilities = [
   {
     title: "End-to-end development",
     description:
-      "Projects cover interface design, backend logic, database modeling, validation, authentication, and deployment planning.",
-    icon: <Layers3 size={21} />,
+      "Projects cover interface design, backend logic, database modelling, validation, authentication, APIs, and deployment planning.",
+    icon: <Layers3 aria-hidden="true" size={21} />,
     variant: "primary" as const,
   },
   {
     title: "Secure engineering",
     description:
-      "Authentication, role checks, prepared statements, session handling, file validation, and protected administration are treated as core requirements.",
-    icon: <ShieldCheck size={21} />,
+      "Authentication, role checks, prepared statements, session handling, validation, and protected administration are treated as core requirements.",
+    icon: <ShieldCheck aria-hidden="true" size={21} />,
     variant: "success" as const,
   },
   {
     title: "Real user workflows",
     description:
       "Each project is designed around practical user journeys rather than disconnected technical demonstrations.",
-    icon: <Users size={21} />,
+    icon: <Users aria-hidden="true" size={21} />,
     variant: "info" as const,
   },
 ];
 
-export function HomeProjects() {
+const projectIcons = [
+  {
+    icon: <Sparkles aria-hidden="true" size={24} />,
+    variant: "primary" as const,
+  },
+  {
+    icon: <Bot aria-hidden="true" size={24} />,
+    variant: "info" as const,
+  },
+  {
+    icon: <BriefcaseBusiness aria-hidden="true" size={24} />,
+    variant: "success" as const,
+  },
+];
+
+function formatProjectType(value: string | null | undefined): string {
+  if (!value) {
+    return "Software Development Project";
+  }
+
+  const labels: Record<string, string> = {
+    "full-stack": "Full-Stack Application",
+    frontend: "Frontend Application",
+    backend: "Backend Application",
+    mobile: "Mobile Application",
+    ai: "Artificial Intelligence Project",
+    cloud: "Cloud and DevOps Project",
+    database: "Database Application",
+    other: "Software Development Project",
+  };
+
+  return (
+    labels[value] ??
+    value
+      .replaceAll("-", " ")
+      .replace(/\b\w/g, (character) => character.toUpperCase())
+  );
+}
+
+function formatDevelopmentStatus(
+  value: string | null | undefined,
+): {
+  label: string;
+  variant: BadgeVariant;
+} {
+  switch (value) {
+    case "completed":
+      return {
+        label: "Completed",
+        variant: "success",
+      };
+
+    case "active":
+      return {
+        label: "Active",
+        variant: "primary",
+      };
+
+    case "in-development":
+      return {
+        label: "In Development",
+        variant: "warning",
+      };
+
+    case "planned":
+      return {
+        label: "Planned",
+        variant: "outline",
+      };
+
+    case "archived":
+  return {
+    label: "Archived",
+    variant: "outline",
+  };
+
+    default:
+      return {
+        label: "Published",
+        variant: "primary",
+      };
+  }
+}
+
+async function getFeaturedProjects(): Promise<ProjectDisplayItem[]> {
+  const payload = await getPayload({
+    config,
+  });
+
+  const result = await payload.find({
+    collection: "projects",
+    where: {
+      and: [
+        {
+          _status: {
+            equals: "published",
+          },
+        },
+        {
+          featured: {
+            equals: true,
+          },
+        },
+      ],
+    },
+    depth: 1,
+    limit: 3,
+    sort: "displayOrder",
+    draft: false,
+  });
+
+  const cmsProjects: ProjectDisplayItem[] = result.docs.map(
+    (project, index) => {
+      const visual =
+        projectIcons[index] ??
+        projectIcons[0];
+
+      const status = formatDevelopmentStatus(
+        project.developmentStatus,
+      );
+
+      const technologies =
+        project.technologies
+          ?.map((technology) => technology.name)
+          .filter(Boolean)
+          .slice(0, 6) ?? [];
+
+      const featureHighlights =
+        project.features
+          ?.map((feature) => feature.title)
+          .filter(Boolean)
+          .slice(0, 4) ?? [];
+
+      const responsibilityHighlights =
+        project.responsibilities
+          ?.map((responsibility) => responsibility.description)
+          .filter(Boolean)
+          .slice(0, 4) ?? [];
+
+      const highlights =
+        featureHighlights.length > 0
+          ? featureHighlights
+          : responsibilityHighlights;
+
+      return {
+        title: project.title,
+        slug: project.slug,
+        category: formatProjectType(project.projectType),
+        description:
+          project.shortDescription ??
+          "A software project designed around practical workflows, secure engineering, and maintainable architecture.",
+        status: status.label,
+        statusVariant: status.variant,
+        technologies:
+          technologies.length > 0
+            ? technologies
+            : ["Software Engineering"],
+        highlights:
+          highlights.length > 0
+            ? highlights
+            : [
+                "Structured application architecture",
+                "Practical user workflows",
+                "Secure data management",
+                "Production-oriented development",
+              ],
+        repository: project.githubURL ?? null,
+        liveURL: project.liveURL ?? null,
+        icon: visual.icon,
+        iconVariant: visual.variant,
+      };
+    },
+  );
+
+  const cmsSlugs = new Set(
+    cmsProjects.map((project) => project.slug),
+  );
+
+  const remainingFallbackProjects = fallbackProjects.filter(
+    (project) => !cmsSlugs.has(project.slug),
+  );
+
+  return [...cmsProjects, ...remainingFallbackProjects].slice(0, 3);
+}
+
+export async function HomeProjects() {
+  const featuredProjects = await getFeaturedProjects();
+
   return (
     <section className="relative border-b border-slate-800/80">
       <div
@@ -139,14 +357,19 @@ export function HomeProjects() {
           <SectionHeading
             eyebrow="Featured Projects"
             title="Software products built around complete real-world workflows"
-            description="These projects demonstrate full-stack development, artificial intelligence integration, database design, secure engineering, role-based systems, and scalable product thinking."
+            description="These projects demonstrate full-stack development, database design, secure engineering, APIs, role-based systems, modern architecture, and scalable product thinking."
           />
 
           <div className="shrink-0">
             <LinkButton
               href="/projects"
               variant="secondary"
-              rightIcon={<ArrowRight size={17} />}
+              rightIcon={
+                <ArrowRight
+                  aria-hidden="true"
+                  size={17}
+                />
+              }
             >
               View all projects
             </LinkButton>
@@ -156,7 +379,7 @@ export function HomeProjects() {
         <div className="mt-8 grid gap-6">
           {featuredProjects.map((project, index) => (
             <Card
-              key={project.title}
+              key={project.slug}
               variant={
                 index === 0
                   ? "glass"
@@ -224,7 +447,10 @@ export function HomeProjects() {
                       size="small"
                       label="Project highlights"
                     >
-                      <Code2 size={16} />
+                      <Code2
+                        aria-hidden="true"
+                        size={16}
+                      />
                     </IconContainer>
 
                     <div>
@@ -255,22 +481,56 @@ export function HomeProjects() {
 
                   <div className="mt-7 flex flex-wrap gap-3">
                     <LinkButton
-                      href={project.projectHref}
-                      rightIcon={<ArrowRight size={17} />}
+                      href={`/projects/${project.slug}`}
+                      rightIcon={
+                        <ArrowRight
+                          aria-hidden="true"
+                          size={17}
+                        />
+                      }
                     >
                       View Case Study
                     </LinkButton>
 
-                    <LinkButton
-                      href={project.repository}
-                      external
-                      variant="secondary"
-                      leftIcon={<GitBranch size={17} />}
-                      rightIcon={<ExternalLink size={14} />}
-                      ariaLabel={`Open ${project.title} repository`}
-                    >
-                      Repository
-                    </LinkButton>
+                    {project.repository ? (
+                      <LinkButton
+                        href={project.repository}
+                        external
+                        variant="secondary"
+                        leftIcon={
+                          <GitBranch
+                            aria-hidden="true"
+                            size={17}
+                          />
+                        }
+                        rightIcon={
+                          <ExternalLink
+                            aria-hidden="true"
+                            size={14}
+                          />
+                        }
+                        ariaLabel={`Open ${project.title} repository`}
+                      >
+                        Repository
+                      </LinkButton>
+                    ) : null}
+
+                    {project.liveURL ? (
+                      <LinkButton
+                        href={project.liveURL}
+                        external
+                        variant="ghost"
+                        rightIcon={
+                          <ExternalLink
+                            aria-hidden="true"
+                            size={14}
+                          />
+                        }
+                        ariaLabel={`Open the live ${project.title} project`}
+                      >
+                        Live Project
+                      </LinkButton>
+                    ) : null}
                   </div>
                 </div>
               </div>
@@ -282,7 +542,7 @@ export function HomeProjects() {
           <SectionHeading
             eyebrow="Project Approach"
             title="Projects designed as complete systems"
-            description="Each application is used to strengthen technical depth, architecture decisions, security awareness, user experience, and software engineering discipline."
+            description="Each application strengthens technical depth, architecture decisions, security awareness, user experience, testing, and software-engineering discipline."
           />
 
           <div className="mt-7 grid gap-5 lg:grid-cols-3">
@@ -311,7 +571,7 @@ export function HomeProjects() {
           </div>
         </div>
 
-        <div className="mt-10 rounded-3xl sm:mt-12 sm:rounded-[2rem] border border-blue-500/20 bg-blue-500/10 p-5 sm:p-8">
+        <div className="mt-10 rounded-3xl border border-blue-500/20 bg-blue-500/10 p-5 sm:mt-12 sm:rounded-[2rem] sm:p-8">
           <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-center">
             <div>
               <p className="syedos-code-text text-xs font-semibold uppercase tracking-[0.18em] text-blue-300">
@@ -319,20 +579,25 @@ export function HomeProjects() {
               </p>
 
               <h3 className="mt-3 text-xl leading-tight sm:text-2xl">
-                Detailed case studies will include architecture,
-                security, challenges, testing, and outcomes.
+                Detailed case studies include architecture, security,
+                challenges, testing, and outcomes.
               </h3>
 
               <p className="mt-3 max-w-3xl text-sm leading-7 text-blue-100/70">
-                The final project pages will explain how each system
-                was planned, built, tested, improved, and prepared for
-                recruiters, interviews, and technical evaluation.
+                Each project page explains how the system was planned,
+                built, tested, improved, and prepared for recruiters,
+                interviews, and technical evaluation.
               </p>
             </div>
 
             <LinkButton
               href="/projects"
-              rightIcon={<ArrowRight size={18} />}
+              rightIcon={
+                <ArrowRight
+                  aria-hidden="true"
+                  size={18}
+                />
+              }
             >
               Explore Project Portfolio
             </LinkButton>
