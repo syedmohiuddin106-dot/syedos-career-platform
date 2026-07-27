@@ -1,20 +1,17 @@
 ﻿import type { Metadata } from "next";
-
 import {
-  ArrowRight,
   Award,
   BadgeCheck,
   BookOpenCheck,
   BrainCircuit,
+  CalendarDays,
   CheckCircle2,
   CloudCog,
-  Code2,
   ExternalLink,
   FileCheck2,
   GraduationCap,
   Layers3,
-  Medal,
-  Sparkles,
+  ShieldCheck,
   Target,
 } from "lucide-react";
 
@@ -24,33 +21,34 @@ import { IconContainer } from "@/components/ui/icon-container";
 import { LinkButton } from "@/components/ui/link-button";
 import { Progress } from "@/components/ui/progress";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { getCertificationsPageData } from "@/lib/cms/get-certifications-page-data";
 
 export const metadata: Metadata = {
-  title: "Certificates",
+  title: "Certifications | SyedOS",
   description:
-    "Explore Syed Mohiuddin's professional certification roadmap, current learning pathways, completed project evidence, and planned full-stack, cloud, AI, and software engineering credentials.",
+    "Verified certifications, current learning pathways, professional credentials, progress, and practical project evidence by Syed Mohiuddin.",
   alternates: {
-    canonical: "/certificates",
+    canonical: "/certifications",
   },
   openGraph: {
-    title: "Certificates and Learning | Syed Mohiuddin",
+    title: "Certifications | Syed Mohiuddin",
     description:
-      "Explore professional certification goals, current learning pathways, and verified project-based technical experience.",
-    url: "/certificates",
+      "Explore verified credentials, current learning pathways, certification progress, and practical project evidence.",
+    url: "/certifications",
     type: "website",
   },
 };
 
-const certificationTracks = [
+const roadmapTracks = [
   {
     title: "Full-Stack Web Development",
     provider: "Meta and recognised learning platforms",
-    status: "Current Priority",
+    status: "Current priority",
     statusVariant: "primary" as const,
-    icon: <Layers3 size={23} />,
     iconVariant: "primary" as const,
+    icon: <Layers3 aria-hidden="true" size={22} />,
     description:
-      "Developing advanced frontend and backend skills through structured learning and practical portfolio projects.",
+      "Strengthening frontend, backend, database, API, version-control, testing, and production application-development skills.",
     subjects: [
       "HTML and CSS",
       "JavaScript",
@@ -67,10 +65,10 @@ const certificationTracks = [
     provider: "AWS learning pathway",
     status: "Planned",
     statusVariant: "warning" as const,
-    icon: <CloudCog size={23} />,
     iconVariant: "warning" as const,
+    icon: <CloudCog aria-hidden="true" size={22} />,
     description:
-      "Building cloud, deployment, containerization, infrastructure, monitoring, and continuous-delivery knowledge.",
+      "Developing cloud, deployment, containerisation, infrastructure, CI/CD, monitoring, and production-delivery knowledge.",
     subjects: [
       "AWS fundamentals",
       "Cloud infrastructure",
@@ -87,10 +85,10 @@ const certificationTracks = [
     provider: "Google and recognised AI learning platforms",
     status: "Developing",
     statusVariant: "info" as const,
-    icon: <BrainCircuit size={23} />,
     iconVariant: "info" as const,
+    icon: <BrainCircuit aria-hidden="true" size={22} />,
     description:
-      "Strengthening AI integration, prompt design, responsible usage, automation, and intelligent application development.",
+      "Improving AI integration, prompt design, automation, responsible usage, intelligent workflows, and AI-assisted products.",
     subjects: [
       "AI fundamentals",
       "Prompt engineering",
@@ -104,134 +102,101 @@ const certificationTracks = [
   },
 ];
 
-const evidenceCategories = [
-  {
-    title: "Project-based evidence",
-    description:
-      "Complete applications demonstrate practical use of frontend, backend, database, security, AI, and architecture skills.",
-    icon: <Code2 size={21} />,
-    variant: "primary" as const,
-  },
-  {
-    title: "Verified credentials",
-    description:
-      "Official certificates will be added only after successful completion and verification through the issuing organisation.",
-    icon: <BadgeCheck size={21} />,
-    variant: "success" as const,
-  },
-  {
-    title: "Structured learning",
-    description:
-      "Courses are selected to support full-stack development, cloud and DevOps, artificial intelligence, and software careers.",
-    icon: <BookOpenCheck size={21} />,
-    variant: "info" as const,
-  },
-  {
-    title: "Continuous improvement",
-    description:
-      "The learning roadmap will continue to evolve with new technologies, projects, industry requirements, and career goals.",
-    icon: <Sparkles size={21} />,
-    variant: "warning" as const,
-  },
-];
-
-const verificationStandards = [
+const credentialStandards = [
   {
     title: "Official issuer",
     description:
-      "The credential should be issued by the recognised organisation, institution, or technology provider.",
-    icon: <Medal size={20} />,
+      "Credentials should come from a recognised institution, organisation, or technology provider.",
+    icon: <Award aria-hidden="true" size={20} />,
   },
   {
-    title: "Credential verification",
+    title: "Public verification",
     description:
-      "Certificates should include a credential ID, verification page, or official record whenever available.",
-    icon: <FileCheck2 size={20} />,
+      "Completed credentials should include an official verification link, credential ID, or issuer record.",
+    icon: <FileCheck2 aria-hidden="true" size={20} />,
   },
   {
-    title: "Relevant skills",
+    title: "Career relevance",
     description:
-      "The certification should support my chosen full-stack, cloud, DevOps, AI, or software engineering career path.",
-    icon: <Target size={20} />,
+      "Each certification should support full-stack, cloud, DevOps, AI, or software-engineering career goals.",
+    icon: <Target aria-hidden="true" size={20} />,
   },
   {
     title: "Practical application",
     description:
-      "Knowledge from each course should be demonstrated through projects, exercises, documentation, or technical implementation.",
-    icon: <CheckCircle2 size={20} />,
+      "Course knowledge should be supported by projects, assessments, documentation, and technical implementation.",
+    icon: <CheckCircle2 aria-hidden="true" size={20} />,
   },
 ];
 
-const currentEvidence = [
-  {
-    title: "CampusHire",
-    type: "Completed Project",
-    description:
-      "Demonstrates PHP, MySQL, secure authentication, role-based access, job workflows, resume handling, and administration.",
-    href: "/projects/campushire",
-    variant: "success" as const,
-  },
-  {
-    title: "SyedAI Assistant",
-    type: "Active AI Project",
-    description:
-      "Demonstrates Gemini API integration, PHP, MySQL, assistant workflows, file handling, history, favorites, and exports.",
-    href: "/projects/syedai-assistant",
-    variant: "primary" as const,
-  },
-  {
-    title: "SyedOS",
-    type: "Advanced Portfolio Project",
-    description:
-      "Demonstrates Next.js, TypeScript, responsive architecture, reusable UI systems, SEO, project case studies, and deployment planning.",
-    href: "/projects/syedos",
-    variant: "warning" as const,
-  },
-];
+function formatLabel(value: string): string {
+  return value
+    .replaceAll("-", " ")
+    .replace(/\b\w/g, (character) =>
+      character.toUpperCase(),
+    );
+}
 
-const futureCredentials = [
-  {
-    title: "Meta Front-End Developer",
-    category: "Full-Stack Foundation",
-    description:
-      "A structured pathway covering frontend development, React, version control, responsive interfaces, and practical projects.",
-  },
-  {
-    title: "Meta Back-End Developer",
-    category: "Backend Development",
-    description:
-      "A structured pathway supporting backend programming, databases, APIs, development workflows, and application architecture.",
-  },
-  {
-    title: "AWS Cloud Practitioner",
-    category: "Cloud Fundamentals",
-    description:
-      "A foundational AWS credential covering cloud concepts, services, security, pricing, support, and architecture basics.",
-  },
-  {
-    title: "AWS Developer or Solutions Architecture Path",
-    category: "Advanced Cloud",
-    description:
-      "A future technical pathway after completing cloud fundamentals and gaining practical deployment experience.",
-  },
-  {
-    title: "Google AI Learning Credentials",
-    category: "Artificial Intelligence",
-    description:
-      "AI learning focused on responsible AI, generative AI, practical integration, productivity, and intelligent applications.",
-  },
-  {
-    title: "Software Testing Credentials",
-    category: "Quality Engineering",
-    description:
-      "Future learning in unit testing, integration testing, end-to-end testing, accessibility, and production quality assurance.",
-  },
-];
+function formatDate(
+  value: string | null | undefined,
+): string | null {
+  if (!value) {
+    return null;
+  }
 
-export default function CertificatesPage() {
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return value;
+  }
+
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    year: "numeric",
+  }).format(date);
+}
+
+function getStatusVariant(
+  status: string,
+): "success" | "primary" | "warning" | "outline" {
+  if (status === "completed") {
+    return "success";
+  }
+
+  if (status === "in-progress") {
+    return "primary";
+  }
+
+  if (status === "planned") {
+    return "warning";
+  }
+
+  return "outline";
+}
+
+export default async function CertificationsPage() {
+  const { certifications, projects } =
+    await getCertificationsPageData();
+
+  const completedCount = certifications.filter(
+    (certification) =>
+      certification.credentialStatus === "completed",
+  ).length;
+
+  const inProgressCount = certifications.filter(
+    (certification) =>
+      certification.credentialStatus ===
+      "in-progress",
+  ).length;
+
+  const plannedCount = certifications.filter(
+    (certification) =>
+      certification.credentialStatus === "planned",
+  ).length;
+
   return (
     <main className="min-w-0 overflow-hidden">
-      <section className="relative overflow-hidden border-b border-slate-800/80" aria-label="Certificates and credentials overview">
+      <section className="relative overflow-hidden border-b border-slate-800/80">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 overflow-hidden"
@@ -245,276 +210,613 @@ export default function CertificatesPage() {
           <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(148,163,184,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.25)_1px,transparent_1px)] [background-size:48px_48px]" />
         </div>
 
-        <div className="syedos-container relative pb-14 pt-6 sm:py-14 lg:py-14 xl:pb-18 xl:pt-8">
-          <div className="grid min-w-0 gap-9 xl:grid-cols-[1.08fr_0.92fr] xl:items-center xl:gap-12">
-            <div className="min-w-0">
-              <div className="space-y-4">
-                <div className="grid grid-cols-[1.08fr_1.28fr_0.9fr] items-center gap-1.5 sm:flex sm:flex-wrap sm:gap-3">
-                  <Badge
-                    variant="primary"
-                    className="w-full justify-center whitespace-nowrap px-1.5 py-1 text-[0.58rem] tracking-tight min-[430px]:px-2 min-[430px]:text-[0.66rem] sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm"
-                  >
-                    Professional Learning
-                  </Badge>
+        <div className="syedos-container relative pb-14 pt-10 sm:pb-16 sm:pt-12 lg:pb-20 lg:pt-12">
+          <div className="grid items-end gap-10 xl:grid-cols-[1fr_0.72fr] xl:gap-14">
+            <div className="max-w-4xl">
+              <div className="space-y-5">
+  <div className="flex flex-wrap items-center gap-3">
+    <Badge
+      variant="primary"
+      className="px-4 py-2 text-sm sm:text-[0.95rem]"
+    >
+      Professional Learning
+    </Badge>
 
-                  <Badge
-                    variant="info"
-                    className="w-full justify-center whitespace-nowrap px-1.5 py-1 text-[0.58rem] tracking-tight min-[430px]:px-2 min-[430px]:text-[0.66rem] sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm"
-                  >
-                    Certification Roadmap
-                  </Badge>
+    <Badge
+      variant="info"
+      className="px-4 py-2 text-sm sm:text-[0.95rem]"
+    >
+      Verified Credentials
+    </Badge>
 
-                  <Badge
-                    variant="success"
-                    className="w-full justify-center whitespace-nowrap px-1.5 py-1 text-[0.58rem] tracking-tight min-[430px]:px-2 min-[430px]:text-[0.66rem] sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm"
-                  >
-                    Project Evidence
-                  </Badge>
-                </div>
+    <Badge
+      variant="success"
+      className="px-4 py-2 text-sm sm:text-[0.95rem]"
+    >
+      Project Evidence
+    </Badge>
+  </div>
 
-                <p className="syedos-code-text text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-cyan-400 sm:text-sm sm:tracking-[0.2em]">
-                  Certificates and Credentials
-                </p>
-              </div>
+  <p className="syedos-code-text text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400">
+    Certifications and Credentials
+  </p>
+</div>
 
-              <h1
-                id="certificates-page-title"
-                className="mt-3 max-w-4xl text-[2rem] font-bold leading-[1.08] tracking-[-0.035em] text-white min-[430px]:text-[2.65rem] sm:text-5xl sm:leading-[1.07] lg:text-6xl"
-              >
-                Building verified credentials around practical software
-                engineering skills.
+              <h1 className="mt-5 max-w-[15ch] text-4xl font-bold leading-[1.08] tracking-[-0.035em] text-white sm:text-5xl lg:text-6xl">
+                Verified credentials supported by practical
+                software work.
               </h1>
 
-              <p className="mt-5 max-w-3xl text-[0.98rem] leading-7 text-slate-400 sm:mt-6 sm:text-lg sm:leading-8">
-                My certification roadmap focuses on credentials that
-                strengthen full-stack development, cloud and DevOps,
-                artificial intelligence, software quality, and long-term
-                career growth.
+              <p className="mt-6 max-w-3xl text-base leading-7 text-slate-400 sm:text-lg sm:leading-8">
+                My certification strategy combines recognised
+                learning pathways, official verification,
+                practical projects, assessments, and continuous
+                technical development.
               </p>
 
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <LinkButton
-                  href="#learning-pathways"
-                  rightIcon={<ArrowRight aria-hidden="true" size={18} />}
+                  href="#certification-records"
+                  rightIcon={
+                    <BookOpenCheck
+                      aria-hidden="true"
+                      size={17}
+                    />
+                  }
                   className="w-full justify-center sm:w-auto"
                 >
-                  View Learning Pathways
+                  View credentials
                 </LinkButton>
 
                 <LinkButton
-                  href="/projects"
+                  href="#learning-roadmap"
                   variant="secondary"
-                  rightIcon={<ArrowRight aria-hidden="true" size={17} />}
+                  rightIcon={
+                    <GraduationCap
+                      aria-hidden="true"
+                      size={17}
+                    />
+                  }
                   className="w-full justify-center sm:w-auto"
                 >
-                  View Project Evidence
+                  View learning roadmap
                 </LinkButton>
-              </div>
-
-              <div className="mt-9 grid max-w-3xl gap-3 sm:mt-10 sm:grid-cols-3 sm:gap-4">
-                <div className="rounded-2xl border border-slate-800 bg-slate-950/55 p-5 backdrop-blur-sm">
-                  <p className="text-2xl font-bold text-white">
-                    3
-                  </p>
-
-                  <p className="mt-1 text-sm text-slate-500">
-                    priority learning tracks
-                  </p>
-                </div>
-
-                <div className="rounded-2xl border border-slate-800 bg-slate-950/55 p-5 backdrop-blur-sm">
-                  <p className="text-2xl font-bold text-white">
-                    3
-                  </p>
-
-                  <p className="mt-1 text-sm text-slate-500">
-                    project evidence areas
-                  </p>
-                </div>
-
-                <div className="rounded-2xl border border-slate-800 bg-slate-950/55 p-5 backdrop-blur-sm">
-                  <p className="text-2xl font-bold text-white">
-                    Ongoing
-                  </p>
-
-                  <p className="mt-1 text-sm text-slate-500">
-                    professional learning
-                  </p>
-                </div>
               </div>
             </div>
 
-            <Card
-              variant="glass"
-              className="overflow-hidden p-0"
-            >
-              <div className="border-b border-slate-800 p-6">
-                <div className="flex items-center justify-between gap-4">
-                  <div>
-                    <p className="syedos-code-text text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                      Credential Status
-                    </p>
+            {certifications.length > 0 ? (
+              <div className="grid grid-cols-3 gap-3">
+                <div className="rounded-2xl border border-slate-800 bg-slate-950/55 p-4 backdrop-blur-sm">
+                  <p className="text-2xl font-bold text-white">
+                    {completedCount}
+                  </p>
 
-                    <h2 className="mt-2 text-xl">
-                      Verified-first certification approach
-                    </h2>
-                  </div>
+                  <p className="mt-1 text-xs leading-5 text-slate-500">
+                    Completed
+                  </p>
+                </div>
 
-                  <IconContainer
-                    variant="success"
-                    size="large"
-                    rounded="large"
-                    label="Professional certificates"
-                  >
-                    <Award size={24} />
-                  </IconContainer>
+                <div className="rounded-2xl border border-slate-800 bg-slate-950/55 p-4 backdrop-blur-sm">
+                  <p className="text-2xl font-bold text-white">
+                    {inProgressCount}
+                  </p>
+
+                  <p className="mt-1 text-xs leading-5 text-slate-500">
+                    In progress
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-slate-800 bg-slate-950/55 p-4 backdrop-blur-sm">
+                  <p className="text-2xl font-bold text-white">
+                    {plannedCount}
+                  </p>
+
+                  <p className="mt-1 text-xs leading-5 text-slate-500">
+                    Planned
+                  </p>
                 </div>
               </div>
+            ) : (
+              <Card
+                variant="glass"
+                className="overflow-hidden p-0"
+              >
+                <div className="p-6 sm:p-7">
+                  <div className="flex items-start gap-4">
+                    <IconContainer
+                      variant="primary"
+                      size="large"
+                      rounded="large"
+                      label="Certification roadmap status"
+                    >
+                      <GraduationCap
+                        aria-hidden="true"
+                        size={23}
+                      />
+                    </IconContainer>
 
-              <div className="space-y-5 p-6">
-                <div className="rounded-2xl border border-slate-800 bg-slate-950/50 p-5">
-                  <p className="font-semibold text-white">
-                    Current portfolio status
-                  </p>
-
-                  <p className="mt-2 text-sm leading-7 text-slate-400">
-                    Official certificates will be displayed here only
-                    after completion and verification. Current
-                    technical capability is supported by project case
-                    studies and active learning pathways.
-                  </p>
-                </div>
-
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="rounded-xl border border-slate-800 bg-slate-950/45 p-4">
-                    <p className="text-xs uppercase tracking-[0.15em] text-slate-500">
-                      Primary track
-                    </p>
-
-                    <p className="mt-2 font-semibold text-white">
-                      Full-Stack Development
-                    </p>
-                  </div>
-
-                  <div className="rounded-xl border border-slate-800 bg-slate-950/45 p-4">
-                    <p className="text-xs uppercase tracking-[0.15em] text-slate-500">
-                      Secondary track
-                    </p>
-
-                    <p className="mt-2 font-semibold text-white">
-                      Cloud and DevOps
-                    </p>
-                  </div>
-                </div>
-
-                <div className="rounded-xl border border-blue-500/25 bg-blue-500/10 p-4">
-                  <div className="flex items-start gap-3">
-                    <BadgeCheck
-                      aria-hidden="true"
-                      size={20}
-                      className="mt-0.5 shrink-0 text-blue-300"
-                    />
-
-                    <div>
-                      <p className="font-semibold text-blue-200">
-                        No unverified claims
+                    <div className="min-w-0">
+                      <p className="syedos-code-text text-xs font-semibold uppercase tracking-[0.18em] text-cyan-400">
+                        Current status
                       </p>
 
-                      <p className="mt-1 text-sm leading-6 text-blue-100/65">
-                        Planned and in-progress courses are kept
-                        separate from credentials that have been
-                        officially earned.
+                      <h2 className="mt-2 text-xl font-semibold text-white">
+                        Certification roadmap in progress
+                      </h2>
+
+                      <p className="mt-3 text-sm leading-7 text-slate-400">
+                        Official completed credentials will
+                        appear here after they are earned,
+                        verified, and published through Payload
+                        CMS.
                       </p>
                     </div>
                   </div>
                 </div>
-              </div>
-            </Card>
+              </Card>
+            )}
           </div>
         </div>
       </section>
 
       <section
-        id="learning-pathways"
+        id="certification-records"
         className="border-b border-slate-800/80"
-       aria-label="Certification pathways">
-        <div className="syedos-container py-16 sm:py-20 lg:py-24">
+      >
+        <div className="syedos-container py-14 sm:py-16 lg:py-20">
           <SectionHeading
-            eyebrow="Learning Pathways"
-            title="Three certification tracks supporting my career direction"
-            description="These learning pathways support my goal of becoming a full-stack software engineer with cloud, DevOps, and artificial-intelligence capabilities."
+            eyebrow="Official Records"
+            title="Professional certifications and learning credentials"
+            description="Completed, in-progress, and planned credentials are managed through Payload CMS and displayed with verification, learning outcomes, progress, skills, and related projects."
           />
 
-          <div className="mt-10 grid gap-6 lg:grid-cols-3">
-            {certificationTracks.map((track) => (
-              <Card
-                key={track.title}
-                variant="glass"
-                className="h-full"
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <IconContainer
-                    variant={track.iconVariant}
-                    size="large"
-                    label={track.title}
+          {certifications.length > 0 ? (
+            <div className="mt-10 grid gap-6 lg:grid-cols-2">
+              {certifications.map((certification) => {
+                const statusVariant =
+                  getStatusVariant(
+                    certification.credentialStatus,
+                  );
+
+                const issueDate = formatDate(
+                  certification.issueDate,
+                );
+
+                const expiryDate =
+                  certification.doesNotExpire
+                    ? "Does not expire"
+                    : formatDate(
+                        certification.expiryDate,
+                      );
+
+                const skills = (
+                  certification.skillsCovered ?? []
+                ).filter(
+                  (
+                    skill,
+                  ): skill is Exclude<
+                    typeof skill,
+                    number
+                  > =>
+                    typeof skill === "object" &&
+                    skill !== null,
+                );
+
+                const relatedProjects = (
+                  certification.relatedProjects ?? []
+                ).filter(
+                  (
+                    project,
+                  ): project is Exclude<
+                    typeof project,
+                    number
+                  > =>
+                    typeof project === "object" &&
+                    project !== null,
+                );
+
+                return (
+                  <Card
+                    key={certification.id}
+                    variant="glass"
+                    className="flex h-full flex-col overflow-hidden p-0"
                   >
-                    {track.icon}
+                    <article className="flex h-full flex-col">
+                      <header className="border-b border-slate-800 bg-slate-950/40 p-6">
+                        <div className="flex items-start justify-between gap-4">
+                          <IconContainer
+                            variant={
+                              certification.credentialStatus ===
+                              "completed"
+                                ? "success"
+                                : certification.credentialStatus ===
+                                    "in-progress"
+                                  ? "primary"
+                                  : "warning"
+                            }
+                            size="large"
+                            label={certification.title}
+                          >
+                            <Award
+                              aria-hidden="true"
+                              size={22}
+                            />
+                          </IconContainer>
+
+                          <Badge
+                            variant={statusVariant}
+                            dot
+                          >
+                            {formatLabel(
+                              certification.credentialStatus,
+                            )}
+                          </Badge>
+                        </div>
+
+                        <p className="syedos-code-text mt-5 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-400">
+                          {certification.issuer}
+                        </p>
+
+                        <h2 className="mt-2 text-2xl font-semibold text-white">
+                          {certification.title}
+                        </h2>
+
+                        <p className="mt-2 text-sm text-slate-500">
+                          {certification.badgeLabel ??
+                            formatLabel(
+                              certification.certificationType,
+                            )}
+                        </p>
+                      </header>
+
+                      <div className="flex flex-1 flex-col space-y-6 p-6">
+                        <p className="leading-7 text-slate-400">
+                          {certification.description}
+                        </p>
+
+                        <div className="grid gap-3 sm:grid-cols-2">
+                          <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-4">
+                            <div className="flex items-center gap-2 text-sm text-slate-500">
+                              <CalendarDays
+                                aria-hidden="true"
+                                size={16}
+                                className="text-blue-400"
+                              />
+
+                              Issue date
+                            </div>
+
+                            <p className="mt-2 font-medium text-slate-200">
+                              {issueDate ??
+                                "Not specified"}
+                            </p>
+                          </div>
+
+                          <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-4">
+                            <div className="flex items-center gap-2 text-sm text-slate-500">
+                              <FileCheck2
+                                aria-hidden="true"
+                                size={16}
+                                className="text-emerald-400"
+                              />
+
+                              Validity
+                            </div>
+
+                            <p className="mt-2 font-medium text-slate-200">
+                              {expiryDate ??
+                                "Not specified"}
+                            </p>
+                          </div>
+                        </div>
+
+                        {certification.credentialStatus ===
+                          "in-progress" &&
+                        certification.completionProgress !==
+                          null &&
+                        certification.completionProgress !==
+                          undefined ? (
+                          <Progress
+                            label="Completion progress"
+                            value={
+                              certification.completionProgress
+                            }
+                            variant="primary"
+                          />
+                        ) : null}
+
+                        {certification.learningOutcomes &&
+                        certification.learningOutcomes.length >
+                          0 ? (
+                          <section>
+                            <h3 className="flex items-center gap-2 font-semibold text-white">
+                              <CheckCircle2
+                                aria-hidden="true"
+                                size={18}
+                                className="text-cyan-400"
+                              />
+
+                              Learning outcomes
+                            </h3>
+
+                            <div className="mt-4 grid gap-3">
+                              {certification.learningOutcomes.map(
+                                (outcome) => (
+                                  <div
+                                    key={
+                                      outcome.id ??
+                                      outcome.title
+                                    }
+                                    className="rounded-xl border border-slate-800 bg-slate-950/35 p-4"
+                                  >
+                                    <p className="font-medium text-slate-200">
+                                      {outcome.title}
+                                    </p>
+
+                                    {outcome.description ? (
+                                      <p className="mt-2 text-sm leading-6 text-slate-500">
+                                        {
+                                          outcome.description
+                                        }
+                                      </p>
+                                    ) : null}
+                                  </div>
+                                ),
+                              )}
+                            </div>
+                          </section>
+                        ) : null}
+
+                        {skills.length > 0 ? (
+                          <section>
+                            <h3 className="font-semibold text-white">
+                              Skills covered
+                            </h3>
+
+                            <ul className="mt-4 flex flex-wrap gap-2">
+                              {skills.map((skill) => (
+                                <li key={skill.id}>
+                                  <Badge variant="outline">
+                                    {skill.name}
+                                  </Badge>
+                                </li>
+                              ))}
+                            </ul>
+                          </section>
+                        ) : null}
+
+                        {relatedProjects.length > 0 ? (
+                          <section>
+                            <h3 className="font-semibold text-white">
+                              Related project evidence
+                            </h3>
+
+                            <div className="mt-4 flex flex-wrap gap-3">
+                              {relatedProjects.map(
+                                (project) => (
+                                  <LinkButton
+                                    key={project.id}
+                                    href={`/projects/${project.slug}`}
+                                    variant="secondary"
+                                    size="small"
+                                  >
+                                    {project.title}
+                                  </LinkButton>
+                                ),
+                              )}
+                            </div>
+                          </section>
+                        ) : null}
+
+                        <div className="mt-auto flex flex-wrap gap-3 pt-2">
+                          {certification.credentialURL ? (
+                            <LinkButton
+                              href={
+                                certification.credentialURL
+                              }
+                              external
+                              rightIcon={
+                                <ExternalLink
+                                  aria-hidden="true"
+                                  size={15}
+                                />
+                              }
+                            >
+                              Verify credential
+                            </LinkButton>
+                          ) : null}
+
+                          {certification.issuerWebsite ? (
+                            <LinkButton
+                              href={
+                                certification.issuerWebsite
+                              }
+                              external
+                              variant="secondary"
+                              rightIcon={
+                                <ExternalLink
+                                  aria-hidden="true"
+                                  size={15}
+                                />
+                              }
+                            >
+                              Visit issuer
+                            </LinkButton>
+                          ) : null}
+                        </div>
+
+                        {certification.credentialID ? (
+                          <p className="text-xs text-slate-600">
+                            Credential ID:{" "}
+                            {
+                              certification.credentialID
+                            }
+                          </p>
+                        ) : null}
+                      </div>
+                    </article>
+                  </Card>
+                );
+              })}
+            </div>
+          ) : (
+            <Card
+              variant="glass"
+              className="mt-10 overflow-hidden p-0"
+            >
+              <div className="grid lg:grid-cols-[0.72fr_1.28fr]">
+                <div className="border-b border-slate-800 bg-slate-950/45 p-7 lg:border-b-0 lg:border-r">
+                  <IconContainer
+                    variant="primary"
+                    size="large"
+                    rounded="large"
+                    label="Certification roadmap"
+                  >
+                    <GraduationCap
+                      aria-hidden="true"
+                      size={23}
+                    />
                   </IconContainer>
 
-                  <Badge
-                    variant={track.statusVariant}
-                    dot
-                  >
-                    {track.status}
-                  </Badge>
+                  <h2 className="mt-5 text-2xl font-semibold text-white">
+                    Official certification records are being
+                    prepared
+                  </h2>
+
+                  <p className="mt-4 leading-7 text-slate-400">
+                    No certification is displayed as
+                    completed until it has been officially
+                    earned, verified, and published through
+                    Payload CMS.
+                  </p>
                 </div>
 
-                <p className="syedos-code-text mt-6 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                  {track.provider}
-                </p>
+                <div className="grid gap-4 p-7 sm:grid-cols-2">
+                  <div className="rounded-xl border border-blue-500/20 bg-blue-500/5 p-5">
+                    <BadgeCheck
+                      aria-hidden="true"
+                      size={22}
+                      className="text-blue-300"
+                    />
 
-                <h2 className="mt-2 text-xl">
-                  {track.title}
-                </h2>
+                    <h3 className="mt-4 font-semibold text-white">
+                      Verified-first approach
+                    </h3>
 
-                <p className="mt-3 text-sm leading-7 text-slate-400">
-                  {track.description}
-                </p>
+                    <p className="mt-2 text-sm leading-6 text-slate-500">
+                      Credential IDs, issuer links, dates,
+                      and official evidence will be shown
+                      whenever available.
+                    </p>
+                  </div>
 
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {track.subjects.map((subject) => (
-                    <Badge
-                      key={subject}
-                      variant="outline"
-                    >
-                      {subject}
-                    </Badge>
-                  ))}
+                  <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-5">
+                    <ShieldCheck
+                      aria-hidden="true"
+                      size={22}
+                      className="text-emerald-300"
+                    />
+
+                    <h3 className="mt-4 font-semibold text-white">
+                      No unverified claims
+                    </h3>
+
+                    <p className="mt-2 text-sm leading-6 text-slate-500">
+                      Planned and in-progress learning
+                      remains clearly separated from completed
+                      credentials.
+                    </p>
+                  </div>
                 </div>
-
-                <div className="mt-7">
-                  <Progress
-                    label="Learning progress"
-                    value={track.progress}
-                    variant={track.progressVariant}
-                  />
-                </div>
-              </Card>
-            ))}
-          </div>
+              </div>
+            </Card>
+          )}
         </div>
       </section>
 
-      <section className="border-b border-slate-800/80" aria-label="Certificate verification standards">
-        <div className="syedos-container py-16 sm:py-20 lg:py-24">
+      {certifications.length === 0 ? (
+        <section
+          id="learning-roadmap"
+          className="border-b border-slate-800/80"
+        >
+          <div className="syedos-container py-14 sm:py-16 lg:py-20">
+            <SectionHeading
+              eyebrow="Learning Roadmap"
+              title="Three professional learning tracks supporting my career direction"
+              description="These pathways strengthen my goal of becoming a full-stack software engineer with cloud, DevOps, and artificial-intelligence capabilities."
+            />
+
+            <div className="mt-10 grid gap-6 lg:grid-cols-3">
+              {roadmapTracks.map((track) => (
+                <Card
+                  key={track.title}
+                  variant="glass"
+                  className="flex h-full flex-col"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <IconContainer
+                      variant={track.iconVariant}
+                      size="large"
+                      label={track.title}
+                    >
+                      {track.icon}
+                    </IconContainer>
+
+                    <Badge
+                      variant={track.statusVariant}
+                      dot
+                    >
+                      {track.status}
+                    </Badge>
+                  </div>
+
+                  <p className="syedos-code-text mt-6 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                    {track.provider}
+                  </p>
+
+                  <h2 className="mt-2 text-xl font-semibold text-white">
+                    {track.title}
+                  </h2>
+
+                  <p className="mt-3 flex-1 text-sm leading-7 text-slate-400">
+                    {track.description}
+                  </p>
+
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {track.subjects.map((subject) => (
+                      <Badge
+                        key={subject}
+                        variant="outline"
+                      >
+                        {subject}
+                      </Badge>
+                    ))}
+                  </div>
+
+                  <div className="mt-7">
+                    <Progress
+                      label="Learning progress"
+                      value={track.progress}
+                      variant={track.progressVariant}
+                    />
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      <section className="border-b border-slate-800/80">
+        <div className="syedos-container py-14 sm:py-16 lg:py-20">
           <SectionHeading
             eyebrow="Credential Standards"
-            title="What makes a certificate valuable"
-            description="Certificates are most useful when they are verifiable, relevant to the career path, issued by credible organisations, and supported by practical application."
+            title="What makes a professional certificate valuable"
+            description="A useful credential should be verifiable, relevant to the career path, issued by a credible organisation, and supported by practical application."
           />
 
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
-            {verificationStandards.map((standard) => (
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+            {credentialStandards.map((standard) => (
               <Card
                 key={standard.title}
                 variant="elevated"
@@ -528,7 +830,7 @@ export default function CertificatesPage() {
                   {standard.icon}
                 </IconContainer>
 
-                <h2 className="mt-5 text-xl">
+                <h2 className="mt-5 text-xl font-semibold text-white">
                   {standard.title}
                 </h2>
 
@@ -541,190 +843,101 @@ export default function CertificatesPage() {
         </div>
       </section>
 
-      <section className="border-b border-slate-800/80" aria-label="Project-based evidence">
-        <div className="syedos-container py-16 sm:py-20 lg:py-24">
-          <SectionHeading
-            eyebrow="Current Technical Evidence"
-            title="Projects supporting my learning progress"
-            description="Until official credentials are completed, these project case studies provide practical evidence of current technical ability."
-          />
+      {projects.length > 0 ? (
+        <section className="border-b border-slate-800/80">
+          <div className="syedos-container py-14 sm:py-16 lg:py-20">
+            <SectionHeading
+              eyebrow="Practical Evidence"
+              title="Projects supporting technical learning"
+              description="Project case studies demonstrate the practical application of software-engineering, database, security, AI, cloud, and full-stack development skills."
+            />
 
-          <div className="mt-10 grid gap-6 lg:grid-cols-3">
-            {currentEvidence.map((evidence) => (
-              <Card
-                key={evidence.title}
-                variant="elevated"
-                interactive
-                className="flex h-full flex-col"
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <IconContainer
-                    variant={
-                      evidence.variant === "success"
-                        ? "success"
-                        : evidence.variant === "warning"
-                          ? "warning"
-                          : "primary"
-                    }
-                    size="large"
-                    label={evidence.title}
-                  >
-                    <Code2 size={22} />
-                  </IconContainer>
-
-                  <Badge
-                    variant={evidence.variant}
-                    dot
-                  >
-                    {evidence.type}
-                  </Badge>
-                </div>
-
-                <h2 className="mt-5 text-xl">
-                  {evidence.title}
-                </h2>
-
-                <p className="mt-3 flex-1 text-sm leading-7 text-slate-400">
-                  {evidence.description}
-                </p>
-
-                <div className="mt-6">
-                  <LinkButton
-                    href={evidence.href}
-                    variant="secondary"
-                    size="small"
-                    rightIcon={<ArrowRight size={16} />}
-                  >
-                    View Case Study
-                  </LinkButton>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="border-b border-slate-800/80" aria-label="Credential learning strategy">
-        <div className="syedos-container py-16 sm:py-20 lg:py-24">
-          <SectionHeading
-            eyebrow="Professional Development"
-            title="How credentials fit into my learning strategy"
-            description="Certification is one part of a broader development process that includes coursework, projects, documentation, problem solving, and technical practice."
-          />
-
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
-            {evidenceCategories.map((category) => (
-              <Card
-                key={category.title}
-                variant="elevated"
-                className="h-full"
-              >
-                <IconContainer
-                  variant={category.variant}
-                  size="large"
-                  label={category.title}
+            <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {projects.map((project) => (
+                <Card
+                  key={project.id}
+                  variant="elevated"
+                  interactive
+                  className="flex h-full flex-col"
                 >
-                  {category.icon}
-                </IconContainer>
+                  <div className="flex items-start justify-between gap-4">
+                    <IconContainer
+                      variant="primary"
+                      size="large"
+                      label={project.title}
+                    >
+                      <Layers3
+                        aria-hidden="true"
+                        size={21}
+                      />
+                    </IconContainer>
 
-                <h2 className="mt-5 text-xl">
-                  {category.title}
-                </h2>
+                    <Badge variant="primary">
+                      Project evidence
+                    </Badge>
+                  </div>
 
-                <p className="mt-3 text-sm leading-7 text-slate-400">
-                  {category.description}
-                </p>
-              </Card>
-            ))}
+                  <h2 className="mt-5 text-xl font-semibold text-white">
+                    {project.title}
+                  </h2>
+
+                  <p className="mt-3 flex-1 text-sm leading-7 text-slate-400">
+                    {project.shortDescription ??
+                      "Explore this project’s architecture, technologies, implementation, and practical outcomes."}
+                  </p>
+
+                  <div className="mt-6">
+                    <LinkButton
+                      href={`/projects/${project.slug}`}
+                      variant="secondary"
+                      size="small"
+                    >
+                      View project
+                    </LinkButton>
+                  </div>
+                </Card>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
-      <section className="border-b border-slate-800/80" aria-label="Future credentials">
-        <div className="syedos-container py-16 sm:py-20 lg:py-24">
-          <SectionHeading
-            eyebrow="Future Credentials"
-            title="Credentials planned for future development"
-            description="These credentials represent a roadmap. They will not be shown as completed until they have been officially earned and verified."
-          />
-
-          <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {futureCredentials.map((credential, index) => (
-              <Card
-                key={credential.title}
-                variant="elevated"
-                className="h-full"
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <IconContainer
-                    variant={
-                      index % 3 === 0
-                        ? "primary"
-                        : index % 3 === 1
-                          ? "info"
-                          : "success"
-                    }
-                    size="large"
-                    label={credential.title}
-                  >
-                    <GraduationCap size={22} />
-                  </IconContainer>
-
-                  <Badge variant="outline">
-                    Planned
-                  </Badge>
-                </div>
-
-                <p className="syedos-code-text mt-6 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-400">
-                  {credential.category}
-                </p>
-
-                <h2 className="mt-2 text-xl">
-                  {credential.title}
-                </h2>
-
-                <p className="mt-3 text-sm leading-7 text-slate-400">
-                  {credential.description}
-                </p>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section aria-label="Certificates call to action">
-        <div className="syedos-container py-16 sm:py-20 lg:py-24">
+      <section>
+        <div className="syedos-container py-14 sm:py-16 lg:py-20">
           <div className="rounded-[2rem] border border-blue-500/25 bg-gradient-to-br from-blue-500/15 via-slate-950/70 to-cyan-500/10 p-7 sm:p-10">
             <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-center">
               <div className="max-w-3xl">
                 <Badge variant="primary" dot>
-                  Learning in progress
+                  Continuous professional development
                 </Badge>
 
-                <h2 className="mt-5 text-3xl sm:text-4xl">
-                  Credentials will support—not replace—practical
+                <h2 className="mt-5 text-3xl font-semibold text-white sm:text-4xl">
+                  Credentials support—not replace—practical
                   project experience.
                 </h2>
 
                 <p className="mt-4 text-sm leading-7 text-slate-300 sm:text-base">
-                  Official certificates, credential IDs, verification
-                  links, issue dates, and supporting project evidence
-                  will be added as each learning pathway is completed.
+                  Official certificates, credential IDs,
+                  verification links, dates, learning
+                  outcomes, and supporting project evidence
+                  will be added as each pathway is completed.
                 </p>
               </div>
 
-              <div className="flex shrink-0 flex-wrap gap-3">
-                <LinkButton
-                  href="/projects"
-                  rightIcon={<ArrowRight size={17} />}
-                >
+              <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
+                <LinkButton href="/projects">
                   View Projects
                 </LinkButton>
 
                 <LinkButton
                   href="/contact"
                   variant="secondary"
-                  rightIcon={<ExternalLink size={15} />}
+                  rightIcon={
+                    <ExternalLink
+                      aria-hidden="true"
+                      size={15}
+                    />
+                  }
                 >
                   Contact Me
                 </LinkButton>
