@@ -1,4 +1,5 @@
 ﻿import type { Metadata } from "next";
+import type { ReactNode } from "react";
 
 import {
   ArrowRight,
@@ -19,24 +20,38 @@ import { Card } from "@/components/ui/card";
 import { IconContainer } from "@/components/ui/icon-container";
 import { LinkButton } from "@/components/ui/link-button";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { getContactPageData } from "@/lib/cms/get-contact-page-data";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description:
-    "Contact Syed Mohiuddin for internships, fresher software roles, technical collaborations, full-stack development opportunities, and project discussions.",
-  alternates: {
-    canonical: "/contact",
-  },
-  openGraph: {
-    title: "Contact | Syed Mohiuddin",
-    description:
-      "Connect with Syed Mohiuddin for software engineering opportunities, internships, collaborations, and project discussions.",
-    url: "/contact",
-    type: "website",
-  },
+type UnknownRecord = Record<string, unknown>;
+
+type VisualVariant =
+  | "primary"
+  | "info"
+  | "success"
+  | "warning";
+
+type ContactMethod = {
+  title: string;
+  value: string;
+  description: string;
+  href: string;
+  icon: ReactNode;
+  variant: VisualVariant;
+  external: boolean;
 };
 
-const contactMethods = [
+type OpportunityType = {
+  title: string;
+  description: string;
+};
+
+type ResponseExpectation = {
+  title: string;
+  description: string;
+  icon: ReactNode;
+};
+
+const fallbackContactMethods: ContactMethod[] = [
   {
     title: "Email",
     value: "syedmohiuddin106@gmail.com",
@@ -44,7 +59,7 @@ const contactMethods = [
       "Best for internship details, fresher roles, interview requests, project discussions, and professional communication.",
     href: "mailto:syedmohiuddin106@gmail.com",
     icon: <Mail size={22} />,
-    variant: "primary" as const,
+    variant: "primary",
     external: false,
   },
   {
@@ -54,7 +69,7 @@ const contactMethods = [
       "View my professional profile, project updates, learning progress, and career activity.",
     href: "https://www.linkedin.com/in/syedmohiuddin106",
     icon: <LinkIcon size={22} />,
-    variant: "info" as const,
+    variant: "info",
     external: true,
   },
   {
@@ -64,26 +79,26 @@ const contactMethods = [
       "Explore repositories, project source code, development history, and future technical work.",
     href: "https://github.com/syedmohiuddin106-dot",
     icon: <GitBranch size={22} />,
-    variant: "success" as const,
+    variant: "success",
     external: true,
   },
 ];
 
-const opportunityTypes = [
+const fallbackOpportunityTypes: OpportunityType[] = [
   {
     title: "Software Engineering Internships",
     description:
-      "Remote, hybrid, or onsite internships that fit my academic schedule and help me gain real development experience.",
+      "Remote, hybrid, or suitable onsite internships that support practical development experience while remaining compatible with my academic schedule.",
   },
   {
     title: "Full-Stack Development Roles",
     description:
-      "Opportunities involving frontend, backend, database, authentication, APIs, and complete application workflows.",
+      "Opportunities involving frontend, backend, databases, authentication, APIs, security, and complete application workflows.",
   },
   {
     title: "AI-Integrated Projects",
     description:
-      "Projects involving AI assistants, automation, Gemini integration, intelligent workflows, and user-focused applications.",
+      "Projects involving AI assistants, automation, intelligent workflows, structured prompting, and user-focused software products.",
   },
   {
     title: "Technical Collaborations",
@@ -92,31 +107,506 @@ const opportunityTypes = [
   },
 ];
 
-const responseExpectations = [
+const fallbackResponseExpectations: ResponseExpectation[] = [
   {
-    title: "Professional inquiries",
+    title: "Professional Inquiries",
     description:
-      "Include the role, company, project, expected responsibilities, location or work mode, and preferred communication method.",
+      "Include the role, company, expected responsibilities, location or work mode, and preferred communication method.",
     icon: <BriefcaseBusiness size={20} />,
   },
   {
-    title: "Project discussions",
+    title: "Project Discussions",
     description:
       "Mention the project scope, current stage, required technologies, expected contribution, and proposed timeline.",
     icon: <MessageSquareText size={20} />,
   },
   {
-    title: "Response timing",
+    title: "Response Timing",
     description:
-      "I will review genuine professional messages and respond as soon as reasonably possible.",
+      "I review genuine professional messages carefully and respond as soon as reasonably possible.",
     icon: <Clock3 size={20} />,
   },
 ];
 
-export default function ContactPage() {
+const suggestedEmailDetails = [
+  "Your name and organisation",
+  "Role or project title",
+  "Opportunity description",
+  "Location or work mode",
+  "Expected responsibilities",
+  "Required technologies",
+  "Proposed timeline",
+  "Preferred next step",
+];
+
+function isRecord(value: unknown): value is UnknownRecord {
+  return typeof value === "object" && value !== null;
+}
+
+function getObjectValue(
+  record: object | null | undefined,
+  key: string,
+): unknown {
+  if (!record) {
+    return undefined;
+  }
+
+  return (record as Record<string, unknown>)[key];
+}
+
+function getString(
+  record: object | null | undefined,
+  key: string,
+  fallback = "",
+): string {
+  const value = getObjectValue(record, key);
+
+  return typeof value === "string" && value.trim().length > 0
+    ? value.trim()
+    : fallback;
+}
+
+function getArray(
+  record: object | null | undefined,
+  key: string,
+): unknown[] {
+  const value = getObjectValue(record, key);
+
+  return Array.isArray(value) ? value : [];
+}
+
+function compactText(value: string, maximum = 220): string {
+  if (value.length <= maximum) {
+    return value;
+  }
+
+  const shortened = value.slice(0, maximum);
+  const lastSpace = shortened.lastIndexOf(" ");
+
+  return `${shortened.slice(
+    0,
+    lastSpace > 0 ? lastSpace : maximum,
+  )}…`;
+}
+
+function formatAvailability(value: string): string {
+  const labels: Record<string, string> = {
+    "open-to-internships": "Available for internships",
+    "open-to-part-time": "Available for part-time roles",
+    "open-to-full-time": "Available for full-time roles",
+    "open-to-freelance": "Available for freelance work",
+    "not-available": "Not currently available",
+  };
+
+  return labels[value] ?? "Available for opportunities";
+}
+
+function formatWorkMode(value: string): string {
+  const labels: Record<string, string> = {
+    remote: "Remote",
+    hybrid: "Hybrid",
+    onsite: "On-site",
+  };
+
+  return labels[value] ?? value;
+}
+
+function formatPlatform(value: string): string {
+  const labels: Record<string, string> = {
+    linkedin: "LinkedIn",
+    github: "GitHub",
+    portfolio: "Portfolio",
+    email: "Email",
+    youtube: "YouTube",
+    x: "X / Twitter",
+    instagram: "Instagram",
+    other: "Professional Link",
+  };
+
+  return labels[value] ?? "Professional Link";
+}
+
+function cleanURLForDisplay(value: string): string {
+  return value
+    .replace(/^https?:\/\//, "")
+    .replace(/^www\./, "")
+    .replace(/\/$/, "");
+}
+
+function getVariant(index: number): VisualVariant {
+  const variants: VisualVariant[] = [
+    "primary",
+    "info",
+    "success",
+    "warning",
+  ];
+
+  return variants[index % variants.length];
+}
+
+function getContactIcon(platform: string): ReactNode {
+  if (platform === "github") {
+    return <GitBranch size={22} />;
+  }
+
+  if (platform === "email") {
+    return <Mail size={22} />;
+  }
+
+  return <LinkIcon size={22} />;
+}
+
+function fillItems<T>(
+  cmsItems: T[],
+  fallbackItems: T[],
+  requiredLength: number,
+): T[] {
+  const combined = [...cmsItems];
+
+  for (const fallbackItem of fallbackItems) {
+    if (combined.length >= requiredLength) {
+      break;
+    }
+
+    combined.push(fallbackItem);
+  }
+
+  return combined.slice(0, requiredLength);
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { profile } = await getContactPageData();
+
+  const profileRecord = isRecord(profile) ? profile : null;
+  const seoValue = getObjectValue(profileRecord, "seo");
+  const seo = isRecord(seoValue) ? seoValue : null;
+
+  const fullName = getString(
+    profileRecord,
+    "fullName",
+    "Syed Mohiuddin",
+  );
+
+  const description = getString(
+    seo,
+    "description",
+    `Contact ${fullName} for internships, fresher software roles, technical collaborations, full-stack development opportunities, and project discussions.`,
+  );
+
+  return {
+    title: getString(seo, "title", `Contact ${fullName}`),
+    description,
+    alternates: {
+      canonical: "/contact",
+    },
+    openGraph: {
+      title: `Contact | ${fullName}`,
+      description,
+      url: "/contact",
+      type: "website",
+    },
+  };
+}
+
+export default async function ContactPage() {
+  const { profile, projects, skills } =
+    await getContactPageData();
+
+  const profileRecord = isRecord(profile) ? profile : null;
+
+  const fullName = getString(
+    profileRecord,
+    "fullName",
+    "Syed Mohiuddin",
+  );
+
+  const publicEmail = getString(
+    profileRecord,
+    "publicEmail",
+    "syedmohiuddin106@gmail.com",
+  );
+
+  const location = getString(
+    profileRecord,
+    "location",
+    "Hanamkonda, Telangana, India",
+  );
+
+  const professionalTitle = getString(
+    profileRecord,
+    "professionalTitle",
+    "Software Developer and Full-Stack Web Developer",
+  );
+
+  const shortTitle = getString(
+    profileRecord,
+    "shortTitle",
+    "Software Engineer",
+  );
+
+  const shortBio = compactText(
+    getString(
+      profileRecord,
+      "shortBio",
+      "I am open to suitable internships, fresher software roles, full-stack development opportunities, AI-integrated projects, and professional technical conversations.",
+    ),
+    250,
+  );
+
+  const availabilityValue = getString(
+    profileRecord,
+    "availabilityStatus",
+    "open-to-internships",
+  );
+
+  const availabilityLabel =
+    formatAvailability(availabilityValue);
+
+  const heroBadge = getString(
+    profileRecord,
+    "heroBadge",
+    availabilityLabel,
+  );
+
+  const careerObjective = compactText(
+    getString(
+      profileRecord,
+      "careerObjective",
+      "I am seeking practical software-engineering opportunities where I can contribute to real products, improve my technical skills, and gain professional development experience.",
+    ),
+    290,
+  );
+
+  const preferredWorkModes = getArray(
+    profileRecord,
+    "preferredWorkModes",
+  )
+    .filter(
+      (item): item is string =>
+        typeof item === "string",
+    )
+    .map(formatWorkMode);
+
+  const workModeSummary =
+    preferredWorkModes.length > 0
+      ? preferredWorkModes.join(", ")
+      : "Remote, hybrid, and suitable onsite";
+
+  const preferredRoles = getArray(
+    profileRecord,
+    "preferredRoles",
+  )
+    .filter(isRecord)
+    .map((item) => getString(item, "role"))
+    .filter(Boolean);
+
+  const careerDirection =
+    preferredRoles[0] ?? shortTitle;
+
+  const primaryCTAValue = getObjectValue(
+    profileRecord,
+    "primaryCallToAction",
+  );
+
+  const primaryCTA = isRecord(primaryCTAValue)
+    ? primaryCTAValue
+    : null;
+
+  const secondaryCTAValue = getObjectValue(
+    profileRecord,
+    "secondaryCallToAction",
+  );
+
+  const secondaryCTA = isRecord(secondaryCTAValue)
+    ? secondaryCTAValue
+    : null;
+
+  const primaryLabel = getString(
+    primaryCTA,
+    "label",
+    "View Projects",
+  );
+
+  const primaryURL = getString(
+    primaryCTA,
+    "url",
+    "/projects",
+  );
+
+  const secondaryLabel = getString(
+    secondaryCTA,
+    "label",
+    "Contact Me",
+  );
+
+  const secondaryURL = getString(
+    secondaryCTA,
+    "url",
+    "/contact",
+  );
+
+  const socialLinks = getArray(
+    profileRecord,
+    "socialLinks",
+  )
+    .filter(isRecord)
+    .map((link, index): ContactMethod | null => {
+      const platform = getString(
+        link,
+        "platform",
+        "other",
+      );
+
+      const url = getString(link, "url");
+
+      if (!url) {
+        return null;
+      }
+
+      const label = getString(
+        link,
+        "label",
+        formatPlatform(platform),
+      );
+
+      return {
+        title: formatPlatform(platform),
+        value:
+          platform === "email"
+            ? url.replace(/^mailto:/, "")
+            : cleanURLForDisplay(url),
+        description:
+          platform === "linkedin"
+            ? "View my professional profile, project updates, learning progress, and career activity."
+            : platform === "github"
+              ? "Explore repositories, project source code, development history, and future technical work."
+              : `Open my ${label} profile for additional professional information and updates.`,
+        href:
+          platform === "email" && !url.startsWith("mailto:")
+            ? `mailto:${url}`
+            : url,
+        icon: getContactIcon(platform),
+        variant: getVariant(index + 1),
+        external:
+          platform !== "email" &&
+          !url.startsWith("mailto:"),
+      };
+    })
+    .filter(
+      (method): method is ContactMethod =>
+        method !== null,
+    );
+
+  const emailMethod: ContactMethod = {
+    title: "Email",
+    value: publicEmail,
+    description:
+      "Best for internship details, fresher roles, interview requests, project discussions, and formal professional communication.",
+    href: `mailto:${publicEmail}`,
+    icon: <Mail size={22} />,
+    variant: "primary",
+    external: false,
+  };
+
+  const contactMethods = fillItems(
+    [
+      emailMethod,
+      ...socialLinks.filter(
+        (method) =>
+          method.title.toLowerCase() !== "email",
+      ),
+    ],
+    fallbackContactMethods,
+    3,
+  );
+
+  const linkedInMethod =
+    contactMethods.find(
+      (method) =>
+        method.title.toLowerCase() === "linkedin",
+    ) ?? fallbackContactMethods[1];
+
+  const careerInterests = getArray(
+    profileRecord,
+    "careerInterests",
+  )
+    .filter(isRecord)
+    .map((interest): OpportunityType => ({
+      title: getString(
+        interest,
+        "title",
+        "Professional Opportunity",
+      ),
+      description: compactText(
+        getString(
+          interest,
+          "description",
+          "A suitable opportunity aligned with software engineering, practical development, and continued professional growth.",
+        ),
+        220,
+      ),
+    }));
+
+  const opportunityTypes = fillItems(
+    careerInterests,
+    fallbackOpportunityTypes,
+    4,
+  );
+
+  const contactPreferences = getArray(
+    profileRecord,
+    "contactPreferences",
+  )
+    .filter(isRecord)
+    .map((item, index): ResponseExpectation => ({
+      title:
+        index === 0
+          ? "Professional Inquiries"
+          : index === 1
+            ? "Project Discussions"
+            : "Communication Preference",
+      description: getString(
+        item,
+        "preference",
+        fallbackResponseExpectations[
+          index % fallbackResponseExpectations.length
+        ].description,
+      ),
+      icon:
+        fallbackResponseExpectations[
+          index % fallbackResponseExpectations.length
+        ].icon,
+    }));
+
+  const responseExpectations = fillItems(
+    contactPreferences,
+    fallbackResponseExpectations,
+    3,
+  );
+
+  const publishedProjectCount = projects.length;
+  const publishedSkillCount = skills.length;
+
+  const projectSummary =
+    publishedProjectCount > 0
+      ? `${publishedProjectCount} published project${
+          publishedProjectCount === 1 ? "" : "s"
+        }`
+      : "Project portfolio available";
+
+  const skillSummary =
+    publishedSkillCount > 0
+      ? `${publishedSkillCount} published skill${
+          publishedSkillCount === 1 ? "" : "s"
+        }`
+      : "Full-Stack · AI · Cloud";
+
   return (
     <main className="min-w-0 overflow-hidden">
-      <section className="relative overflow-hidden border-b border-slate-800/80" aria-label="Contact overview">
+      <section
+        className="relative overflow-hidden border-b border-slate-800/80"
+        aria-labelledby="contact-page-title"
+      >
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 overflow-hidden"
@@ -130,61 +620,60 @@ export default function ContactPage() {
           <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(148,163,184,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.25)_1px,transparent_1px)] [background-size:48px_48px]" />
         </div>
 
-        <div className="syedos-container relative pb-14 pt-6 sm:py-14 lg:py-14 xl:pb-18 xl:pt-8">
-          <div className="grid min-w-0 gap-9 xl:grid-cols-[1.08fr_0.92fr] xl:items-center xl:gap-12">
+        <div className="syedos-container relative pb-12 pt-8 sm:pb-14 sm:pt-10 lg:pb-16 lg:pt-10">
+          <div className="grid items-start gap-10 xl:grid-cols-[1.04fr_0.96fr] xl:gap-16">
             <div className="min-w-0">
-              <div className="space-y-4">
-                <div className="grid grid-cols-[1.35fr_0.95fr_1fr] items-center gap-1.5 sm:flex sm:flex-wrap sm:gap-3">
+              <div className="space-y-5">
+                <div className="flex flex-wrap items-center gap-3">
                   <Badge
                     variant="success"
                     dot
-                    className="w-full justify-center whitespace-nowrap px-2 py-1 text-[0.58rem] tracking-tight sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm"
+                    className="px-4 py-2 text-sm sm:text-[0.95rem]"
                   >
-                    Available for opportunities
+                    {heroBadge}
                   </Badge>
 
                   <Badge
                     variant="primary"
-                    className="w-full justify-center whitespace-nowrap px-2 py-1 text-[0.58rem] tracking-tight sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm"
+                    className="px-4 py-2 text-sm sm:text-[0.95rem]"
                   >
                     Software Engineering
                   </Badge>
 
                   <Badge
-                    variant="outline"
-                    className="w-full justify-center whitespace-nowrap px-2 py-1 text-[0.58rem] tracking-tight sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm"
+                    variant="info"
+                    className="px-4 py-2 text-sm sm:text-[0.95rem]"
                   >
                     Professional Contact
                   </Badge>
                 </div>
 
-                <p className="syedos-code-text text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-cyan-400 sm:text-sm sm:tracking-[0.2em]">
-                  Contact
+                <p className="syedos-code-text text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400">
+                  Contact {fullName}
                 </p>
               </div>
 
               <h1
                 id="contact-page-title"
-                className="mt-3 max-w-4xl text-[2rem] font-bold leading-[1.08] tracking-[-0.035em] text-white min-[430px]:text-[2.65rem] sm:text-5xl sm:leading-[1.07] lg:text-6xl"
+                className="mt-4 max-w-3xl text-[2.5rem] font-bold leading-[1.04] tracking-[-0.045em] text-white sm:text-5xl lg:text-6xl"
               >
-                Let&apos;s discuss software opportunities, projects, and
-                technical collaborations.
+                Let&apos;s discuss software opportunities and
+                technical projects.
               </h1>
 
-              <p className="mt-5 max-w-3xl text-[0.98rem] leading-7 text-slate-400 sm:mt-6 sm:text-lg sm:leading-8">
-                I am open to suitable internships, fresher software roles,
-                full-stack development opportunities, AI-integrated projects,
-                and professional technical conversations.
+              <p className="mt-6 max-w-2xl text-base leading-8 text-slate-400 sm:text-lg">
+                {shortBio}
               </p>
 
-              <div className="mt-7 flex flex-col items-start gap-3 text-sm text-slate-500 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-5 sm:gap-y-3">
+              <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-slate-500">
                 <span className="inline-flex items-center gap-2">
                   <MapPin
                     aria-hidden="true"
                     size={17}
                     className="shrink-0 text-cyan-400"
                   />
-                  Hanamkonda, Telangana, India
+
+                  {location}
                 </span>
 
                 <span className="inline-flex items-center gap-2">
@@ -193,26 +682,44 @@ export default function ContactPage() {
                     size={17}
                     className="shrink-0 text-green-400"
                   />
-                  Open to remote, hybrid, and suitable onsite roles
+
+                  {workModeSummary} opportunities
                 </span>
               </div>
 
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <LinkButton
-                  href="mailto:syedmohiuddin106@gmail.com"
-                  leftIcon={<Send aria-hidden="true" size={18} />}
+                  href={`mailto:${publicEmail}`}
+                  leftIcon={
+                    <Send
+                      aria-hidden="true"
+                      size={18}
+                    />
+                  }
                   className="w-full justify-center sm:w-auto"
                 >
                   Send an Email
                 </LinkButton>
 
                 <LinkButton
-                  href="https://www.linkedin.com/in/syedmohiuddin106"
-                  external
+                  href={linkedInMethod.href}
+                  external={linkedInMethod.external}
                   variant="secondary"
-                  leftIcon={<LinkIcon aria-hidden="true" size={18} />}
-                  rightIcon={<ExternalLink aria-hidden="true" size={14} />}
-                  ariaLabel="Open Syed Mohiuddin's LinkedIn profile"
+                  leftIcon={
+                    <LinkIcon
+                      aria-hidden="true"
+                      size={18}
+                    />
+                  }
+                  rightIcon={
+                    linkedInMethod.external ? (
+                      <ExternalLink
+                        aria-hidden="true"
+                        size={14}
+                      />
+                    ) : undefined
+                  }
+                  ariaLabel={`Open ${fullName}'s LinkedIn profile`}
                   className="w-full justify-center sm:w-auto"
                 >
                   Connect on LinkedIn
@@ -222,16 +729,16 @@ export default function ContactPage() {
 
             <Card
               variant="glass"
-              className="overflow-hidden p-0"
+              className="overflow-hidden p-0 xl:mt-10"
             >
-              <div className="border-b border-slate-800 p-6">
-                <div className="flex items-center justify-between gap-4">
+              <div className="border-b border-slate-800 px-6 py-5 sm:px-7">
+                <div className="flex items-start justify-between gap-5">
                   <div>
                     <p className="syedos-code-text text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
                       Contact Summary
                     </p>
 
-                    <h2 className="mt-2 text-xl">
+                    <h2 className="mt-3 text-2xl leading-tight">
                       Best way to reach me
                     </h2>
                   </div>
@@ -240,48 +747,57 @@ export default function ContactPage() {
                     variant="primary"
                     size="large"
                     rounded="large"
-                    label="Contact Syed Mohiuddin"
+                    label={`Contact ${fullName}`}
                   >
                     <Mail size={24} />
                   </IconContainer>
                 </div>
               </div>
 
-              <div className="space-y-5 p-6">
-                <div className="rounded-2xl border border-slate-800 bg-slate-950/50 p-5">
+              <div className="space-y-4 p-5 sm:p-6">
+                <div className="rounded-2xl border border-slate-800 bg-slate-950/55 p-4 sm:p-5">
                   <p className="font-semibold text-white">
                     Email is preferred
                   </p>
 
                   <p className="mt-2 break-all text-sm text-cyan-300">
-                    syedmohiuddin106@gmail.com
+                    {publicEmail}
                   </p>
 
                   <p className="mt-3 text-sm leading-7 text-slate-400">
-                    Use email for detailed internship information,
-                    interview requests, project proposals, recruiter
-                    communication, and formal professional inquiries.
+                    Use email for detailed internship
+                    information, interview requests, project
+                    proposals, recruiter communication, and
+                    formal professional inquiries.
                   </p>
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="rounded-xl border border-slate-800 bg-slate-950/45 p-4">
                     <p className="text-xs uppercase tracking-[0.15em] text-slate-500">
-                      Current status
+                      Career direction
                     </p>
 
                     <p className="mt-2 font-semibold text-white">
-                      Final-Year Student
+                      {careerDirection}
+                    </p>
+
+                    <p className="mt-2 text-sm leading-6 text-slate-500">
+                      {professionalTitle}
                     </p>
                   </div>
 
                   <div className="rounded-xl border border-slate-800 bg-slate-950/45 p-4">
                     <p className="text-xs uppercase tracking-[0.15em] text-slate-500">
-                      Career direction
+                      Portfolio evidence
                     </p>
 
                     <p className="mt-2 font-semibold text-white">
-                      Full-Stack · AI · Cloud
+                      {projectSummary}
+                    </p>
+
+                    <p className="mt-2 text-sm leading-6 text-slate-500">
+                      {skillSummary}
                     </p>
                   </div>
                 </div>
@@ -296,13 +812,11 @@ export default function ContactPage() {
 
                     <div>
                       <p className="font-semibold text-green-200">
-                        Open to suitable opportunities
+                        {availabilityLabel}
                       </p>
 
                       <p className="mt-1 text-sm leading-6 text-green-100/65">
-                        Internships and part-time remote opportunities
-                        should remain compatible with my academic
-                        attendance requirements.
+                        {careerObjective}
                       </p>
                     </div>
                   </div>
@@ -313,18 +827,21 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="border-b border-slate-800/80" aria-label="Contact methods">
+      <section
+        className="border-b border-slate-800/80"
+        aria-label="Contact methods"
+      >
         <div className="syedos-container py-16 sm:py-20 lg:py-24">
           <SectionHeading
             eyebrow="Contact Methods"
             title="Choose the most suitable way to connect"
-            description="Each contact method is intended for a different type of professional interaction."
+            description="Each contact method supports a different type of professional interaction."
           />
 
           <div className="mt-10 grid gap-6 lg:grid-cols-3">
-            {contactMethods.map((method) => (
+            {contactMethods.map((method, index) => (
               <Card
-                key={method.title}
+                key={`${method.title}-${index}`}
                 variant="elevated"
                 interactive
                 className="flex h-full flex-col"
@@ -383,55 +900,55 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="border-b border-slate-800/80" aria-label="Professional opportunities">
+      <section
+        className="border-b border-slate-800/80"
+        aria-label="Professional opportunities"
+      >
         <div className="syedos-container py-16 sm:py-20 lg:py-24">
           <SectionHeading
             eyebrow="Opportunity Interests"
             title="Professional opportunities I am open to discussing"
-            description="My priority is gaining practical software-engineering experience while continuing to strengthen full-stack, AI, cloud, and professional skills."
+            description="My priority is gaining practical software-engineering experience while strengthening full-stack, AI, cloud, and professional skills."
           />
 
           <div className="mt-10 grid gap-6 md:grid-cols-2">
-            {opportunityTypes.map((opportunity, index) => (
-              <Card
-                key={opportunity.title}
-                variant="elevated"
-                className="h-full"
-              >
-                <div className="flex items-start gap-4">
-                  <IconContainer
-                    variant={
-                      index % 4 === 0
-                        ? "primary"
-                        : index % 4 === 1
-                          ? "success"
-                          : index % 4 === 2
-                            ? "info"
-                            : "warning"
-                    }
-                    size="large"
-                    label={opportunity.title}
-                  >
-                    <BriefcaseBusiness size={21} />
-                  </IconContainer>
+            {opportunityTypes.map(
+              (opportunity, index) => (
+                <Card
+                  key={`${opportunity.title}-${index}`}
+                  variant="elevated"
+                  className="h-full"
+                >
+                  <div className="flex items-start gap-4">
+                    <IconContainer
+                      variant={getVariant(index)}
+                      size="large"
+                      label={opportunity.title}
+                    >
+                      <BriefcaseBusiness size={21} />
+                    </IconContainer>
 
-                  <div>
-                    <h2 className="text-xl">
-                      {opportunity.title}
-                    </h2>
+                    <div>
+                      <h2 className="text-xl">
+                        {opportunity.title}
+                      </h2>
 
-                    <p className="mt-3 text-sm leading-7 text-slate-400">
-                      {opportunity.description}
-                    </p>
+                      <p className="mt-3 text-sm leading-7 text-slate-400">
+                        {opportunity.description}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </Card>
-            ))}
+                </Card>
+              ),
+            )}
           </div>
         </div>
       </section>
 
-      <section className="border-b border-slate-800/80" aria-label="Response expectations">
+      <section
+        className="border-b border-slate-800/80"
+        aria-label="Response expectations"
+      >
         <div className="syedos-container py-16 sm:py-20 lg:py-24">
           <SectionHeading
             eyebrow="Professional Communication"
@@ -440,29 +957,31 @@ export default function ContactPage() {
           />
 
           <div className="mt-10 grid gap-6 lg:grid-cols-3">
-            {responseExpectations.map((item) => (
-              <Card
-                key={item.title}
-                variant="glass"
-                className="h-full"
-              >
-                <IconContainer
-                  variant="info"
-                  size="large"
-                  label={item.title}
+            {responseExpectations.map(
+              (item, index) => (
+                <Card
+                  key={`${item.title}-${index}`}
+                  variant="glass"
+                  className="h-full"
                 >
-                  {item.icon}
-                </IconContainer>
+                  <IconContainer
+                    variant={getVariant(index)}
+                    size="large"
+                    label={item.title}
+                  >
+                    {item.icon}
+                  </IconContainer>
 
-                <h2 className="mt-5 text-xl">
-                  {item.title}
-                </h2>
+                  <h2 className="mt-5 text-xl">
+                    {item.title}
+                  </h2>
 
-                <p className="mt-3 text-sm leading-7 text-slate-400">
-                  {item.description}
-                </p>
-              </Card>
-            ))}
+                  <p className="mt-3 text-sm leading-7 text-slate-400">
+                    {item.description}
+                  </p>
+                </Card>
+              ),
+            )}
           </div>
 
           <div className="mt-10 rounded-2xl border border-slate-800 bg-slate-950/50 p-6 sm:p-8">
@@ -475,16 +994,7 @@ export default function ContactPage() {
             </h2>
 
             <div className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-              {[
-                "Your name and organisation",
-                "Role or project title",
-                "Opportunity description",
-                "Location or work mode",
-                "Expected responsibilities",
-                "Required technologies",
-                "Proposed timeline",
-                "Preferred next step",
-              ].map((detail) => (
+              {suggestedEmailDetails.map((detail) => (
                 <div
                   key={detail}
                   className="flex items-start gap-3 rounded-xl border border-slate-800 bg-slate-950/45 p-4"
@@ -511,36 +1021,53 @@ export default function ContactPage() {
             <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-center">
               <div className="max-w-3xl">
                 <Badge variant="success" dot>
-                  Available for professional conversations
+                  {availabilityLabel}
                 </Badge>
 
                 <h2 className="mt-5 text-3xl sm:text-4xl">
-                  Have an internship, fresher role, or technical project
-                  to discuss?
+                  Have an internship, fresher role, or
+                  technical project to discuss?
                 </h2>
 
                 <p className="mt-4 text-sm leading-7 text-slate-300 sm:text-base">
-                  Send a clear professional email or connect with me on
-                  LinkedIn. You can also review my projects and technical
-                  skills before reaching out.
+                  Send a clear professional email or connect
+                  with me on LinkedIn. You can also review my
+                  projects and technical skills before
+                  reaching out.
                 </p>
               </div>
 
               <div className="flex shrink-0 flex-wrap gap-3">
                 <LinkButton
-                  href="mailto:syedmohiuddin106@gmail.com"
+                  href={`mailto:${publicEmail}`}
                   leftIcon={<Send size={18} />}
                 >
                   Email Me
                 </LinkButton>
 
                 <LinkButton
-                  href="/projects"
+                  href={
+                    primaryURL === "/contact"
+                      ? "/projects"
+                      : primaryURL
+                  }
                   variant="secondary"
                   rightIcon={<ArrowRight size={17} />}
                 >
-                  View Projects
+                  {primaryURL === "/contact"
+                    ? "View Projects"
+                    : primaryLabel}
                 </LinkButton>
+
+                {secondaryURL !== "/contact" && (
+                  <LinkButton
+                    href={secondaryURL}
+                    variant="secondary"
+                    rightIcon={<ArrowRight size={17} />}
+                  >
+                    {secondaryLabel}
+                  </LinkButton>
+                )}
               </div>
             </div>
           </div>
