@@ -22,6 +22,7 @@ import { IconContainer } from "@/components/ui/icon-container";
 import { LinkButton } from "@/components/ui/link-button";
 import { Progress } from "@/components/ui/progress";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { getSkillsPageData } from "@/lib/cms/get-skills-page-data";
 
 export const metadata: Metadata = {
   title: "Skills",
@@ -39,7 +40,7 @@ export const metadata: Metadata = {
   },
 };
 
-const skillGroups = [
+const fallbackSkillGroups = [
   {
     title: "Frontend Development",
     description:
@@ -194,7 +195,7 @@ const skillGroups = [
   },
 ];
 
-const capabilityProgress = [
+const fallbackCapabilityProgress = [
   {
     label: "HTML, CSS and Responsive Design",
     value: 86,
@@ -310,7 +311,7 @@ const learningPriorities = [
   },
 ];
 
-const proofPoints = [
+const fallbackProofPoints = [
   "Built a role-based placement management system",
   "Integrated Gemini AI into a practical assistant",
   "Created reusable Next.js UI architecture",
@@ -321,7 +322,199 @@ const proofPoints = [
   "Managed project development using Git",
 ];
 
-export default function SkillsPage() {
+type CmsRecord = Record<string, unknown>;
+
+type SkillGroup = (typeof fallbackSkillGroups)[number];
+type CapabilityProgressItem = (typeof fallbackCapabilityProgress)[number];
+type ProgressVariant = CapabilityProgressItem["variant"];
+
+function isObject(value: unknown): value is CmsRecord {
+  return typeof value === "object" && value !== null;
+}
+
+function getString(
+  record: CmsRecord | null | undefined,
+  key: string,
+  fallback = "",
+): string {
+  const value = record?.[key];
+
+  return typeof value === "string" && value.trim().length > 0
+    ? value.trim()
+    : fallback;
+}
+
+function getNumber(
+  record: CmsRecord | null | undefined,
+  key: string,
+  fallback = 0,
+): number {
+  const value = record?.[key];
+
+  return typeof value === "number" && Number.isFinite(value)
+    ? value
+    : fallback;
+}
+
+function getArray(
+  record: CmsRecord | null | undefined,
+  key: string,
+): unknown[] {
+  const value = record?.[key];
+  return Array.isArray(value) ? value : [];
+}
+
+function uniqueStrings(values: string[]): string[] {
+  return Array.from(
+    new Set(values.map((value) => value.trim()).filter(Boolean)),
+  );
+}
+
+function categoriesForGroup(title: string): string[] {
+  const categoryMap: Record<string, string[]> = {
+    "Frontend Development": ["frontend"],
+    "Backend Development": ["backend"],
+    "Database Engineering": ["database"],
+    "Artificial Intelligence": ["ai"],
+    "Cloud and DevOps": ["cloud", "devops"],
+    "Security Practices": ["cybersecurity"],
+    "Programming and Problem Solving": ["programming-language"],
+    "Development Tools": ["tool", "testing", "soft-skill", "other"],
+  };
+
+  return categoryMap[title] ?? [];
+}
+
+function progressVariantForSkill(record: CmsRecord): ProgressVariant {
+  const accentStyle = getString(record, "accentStyle");
+  const category = getString(record, "category");
+
+  if (
+    accentStyle === "emerald" ||
+    accentStyle === "teal" ||
+    category === "backend" ||
+    category === "database"
+  ) {
+    return "success";
+  }
+
+  if (
+    accentStyle === "cyan" ||
+    category === "frontend" ||
+    category === "tool"
+  ) {
+    return "info";
+  }
+
+  if (
+    accentStyle === "amber" ||
+    category === "ai" ||
+    category === "cloud" ||
+    category === "devops"
+  ) {
+    return "warning";
+  }
+
+  return "primary";
+}
+
+function buildSkillGroups(cmsSkills: CmsRecord[]): SkillGroup[] {
+  return fallbackSkillGroups.map((fallbackGroup) => {
+    const acceptedCategories = categoriesForGroup(fallbackGroup.title);
+    const matchingSkills = cmsSkills.filter((skill) =>
+      acceptedCategories.includes(getString(skill, "category")),
+    );
+    const cmsNames = matchingSkills.map((skill) => getString(skill, "name"));
+
+    return {
+      ...fallbackGroup,
+      skills: uniqueStrings([
+        ...cmsNames,
+        ...fallbackGroup.skills,
+      ]).slice(0, 10),
+    };
+  });
+}
+
+function buildCapabilityProgress(
+  cmsSkills: CmsRecord[],
+): CapabilityProgressItem[] {
+  const cmsProgress = cmsSkills
+    .filter(
+      (skill) =>
+        getString(skill, "name").length > 0 &&
+        getNumber(skill, "proficiencyPercentage", -1) >= 0,
+    )
+    .sort((left, right) => {
+      const leftFeatured = left.featured === true ? 1 : 0;
+      const rightFeatured = right.featured === true ? 1 : 0;
+
+      if (leftFeatured !== rightFeatured) {
+        return rightFeatured - leftFeatured;
+      }
+
+      return (
+        getNumber(left, "displayOrder", 100) -
+        getNumber(right, "displayOrder", 100)
+      );
+    })
+    .map(
+      (skill): CapabilityProgressItem => ({
+        label: getString(skill, "name"),
+        value: Math.min(
+          100,
+          Math.max(
+            0,
+            getNumber(skill, "proficiencyPercentage", 70),
+          ),
+        ),
+        variant: progressVariantForSkill(skill),
+      }),
+    );
+
+  const result: CapabilityProgressItem[] = [];
+  const usedLabels = new Set<string>();
+
+  for (const item of [...cmsProgress, ...fallbackCapabilityProgress]) {
+    const normalized = item.label.toLowerCase();
+
+    if (usedLabels.has(normalized)) {
+      continue;
+    }
+
+    usedLabels.add(normalized);
+    result.push(item);
+
+    if (result.length === 7) {
+      break;
+    }
+  }
+
+  return result;
+}
+
+function buildProofPoints(cmsSkills: CmsRecord[]): string[] {
+  const cmsHighlights = cmsSkills.flatMap((skill) =>
+    getArray(skill, "highlights")
+      .filter(isObject)
+      .map((highlight) => getString(highlight, "description")),
+  );
+
+  return uniqueStrings([
+    ...cmsHighlights,
+    ...fallbackProofPoints,
+  ]).slice(0, 8);
+}
+
+export default async function SkillsPage() {
+  const { skills: skillDocs, projects } = await getSkillsPageData();
+
+  const cmsSkills: CmsRecord[] = (skillDocs as unknown[]).filter(isObject);
+  const skillGroups = buildSkillGroups(cmsSkills);
+  const capabilityProgress = buildCapabilityProgress(cmsSkills);
+  const proofPoints = buildProofPoints(cmsSkills);
+  const projectCount = Math.max(projects.length, 3);
+
   return (
     <main className="min-w-0 overflow-hidden">
       <section className="relative overflow-hidden border-b border-slate-800/80" aria-label="Technical skills overview">
@@ -417,7 +610,7 @@ export default function SkillsPage() {
 
                 <div className="rounded-2xl border border-slate-800 bg-slate-950/55 p-4 backdrop-blur-sm sm:p-5">
                   <p className="text-2xl font-bold text-white">
-                    3
+                    {projectCount}
                   </p>
 
                   <p className="mt-1 text-sm text-slate-500">
