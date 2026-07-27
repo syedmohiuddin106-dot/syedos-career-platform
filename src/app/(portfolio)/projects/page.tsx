@@ -1,4 +1,5 @@
 ﻿import type { Metadata } from "next";
+import type { ReactNode } from "react";
 
 import {
   ArrowRight,
@@ -20,24 +21,45 @@ import { Card } from "@/components/ui/card";
 import { IconContainer } from "@/components/ui/icon-container";
 import { LinkButton } from "@/components/ui/link-button";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { getProjectsPageData } from "@/lib/cms/get-projects-page-data";
 
-export const metadata: Metadata = {
-  title: "Projects",
-  description:
-    "Explore Syed Mohiuddin's software projects, including SyedOS, SyedAI Assistant, and CampusHire.",
-  alternates: {
-    canonical: "/projects",
-  },
-  openGraph: {
-    title: "Projects | Syed Mohiuddin",
-    description:
-      "Explore full-stack, AI-integrated, and database-driven software projects built by Syed Mohiuddin.",
-    url: "/projects",
-    type: "website",
-  },
+type VisualVariant =
+  | "primary"
+  | "info"
+  | "success"
+  | "warning";
+
+type EngineeringItem = {
+  label: string;
+  value: string;
 };
 
-const projects = [
+type ProjectItem = {
+  title: string;
+  slug: string;
+  category: string;
+  description: string;
+  longDescription: string;
+  icon: ReactNode;
+  iconVariant: VisualVariant;
+  status: string;
+  statusVariant: VisualVariant;
+  featured: boolean;
+  technologies: string[];
+  features: string[];
+  engineering: EngineeringItem[];
+  repository: string;
+  caseStudy: string;
+};
+
+type ProjectPrinciple = {
+  title: string;
+  description: string;
+  icon: ReactNode;
+  variant: VisualVariant;
+};
+
+const fallbackProjects: ProjectItem[] = [
   {
     title: "SyedOS",
     slug: "syedos",
@@ -47,9 +69,9 @@ const projects = [
     longDescription:
       "SyedOS is being developed as a long-term professional platform rather than a basic portfolio website. It uses reusable architecture, a complete design system, responsive layouts, structured sections, and a roadmap for CMS, database, authentication, analytics, AI, testing, and cloud deployment.",
     icon: <Sparkles size={25} />,
-    iconVariant: "primary" as const,
+    iconVariant: "primary",
     status: "In Development",
-    statusVariant: "warning" as const,
+    statusVariant: "warning",
     featured: true,
     technologies: [
       "Next.js",
@@ -89,7 +111,8 @@ const projects = [
         value: "PostgreSQL",
       },
     ],
-    repository: "https://github.com/syedmohiuddin106-dot",
+    repository:
+      "https://github.com/syedmohiuddin106-dot",
     caseStudy: "/projects/syedos",
   },
   {
@@ -101,9 +124,9 @@ const projects = [
     longDescription:
       "SyedAI Assistant combines AI API integration with practical application features such as multiple assistant modes, conversation history, favorites, exports, profile controls, file handling, response continuation, and structured user workflows.",
     icon: <Bot size={25} />,
-    iconVariant: "info" as const,
+    iconVariant: "info",
     status: "Active Project",
-    statusVariant: "primary" as const,
+    statusVariant: "primary",
     featured: true,
     technologies: [
       "PHP",
@@ -156,9 +179,9 @@ const projects = [
     longDescription:
       "CampusHire was built to model real campus recruitment workflows. It includes protected role-based access, secure authentication, recruiter approval, student applications, resume handling, job management, application tracking, notifications, contact messages, and administrative reporting.",
     icon: <BriefcaseBusiness size={25} />,
-    iconVariant: "success" as const,
+    iconVariant: "success",
     status: "Completed",
-    statusVariant: "success" as const,
+    statusVariant: "success",
     featured: true,
     technologies: [
       "HTML",
@@ -198,46 +221,518 @@ const projects = [
         value: "MySQL",
       },
     ],
-    repository: "https://github.com/syedmohiuddin106-dot",
+    repository:
+      "https://github.com/syedmohiuddin106-dot",
     caseStudy: "/projects/campushire",
   },
 ];
 
-const projectPrinciples = [
+const projectPrinciples: ProjectPrinciple[] = [
   {
     title: "Complete user workflows",
     description:
       "Each project is designed around realistic user journeys, clear roles, useful actions, and meaningful outcomes.",
     icon: <Users size={21} />,
-    variant: "primary" as const,
+    variant: "primary",
   },
   {
     title: "Secure foundations",
     description:
       "Authentication, authorization, validation, prepared statements, protected routes, and safe data handling are treated as core requirements.",
     icon: <ShieldCheck size={21} />,
-    variant: "success" as const,
+    variant: "success",
   },
   {
     title: "Structured architecture",
     description:
       "Projects are organized into reusable components, modules, configuration files, and maintainable feature areas.",
     icon: <Layers3 size={21} />,
-    variant: "info" as const,
+    variant: "info",
   },
   {
     title: "Practical learning",
     description:
       "Every project is used to strengthen debugging, architecture, security, documentation, deployment, and software engineering skills.",
     icon: <Code2 size={21} />,
-    variant: "warning" as const,
+    variant: "warning",
   },
 ];
 
-export default function ProjectsPage() {
+function isObject(value: unknown): value is object {
+  return typeof value === "object" && value !== null;
+}
+
+function getObjectValue(
+  record: object | null | undefined,
+  key: string,
+): unknown {
+  if (!record) {
+    return undefined;
+  }
+
+  return (record as Record<string, unknown>)[key];
+}
+
+function getString(
+  record: object | null | undefined,
+  key: string,
+  fallback = "",
+): string {
+  const value = getObjectValue(record, key);
+
+  return typeof value === "string" && value.trim().length > 0
+    ? value.trim()
+    : fallback;
+}
+
+function getBoolean(
+  record: object | null | undefined,
+  key: string,
+): boolean {
+  return getObjectValue(record, key) === true;
+}
+
+function getArray(
+  record: object | null | undefined,
+  key: string,
+): unknown[] {
+  const value = getObjectValue(record, key);
+
+  return Array.isArray(value) ? value : [];
+}
+
+function compactText(
+  value: string,
+  maximum = 320,
+): string {
+  if (value.length <= maximum) {
+    return value;
+  }
+
+  const shortened = value.slice(0, maximum);
+  const lastSpace = shortened.lastIndexOf(" ");
+
+  return `${shortened.slice(
+    0,
+    lastSpace > 0 ? lastSpace : maximum,
+  )}…`;
+}
+
+function formatProjectType(value: string): string {
+  const labels: Record<string, string> = {
+    "full-stack": "Full-Stack Application",
+    ai: "Artificial Intelligence Project",
+    "cloud-devops": "Cloud and DevOps Project",
+    frontend: "Frontend Application",
+    backend: "Backend System",
+    academic: "Academic Project",
+    other: "Software Project",
+  };
+
+  return labels[value] ?? "Software Project";
+}
+
+function formatDevelopmentStatus(
+  value: string,
+): string {
+  const labels: Record<string, string> = {
+    planning: "Planning",
+    "in-development": "In Development",
+    completed: "Completed",
+    maintained: "Maintained",
+    archived: "Archived",
+  };
+
+  return labels[value] ?? "Active Project";
+}
+
+function getStatusVariant(
+  value: string,
+): VisualVariant {
+  if (value === "completed" || value === "maintained") {
+    return "success";
+  }
+
+  if (value === "in-development") {
+    return "warning";
+  }
+
+  if (value === "planning") {
+    return "info";
+  }
+
+  return "primary";
+}
+
+function getProjectIcon(
+  projectType: string,
+  index: number,
+): ReactNode {
+  if (projectType === "ai") {
+    return <Bot size={25} />;
+  }
+
+  if (
+    projectType === "academic" ||
+    projectType === "backend"
+  ) {
+    return <BriefcaseBusiness size={25} />;
+  }
+
+  if (
+    projectType === "cloud-devops" ||
+    projectType === "full-stack"
+  ) {
+    return <Sparkles size={25} />;
+  }
+
+  const fallbackIcons = [
+    <Sparkles key="sparkles" size={25} />,
+    <Bot key="bot" size={25} />,
+    <BriefcaseBusiness
+      key="briefcase"
+      size={25}
+    />,
+  ];
+
+  return fallbackIcons[index % fallbackIcons.length];
+}
+
+function getProjectVariant(
+  projectType: string,
+  index: number,
+): VisualVariant {
+  if (projectType === "ai") {
+    return "info";
+  }
+
+  if (projectType === "academic") {
+    return "success";
+  }
+
+  if (projectType === "cloud-devops") {
+    return "warning";
+  }
+
+  const variants: VisualVariant[] = [
+    "primary",
+    "info",
+    "success",
+  ];
+
+  return variants[index % variants.length];
+}
+
+function createEngineeringItems(
+  record: object,
+  fallback: EngineeringItem[],
+): EngineeringItem[] {
+  const technologies = getArray(
+    record,
+    "technologies",
+  )
+    .filter(isObject)
+    .map((technology) => ({
+      name: getString(technology, "name"),
+      category: getString(
+        technology,
+        "category",
+        "other",
+      ),
+    }))
+    .filter((technology) => technology.name);
+
+  const categoryLabels: Record<string, string> = {
+    frontend: "Frontend",
+    backend: "Backend",
+    database: "Database",
+    ai: "Artificial Intelligence",
+    cloud: "Cloud",
+    devops: "DevOps",
+    testing: "Testing",
+    tool: "Tools",
+    other: "Technology",
+  };
+
+  const grouped = new Map<string, string[]>();
+
+  for (const technology of technologies) {
+    const label =
+      categoryLabels[technology.category] ??
+      "Technology";
+
+    const existing = grouped.get(label) ?? [];
+    existing.push(technology.name);
+    grouped.set(label, existing);
+  }
+
+  const engineeringItems = Array.from(
+    grouped.entries(),
+  )
+    .map(([label, values]) => ({
+      label,
+      value: values.join(", "),
+    }))
+    .slice(0, 4);
+
+  return engineeringItems.length > 0
+    ? engineeringItems
+    : fallback;
+}
+
+function fillProjects(
+  cmsProjects: ProjectItem[],
+): ProjectItem[] {
+  const result = [...cmsProjects];
+
+  for (const fallbackProject of fallbackProjects) {
+    if (result.length >= 3) {
+      break;
+    }
+
+    const alreadyExists = result.some(
+      (project) =>
+        project.slug === fallbackProject.slug ||
+        project.title.toLowerCase() ===
+          fallbackProject.title.toLowerCase(),
+    );
+
+    if (!alreadyExists) {
+      result.push(fallbackProject);
+    }
+  }
+
+  return result.slice(0, 3);
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { profile, projects } =
+    await getProjectsPageData();
+
+  const profileRecord = isObject(profile)
+    ? profile
+    : null;
+
+  const fullName = getString(
+    profileRecord,
+    "fullName",
+    "Syed Mohiuddin",
+  );
+
+  const firstProject =
+    projects.find(isObject) ?? null;
+
+  const seoValue = getObjectValue(
+    firstProject,
+    "seo",
+  );
+
+  const seo = isObject(seoValue)
+    ? seoValue
+    : null;
+
+  const description = getString(
+    seo,
+    "description",
+    `Explore ${fullName}'s full-stack, AI-integrated, database-driven, and production-oriented software projects.`,
+  );
+
+  return {
+    title: getString(
+      seo,
+      "title",
+      `Projects | ${fullName}`,
+    ),
+    description,
+    alternates: {
+      canonical: "/projects",
+    },
+    openGraph: {
+      title: `Projects | ${fullName}`,
+      description,
+      url: "/projects",
+      type: "website",
+    },
+  };
+}
+
+export default async function ProjectsPage() {
+  const { profile, projects: cmsProjectDocs } =
+    await getProjectsPageData();
+
+  const profileRecord = isObject(profile)
+    ? profile
+    : null;
+
+  const socialLinks = getArray(
+    profileRecord,
+    "socialLinks",
+  ).filter(isObject);
+
+  const githubLink =
+    socialLinks.find(
+      (link) =>
+        getString(link, "platform") === "github",
+    ) ?? null;
+
+  const githubURL = getString(
+    githubLink,
+    "url",
+    "https://github.com/syedmohiuddin106-dot",
+  );
+
+  const cmsProjects = cmsProjectDocs
+    .filter(isObject)
+    .map((record, index): ProjectItem => {
+      const fallback =
+        fallbackProjects[
+          index % fallbackProjects.length
+        ];
+
+      const projectType = getString(
+        record,
+        "projectType",
+        "full-stack",
+      );
+
+      const developmentStatus = getString(
+        record,
+        "developmentStatus",
+        "completed",
+      );
+
+      const technologies = getArray(
+        record,
+        "technologies",
+      )
+        .filter(isObject)
+        .map((technology) =>
+          getString(technology, "name"),
+        )
+        .filter(Boolean);
+
+      const features = getArray(
+        record,
+        "features",
+      )
+        .filter(isObject)
+        .map((feature) =>
+          getString(
+            feature,
+            "title",
+            getString(feature, "description"),
+          ),
+        )
+        .filter(Boolean);
+
+      const responsibilities = getArray(
+        record,
+        "responsibilities",
+      )
+        .filter(isObject)
+        .map((responsibility) =>
+          getString(
+            responsibility,
+            "description",
+          ),
+        )
+        .filter(Boolean);
+
+      const slug = getString(
+        record,
+        "slug",
+        fallback.slug,
+      );
+
+      const repository = getString(
+        record,
+        "githubURL",
+        fallback.repository,
+      );
+
+      const documentationURL = getString(
+        record,
+        "documentationURL",
+      );
+
+      const caseStudy =
+        documentationURL.startsWith("/")
+          ? documentationURL
+          : `/projects/${slug}`;
+
+      return {
+        title: getString(
+          record,
+          "title",
+          fallback.title,
+        ),
+        slug,
+        category: formatProjectType(projectType),
+        description: compactText(
+          getString(
+            record,
+            "shortDescription",
+            fallback.description,
+          ),
+          300,
+        ),
+        longDescription: compactText(
+          getString(
+            record,
+            "fullDescription",
+            fallback.longDescription,
+          ),
+          900,
+        ),
+        icon: getProjectIcon(projectType, index),
+        iconVariant: getProjectVariant(
+          projectType,
+          index,
+        ),
+        status: formatDevelopmentStatus(
+          developmentStatus,
+        ),
+        statusVariant: getStatusVariant(
+          developmentStatus,
+        ),
+        featured: getBoolean(record, "featured"),
+        technologies:
+          technologies.length > 0
+            ? technologies.slice(0, 10)
+            : fallback.technologies,
+        features:
+          features.length > 0
+            ? features.slice(0, 8)
+            : responsibilities.length > 0
+              ? responsibilities.slice(0, 8)
+              : fallback.features,
+        engineering: createEngineeringItems(
+          record,
+          fallback.engineering,
+        ),
+        repository,
+        caseStudy,
+      };
+    });
+
+  const projects = fillProjects(cmsProjects);
+
+  const projectCount = projects.length;
+
+  const architectureCount = new Set(
+    projects.flatMap((project) =>
+      project.engineering.map(
+        (item) => `${item.label}:${item.value}`,
+      ),
+    ),
+  ).size;
+
   return (
     <main className="min-w-0 overflow-hidden">
-      <section className="relative overflow-hidden border-b border-slate-800/80" aria-label="Projects overview">
+      <section
+        className="relative overflow-hidden border-b border-slate-800/80"
+        aria-labelledby="projects-page-title"
+      >
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 overflow-hidden"
@@ -282,15 +777,21 @@ export default function ProjectsPage() {
               </p>
             </div>
 
-            <h1 id="projects-page-title" className="mt-3 max-w-4xl text-[2rem] font-bold leading-[1.08] tracking-[-0.035em] text-white min-[430px]:text-[2.65rem] sm:text-5xl sm:leading-[1.07] lg:text-6xl">
-              Software projects built to solve practical problems.
+            <h1
+              id="projects-page-title"
+              className="mt-3 max-w-4xl text-[2rem] font-bold leading-[1.08] tracking-[-0.035em] text-white min-[430px]:text-[2.65rem] sm:text-5xl sm:leading-[1.07] lg:text-6xl"
+            >
+              Software projects built to solve practical
+              problems.
             </h1>
 
             <p className="mt-5 max-w-3xl text-[0.98rem] leading-7 text-slate-400 sm:mt-6 sm:text-lg sm:leading-8">
-              These projects demonstrate full-stack development,
-              database design, artificial intelligence integration,
-              authentication, role-based systems, secure engineering,
-              reusable architecture, and complete user workflows.
+              These projects demonstrate full-stack
+              development, database design, artificial
+              intelligence integration, authentication,
+              role-based systems, secure engineering,
+              reusable architecture, and complete user
+              workflows.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
@@ -302,7 +803,7 @@ export default function ProjectsPage() {
               </LinkButton>
 
               <LinkButton
-                href="https://github.com/syedmohiuddin106-dot"
+                href={githubURL}
                 external
                 variant="secondary"
                 leftIcon={<GitBranch size={18} />}
@@ -316,7 +817,7 @@ export default function ProjectsPage() {
             <div className="mt-10 grid max-w-3xl gap-4 sm:grid-cols-3">
               <div className="rounded-2xl border border-slate-800 bg-slate-950/55 p-5 backdrop-blur-sm">
                 <p className="text-2xl font-bold text-white">
-                  3
+                  {projectCount}
                 </p>
 
                 <p className="mt-1 text-sm text-slate-500">
@@ -326,7 +827,10 @@ export default function ProjectsPage() {
 
               <div className="rounded-2xl border border-slate-800 bg-slate-950/55 p-5 backdrop-blur-sm">
                 <p className="text-2xl font-bold text-white">
-                  3
+                  {Math.min(
+                    architectureCount,
+                    projectCount,
+                  )}
                 </p>
 
                 <p className="mt-1 text-sm text-slate-500">
@@ -351,7 +855,8 @@ export default function ProjectsPage() {
       <section
         id="featured-projects"
         className="relative border-b border-slate-800/80"
-       aria-label="Featured software projects">
+        aria-label="Featured software projects"
+      >
         <div className="syedos-container py-16 sm:py-20 lg:py-24">
           <SectionHeading
             eyebrow="Featured Work"
@@ -411,20 +916,24 @@ export default function ProjectsPage() {
                       </p>
 
                       <div className="mt-6 flex flex-wrap gap-2">
-                        {project.technologies.map((technology) => (
-                          <Badge
-                            key={technology}
-                            variant="outline"
-                          >
-                            {technology}
-                          </Badge>
-                        ))}
+                        {project.technologies.map(
+                          (technology) => (
+                            <Badge
+                              key={technology}
+                              variant="outline"
+                            >
+                              {technology}
+                            </Badge>
+                          ),
+                        )}
                       </div>
 
                       <div className="mt-7 flex flex-wrap gap-3">
                         <LinkButton
                           href={project.caseStudy}
-                          rightIcon={<ArrowRight size={17} />}
+                          rightIcon={
+                            <ArrowRight size={17} />
+                          }
                         >
                           View Case Study
                         </LinkButton>
@@ -433,8 +942,12 @@ export default function ProjectsPage() {
                           href={project.repository}
                           external
                           variant="secondary"
-                          leftIcon={<GitBranch size={17} />}
-                          rightIcon={<ExternalLink size={14} />}
+                          leftIcon={
+                            <GitBranch size={17} />
+                          }
+                          rightIcon={
+                            <ExternalLink size={14} />
+                          }
                           ariaLabel={`Open ${project.title} repository`}
                         >
                           Repository
@@ -471,18 +984,20 @@ export default function ProjectsPage() {
                         </div>
 
                         <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                          {project.features.map((feature) => (
-                            <div
-                              key={feature}
-                              className="flex items-start gap-3 rounded-xl border border-slate-800 bg-slate-950/45 p-4"
-                            >
-                              <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-blue-400" />
+                          {project.features.map(
+                            (feature) => (
+                              <div
+                                key={feature}
+                                className="flex items-start gap-3 rounded-xl border border-slate-800 bg-slate-950/45 p-4"
+                              >
+                                <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-blue-400" />
 
-                              <p className="text-sm leading-6 text-slate-400">
-                                {feature}
-                              </p>
-                            </div>
-                          ))}
+                                <p className="text-sm leading-6 text-slate-400">
+                                  {feature}
+                                </p>
+                              </div>
+                            ),
+                          )}
                         </div>
                       </div>
 
@@ -508,20 +1023,22 @@ export default function ProjectsPage() {
                         </div>
 
                         <div className="mt-5 space-y-3">
-                          {project.engineering.map((item) => (
-                            <div
-                              key={item.label}
-                              className="rounded-xl border border-slate-800 bg-slate-950/45 p-4"
-                            >
-                              <p className="text-xs uppercase tracking-[0.15em] text-slate-500">
-                                {item.label}
-                              </p>
+                          {project.engineering.map(
+                            (item) => (
+                              <div
+                                key={`${item.label}-${item.value}`}
+                                className="rounded-xl border border-slate-800 bg-slate-950/45 p-4"
+                              >
+                                <p className="text-xs uppercase tracking-[0.15em] text-slate-500">
+                                  {item.label}
+                                </p>
 
-                              <p className="mt-2 font-medium text-white">
-                                {item.value}
-                              </p>
-                            </div>
-                          ))}
+                                <p className="mt-2 font-medium text-white">
+                                  {item.value}
+                                </p>
+                              </div>
+                            ),
+                          )}
                         </div>
                       </div>
                     </div>
@@ -533,7 +1050,10 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      <section className="border-b border-slate-800/80" aria-label="Project engineering principles">
+      <section
+        className="border-b border-slate-800/80"
+        aria-label="Project engineering principles"
+      >
         <div className="syedos-container py-16 sm:py-20 lg:py-24">
           <SectionHeading
             eyebrow="Engineering Approach"
@@ -580,13 +1100,15 @@ export default function ProjectsPage() {
                 </Badge>
 
                 <h2 className="mt-5 text-3xl sm:text-4xl">
-                  Interested in discussing one of these projects?
+                  Interested in discussing one of these
+                  projects?
                 </h2>
 
                 <p className="mt-4 text-sm leading-7 text-slate-300 sm:text-base">
-                  Contact me for internships, fresher software roles,
-                  project discussions, technical collaborations, or
-                  detailed project demonstrations.
+                  Contact me for internships, fresher
+                  software roles, project discussions,
+                  technical collaborations, or detailed
+                  project demonstrations.
                 </p>
               </div>
 
@@ -599,11 +1121,13 @@ export default function ProjectsPage() {
                 </LinkButton>
 
                 <LinkButton
-                  href="https://github.com/syedmohiuddin106-dot"
+                  href={githubURL}
                   external
                   variant="secondary"
                   leftIcon={<GitBranch size={17} />}
-                  rightIcon={<ExternalLink size={14} />}
+                  rightIcon={
+                    <ExternalLink size={14} />
+                  }
                   ariaLabel="Open Syed Mohiuddin's GitHub profile"
                 >
                   Visit GitHub
