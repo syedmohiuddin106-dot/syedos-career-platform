@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "ci": "payload migrate && next build",
+    "payload": "payload",
     "start": "next start",
     "lint": "eslint",
     "audit:links": "node scripts/check-links.mjs"
