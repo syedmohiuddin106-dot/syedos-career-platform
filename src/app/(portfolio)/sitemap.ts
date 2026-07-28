@@ -44,7 +44,7 @@ const routes = [
     priority: 0.8,
   },
   {
-    path: "/certificates",
+    path: "/certifications",
     changeFrequency: "monthly",
     priority: 0.7,
   },

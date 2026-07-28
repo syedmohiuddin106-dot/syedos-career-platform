@@ -70,8 +70,8 @@ export async function Navbar() {
             highlighted: false,
           },
           {
-            label: "Certificates",
-            href: "/certificates",
+            label: "Certifications",
+            href: "/certifications",
             openInNewTab: false,
             highlighted: false,
           },

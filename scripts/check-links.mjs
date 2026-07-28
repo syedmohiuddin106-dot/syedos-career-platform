@@ -11,7 +11,7 @@ const routes = [
   "/projects/campushire",
   "/skills",
   "/education",
-  "/certificates",
+  "/certifications",
   "/contact",
   "/sitemap.xml",
   "/robots.txt",

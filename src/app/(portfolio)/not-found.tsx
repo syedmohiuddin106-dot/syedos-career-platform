@@ -15,7 +15,7 @@ const suggestedRoutes = [
   "/projects",
   "/skills",
   "/education",
-  "/certificates",
+  "/certifications",
   "/contact",
 ] as const;
 
