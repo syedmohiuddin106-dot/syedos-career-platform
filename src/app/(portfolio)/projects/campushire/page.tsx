@@ -26,24 +26,47 @@ import { IconContainer } from "@/components/ui/icon-container";
 import { LinkButton } from "@/components/ui/link-button";
 import { Progress } from "@/components/ui/progress";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { getProjectCaseStudyData } from "@/lib/cms/get-project-case-study-data";
 
-export const metadata: Metadata = {
-  title: "CampusHire Project Case Study",
-  description:
+export async function generateMetadata(): Promise<Metadata> {
+  const { project } =
+    await getProjectCaseStudyData("campushire");
+
+  const projectRecord = isObject(project)
+    ? project
+    : null;
+
+  const seoValue = projectRecord?.seo;
+  const seo = isObject(seoValue) ? seoValue : null;
+
+  const title = getString(
+    seo,
+    "title",
+    "CampusHire Project Case Study",
+  );
+
+  const description = getString(
+    seo,
+    "description",
     "Explore the features, architecture, user roles, security, workflows, and development outcomes of CampusHire, a campus placement management system.",
-  alternates: {
-    canonical: "/projects/campushire",
-  },
-  openGraph: {
-    title: "CampusHire Case Study | Syed Mohiuddin",
-    description:
-      "A detailed case study of CampusHire, a full-stack campus placement management system built with PHP and MySQL.",
-    url: "/projects/campushire",
-    type: "article",
-  },
-};
+  );
 
-const technologies = [
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: "/projects/campushire",
+    },
+    openGraph: {
+      title: `${title} | Syed Mohiuddin`,
+      description,
+      url: "/projects/campushire",
+      type: "article",
+    },
+  };
+}
+
+const fallbackTechnologies = [
   "HTML5",
   "CSS3",
   "JavaScript",
@@ -338,7 +361,152 @@ const outcomes = [
   "Prepared the project for local deployment using XAMPP",
 ];
 
-export default function CampusHireCaseStudyPage() {
+type CmsRecord = Record<string, unknown>;
+
+type BadgeVariant =
+  | "primary"
+  | "info"
+  | "success"
+  | "warning"
+  | "outline";
+
+function isObject(value: unknown): value is CmsRecord {
+  return typeof value === "object" && value !== null;
+}
+
+function getString(
+  record: CmsRecord | null | undefined,
+  key: string,
+  fallback = "",
+): string {
+  const value = record?.[key];
+
+  return typeof value === "string" && value.trim().length > 0
+    ? value.trim()
+    : fallback;
+}
+
+function getArray(
+  record: CmsRecord | null | undefined,
+  key: string,
+): unknown[] {
+  const value = record?.[key];
+
+  return Array.isArray(value) ? value : [];
+}
+
+function uniqueStrings(values: string[]): string[] {
+  return Array.from(
+    new Set(
+      values
+        .map((value) => value.trim())
+        .filter(Boolean),
+    ),
+  );
+}
+
+function formatProjectType(value: string): string {
+  const labels: Record<string, string> = {
+    "full-stack": "Full-Stack Application",
+    ai: "Artificial Intelligence Project",
+    "cloud-devops": "Cloud and DevOps Project",
+    frontend: "Frontend Application",
+    backend: "Backend System",
+    academic: "Academic Project",
+    other: "Software Project",
+  };
+
+  return labels[value] ?? "Full-Stack Application";
+}
+
+function formatDevelopmentStatus(value: string): string {
+  const labels: Record<string, string> = {
+    planning: "Planning",
+    "in-development": "In Development",
+    completed: "Completed",
+    maintained: "Maintained",
+    archived: "Archived",
+  };
+
+  return labels[value] ?? "Completed";
+}
+
+function getStatusVariant(
+  value: string,
+): BadgeVariant {
+  if (value === "completed" || value === "maintained") {
+    return "success";
+  }
+
+  if (value === "planning") {
+    return "info";
+  }
+
+  if (value === "archived") {
+    return "outline";
+  }
+
+  return "warning";
+}
+
+export default async function CampusHireCaseStudyPage() {
+  const { project } =
+    await getProjectCaseStudyData("campushire");
+
+  const projectRecord = isObject(project)
+    ? project
+    : null;
+
+  const title = getString(
+    projectRecord,
+    "title",
+    "CampusHire",
+  );
+
+  const shortDescription = getString(
+    projectRecord,
+    "shortDescription",
+    "A full-stack campus placement platform with dedicated student, recruiter, and administrator experiences for profiles, jobs, applications, approvals, interview scheduling, notifications, and reports.",
+  );
+
+  const projectType = getString(
+    projectRecord,
+    "projectType",
+    "full-stack",
+  );
+
+  const developmentStatus = getString(
+    projectRecord,
+    "developmentStatus",
+    "completed",
+  );
+
+  const statusLabel =
+    formatDevelopmentStatus(developmentStatus);
+
+  const statusVariant =
+    getStatusVariant(developmentStatus);
+
+  const repositoryURL = getString(
+    projectRecord,
+    "githubURL",
+    "https://github.com/syedmohiuddin106-dot",
+  );
+
+  const cmsTechnologies = getArray(
+    projectRecord,
+    "technologies",
+  )
+    .filter(isObject)
+    .map((technology) =>
+      getString(technology, "name"),
+    );
+
+  const technologies = uniqueStrings([
+    ...cmsTechnologies,
+    ...fallbackTechnologies,
+  ]).slice(0, 10);
+
   return (
     <main className="min-w-0 overflow-hidden">
       <section className="relative overflow-hidden border-b border-slate-800/80">
@@ -355,7 +523,7 @@ export default function CampusHireCaseStudyPage() {
           <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(148,163,184,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.25)_1px,transparent_1px)] [background-size:48px_48px]" />
         </div>
 
-        <div className="syedos-container relative py-16 sm:py-20 lg:py-28">
+        <div className="syedos-container relative pb-14 pt-6 sm:py-14 lg:py-14 xl:pb-18 xl:pt-8">
           <LinkButton
             href="/projects"
             variant="ghost"
@@ -365,46 +533,55 @@ export default function CampusHireCaseStudyPage() {
             Back to Projects
           </LinkButton>
 
-          <div className="mt-8 grid gap-12 xl:grid-cols-[1.08fr_0.92fr] xl:items-center">
+          <div className="mt-6 grid min-w-0 items-start gap-9 xl:grid-cols-[1.08fr_0.92fr] xl:gap-12">
             <div>
-              <div className="flex flex-wrap gap-3">
-                <Badge variant="success" dot>
-                  Completed
-                </Badge>
+              <div className="space-y-4">
+                <div className="grid w-full grid-cols-[0.9fr_1fr_1.15fr] items-center gap-1.5 sm:flex sm:flex-wrap sm:gap-2">
+                  <Badge
+                    variant={statusVariant}
+                    dot
+                    className="w-full justify-center whitespace-nowrap px-1.5 py-1 text-[0.6rem] sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm"
+                  >
+                    {statusLabel}
+                  </Badge>
 
-                <Badge variant="primary">
-                  Full-Stack Project
-                </Badge>
+                  <Badge
+                    variant="primary"
+                    className="w-full justify-center whitespace-nowrap px-1.5 py-1 text-[0.6rem] sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm"
+                  >
+                    Full-Stack Project
+                  </Badge>
 
-                <Badge variant="outline">
-                  Placement Management
-                </Badge>
+                  <Badge
+                    variant="outline"
+                    className="w-full justify-center whitespace-nowrap px-1.5 py-1 text-[0.6rem] sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm"
+                  >
+                    Placement Management
+                  </Badge>
+                </div>
+
+                <p className="syedos-code-text text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-cyan-400 sm:text-sm sm:tracking-[0.2em]">
+                  Campus Placement Management System
+                </p>
               </div>
 
-              <p className="syedos-code-text mt-7 text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400">
-                Campus Placement Management System
-              </p>
-
-              <h1 className="mt-4 text-5xl leading-[1.02] sm:text-6xl lg:text-7xl">
-                CampusHire
+              <h1 className="mt-3 max-w-4xl text-[2rem] font-bold leading-[1.08] tracking-[-0.035em] text-white min-[430px]:text-[2.65rem] sm:text-5xl sm:leading-[1.07] lg:text-6xl">
+                {title}
               </h1>
 
-              <p className="mt-6 max-w-3xl text-base leading-8 text-slate-400 sm:text-lg">
-                A full-stack campus placement platform with dedicated
-                student, recruiter, and administrator experiences for
-                profiles, jobs, applications, approvals, interview
-                scheduling, notifications, and reports.
+              <p className="mt-5 max-w-3xl text-[0.98rem] leading-7 text-slate-400 sm:mt-6 sm:text-lg sm:leading-8">
+                {shortDescription}
               </p>
 
               <div className="mt-8 flex flex-wrap gap-4">
                 <LinkButton
-                  href="https://github.com/syedmohiuddin106-dot"
+                  href={repositoryURL}
                   external
                   leftIcon={<GitBranch size={18} />}
                   rightIcon={<ExternalLink size={14} />}
-                  ariaLabel="Open Syed Mohiuddin's GitHub profile"
+                  ariaLabel={`Open ${title} repository`}
                 >
-                  View GitHub
+                  View Repository
                 </LinkButton>
 
                 <LinkButton
@@ -462,7 +639,7 @@ export default function CampusHireCaseStudyPage() {
                   </p>
 
                   <p className="mt-2 font-semibold text-white">
-                    Placement System
+                    {formatProjectType(projectType)}
                   </p>
                 </div>
 
@@ -472,7 +649,7 @@ export default function CampusHireCaseStudyPage() {
                   </p>
 
                   <p className="mt-2 font-semibold text-white">
-                    3 Roles
+                    3 Connected Roles
                   </p>
                 </div>
 
@@ -508,13 +685,13 @@ export default function CampusHireCaseStudyPage() {
 
                     <div>
                       <p className="font-semibold text-green-200">
-                        Core development completed
+                        Core platform completed
                       </p>
 
                       <p className="mt-1 text-sm leading-6 text-green-100/65">
                         Student, recruiter, administrator, job,
-                        application, notification, and reporting
-                        workflows have been implemented.
+                        application, notification, interview, and
+                        reporting workflows have been implemented.
                       </p>
                     </div>
                   </div>
@@ -743,8 +920,8 @@ export default function CampusHireCaseStudyPage() {
 
       <section className="border-b border-slate-800/80">
         <div className="syedos-container py-16 sm:py-20 lg:py-24">
-          <div className="grid gap-6 xl:grid-cols-[0.92fr_1.08fr]">
-            <Card variant="glass">
+          <div className="grid items-start gap-6 xl:grid-cols-[0.92fr_1.08fr]">
+            <Card variant="glass" className="self-start">
               <p className="syedos-code-text text-xs font-semibold uppercase tracking-[0.18em] text-cyan-400">
                 Development Progress
               </p>
@@ -771,7 +948,7 @@ export default function CampusHireCaseStudyPage() {
               </div>
             </Card>
 
-            <Card variant="editorial">
+            <Card variant="editorial" className="self-start">
               <p className="syedos-code-text text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
                 Development Challenges
               </p>
