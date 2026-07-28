@@ -27,24 +27,41 @@ import { IconContainer } from "@/components/ui/icon-container";
 import { LinkButton } from "@/components/ui/link-button";
 import { Progress } from "@/components/ui/progress";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { getProjectCaseStudyData } from "@/lib/cms/get-project-case-study-data";
 
-export const metadata: Metadata = {
-  title: "SyedOS Project Case Study",
-  description:
+export async function generateMetadata(): Promise<Metadata> {
+  const { project } = await getProjectCaseStudyData("syedos");
+  const projectRecord = isObject(project) ? project : null;
+  const seoValue = projectRecord?.seo;
+  const seo = isObject(seoValue) ? seoValue : null;
+
+  const title = getString(
+    seo,
+    "title",
+    "SyedOS Project Case Study",
+  );
+  const description = getString(
+    seo,
+    "description",
     "Explore the architecture, development goals, technology stack, features, security, and roadmap of SyedOS, an intelligent career portfolio platform.",
-  alternates: {
-    canonical: "/projects/syedos",
-  },
-  openGraph: {
-    title: "SyedOS Project Case Study | Syed Mohiuddin",
-    description:
-      "A detailed case study of SyedOS, a production-oriented intelligent career portfolio platform built with Next.js and TypeScript.",
-    url: "/projects/syedos",
-    type: "article",
-  },
-};
+  );
 
-const technologies = [
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: "/projects/syedos",
+    },
+    openGraph: {
+      title: `${title} | Syed Mohiuddin`,
+      description,
+      url: "/projects/syedos",
+      type: "article",
+    },
+  };
+}
+
+const fallbackTechnologies = [
   "Next.js 16",
   "React",
   "TypeScript",
@@ -88,27 +105,27 @@ const projectGoals = [
   },
 ];
 
-const currentFeatures = [
+const fallbackCurrentFeatures = [
   "Responsive global Navbar and Footer",
   "Complete reusable UI component library",
   "Advanced Interface Lab for design-system testing",
-  "Professional public homepage",
-  "Detailed About page",
-  "Complete Projects portfolio page",
-  "Responsive mobile and desktop layouts",
-  "SEO metadata and social-sharing structure",
+  "Professional CMS-powered homepage",
+  "About, Skills, Education, Certifications, Experience, and Contact pages",
+  "Projects portfolio with CMS-powered project data",
+  "Payload CMS collections, drafts, versions, and structured relationships",
+  "PostgreSQL database running through Docker",
+  "Secure private Payload administration experience",
+  "Responsive layouts, SEO metadata, and social-sharing structure",
 ];
 
-const plannedFeatures = [
-  "Private administrator dashboard",
-  "Payload CMS content management",
-  "PostgreSQL database integration",
-  "Authentication and protected admin routes",
+const fallbackPlannedFeatures = [
+  "Complete CMS integration for the remaining project case studies",
   "Project analytics and audience insights",
   "AI-powered portfolio assistant",
   "Recruiter-focused viewing mode",
-  "Dynamic project case studies",
-  "Resume and certificate management",
+  "Advanced resume and certificate management",
+  "Automated testing and accessibility validation",
+  "Performance monitoring and production optimization",
   "Cloud deployment and CI/CD",
 ];
 
@@ -211,25 +228,35 @@ const developmentProgress = [
   },
   {
     label: "Portfolio Pages",
-    value: 45,
+    value: 100,
+    variant: "success" as const,
+  },
+  {
+    label: "Payload CMS and PostgreSQL",
+    value: 95,
     variant: "primary" as const,
   },
   {
-    label: "CMS and Database",
-    value: 10,
-    variant: "warning" as const,
+    label: "Private Administration",
+    value: 90,
+    variant: "primary" as const,
+  },
+  {
+    label: "Dynamic CMS Integration",
+    value: 92,
+    variant: "info" as const,
   },
   {
     label: "AI Features",
     value: 5,
-    variant: "info" as const,
+    variant: "warning" as const,
   },
   {
     label: "Deployment and CI/CD",
-    value: 5,
+    value: 10,
     variant: "warning" as const,
   },
-];
+]
 
 const developmentPhases = [
   {
@@ -238,23 +265,23 @@ const developmentPhases = [
     status: "Completed",
     statusVariant: "success" as const,
     description:
-      "Created the Next.js foundation, project architecture, global styles, design tokens, reusable UI components, Interface Lab, responsive Navbar, and Footer.",
+      "Completed the Next.js foundation, project architecture, global styles, design tokens, reusable UI components, Interface Lab, responsive Navbar, and Footer.",
   },
   {
     phase: "Phase 2",
     title: "Public Portfolio Experience",
-    status: "In Progress",
-    statusVariant: "primary" as const,
+    status: "Completed",
+    statusVariant: "success" as const,
     description:
-      "Building the homepage, About page, Projects page, case studies, skills, education, certificates, and contact experiences.",
+      "Completed the homepage, About, Projects, Skills, Education, Certifications, Experience, Contact, and responsive project case-study experiences.",
   },
   {
     phase: "Phase 3",
-    title: "CMS and Private Administration",
-    status: "Planned",
-    statusVariant: "warning" as const,
+    title: "CMS, Database, and Private Administration",
+    status: "In Progress",
+    statusVariant: "primary" as const,
     description:
-      "Integrating Payload CMS, PostgreSQL, authentication, private routes, media management, and editable portfolio content.",
+      "Payload CMS, PostgreSQL, Docker, structured collections, drafts, versions, media, profile content, and the private administration experience are active. The remaining work is completing CMS integration for every project case study and final administration refinements.",
   },
   {
     phase: "Phase 4",
@@ -262,7 +289,7 @@ const developmentPhases = [
     status: "Planned",
     statusVariant: "warning" as const,
     description:
-      "Adding AI-assisted project explanations, recruiter support, resume intelligence, audience modes, and career guidance.",
+      "Add AI-assisted project explanations, recruiter support, resume intelligence, audience modes, structured tool usage, and career guidance.",
   },
   {
     phase: "Phase 5",
@@ -270,11 +297,159 @@ const developmentPhases = [
     status: "Planned",
     statusVariant: "warning" as const,
     description:
-      "Completing automated tests, analytics, accessibility checks, performance optimization, CI/CD, monitoring, and production deployment.",
+      "Complete automated testing, analytics, accessibility checks, performance optimization, CI/CD, monitoring, and production cloud deployment.",
   },
-];
+]
 
-export default function SyedOSCaseStudyPage() {
+type CmsRecord = Record<string, unknown>;
+
+type BadgeVariant =
+  | "primary"
+  | "info"
+  | "success"
+  | "warning"
+  | "outline";
+
+function isObject(value: unknown): value is CmsRecord {
+  return typeof value === "object" && value !== null;
+}
+
+function getString(
+  record: CmsRecord | null | undefined,
+  key: string,
+  fallback = "",
+): string {
+  const value = record?.[key];
+
+  return typeof value === "string" && value.trim().length > 0
+    ? value.trim()
+    : fallback;
+}
+
+function getArray(
+  record: CmsRecord | null | undefined,
+  key: string,
+): unknown[] {
+  const value = record?.[key];
+  return Array.isArray(value) ? value : [];
+}
+
+function uniqueStrings(values: string[]): string[] {
+  return Array.from(
+    new Set(values.map((value) => value.trim()).filter(Boolean)),
+  );
+}
+
+function formatProjectType(value: string): string {
+  const labels: Record<string, string> = {
+    "full-stack": "Full-Stack Platform",
+    ai: "Artificial Intelligence Project",
+    "cloud-devops": "Cloud and DevOps Project",
+    frontend: "Frontend Application",
+    backend: "Backend System",
+    academic: "Academic Project",
+    other: "Software Project",
+  };
+
+  return labels[value] ?? "Full-Stack Platform";
+}
+
+function formatDevelopmentStatus(value: string): string {
+  const labels: Record<string, string> = {
+    planning: "Planning",
+    "in-development": "In Development",
+    completed: "Completed",
+    maintained: "Maintained",
+    archived: "Archived",
+  };
+
+  return labels[value] ?? "In Development";
+}
+
+function getStatusVariant(value: string): BadgeVariant {
+  if (value === "completed" || value === "maintained") {
+    return "success";
+  }
+
+  if (value === "planning") {
+    return "info";
+  }
+
+  if (value === "archived") {
+    return "outline";
+  }
+
+  return "warning";
+}
+
+export default async function SyedOSCaseStudyPage() {
+  const { project } = await getProjectCaseStudyData("syedos");
+  const projectRecord = isObject(project) ? project : null;
+
+  const title = getString(projectRecord, "title", "SyedOS");
+  const shortDescription = getString(
+    projectRecord,
+    "shortDescription",
+    "A production-oriented career platform designed to combine professional portfolio storytelling, private administration, structured content, analytics, AI assistance, and recruiter-focused experiences.",
+  );
+  const fullDescription = getString(
+    projectRecord,
+    "fullDescription",
+    "SyedOS is designed as an editable, scalable, secure, and intelligent career platform that can continue growing beyond graduation.",
+  );
+  const projectType = getString(
+    projectRecord,
+    "projectType",
+    "full-stack",
+  );
+  const developmentStatus = getString(
+    projectRecord,
+    "developmentStatus",
+    "in-development",
+  );
+  const statusLabel = formatDevelopmentStatus(developmentStatus);
+  const statusVariant = getStatusVariant(developmentStatus);
+  const repositoryURL = getString(
+    projectRecord,
+    "githubURL",
+    "https://github.com/syedmohiuddin106-dot",
+  );
+
+  const cmsTechnologies = getArray(projectRecord, "technologies")
+    .filter(isObject)
+    .map((technology) => getString(technology, "name"));
+  const technologies = uniqueStrings([
+    ...cmsTechnologies,
+    ...fallbackTechnologies,
+  ]).slice(0, 10);
+
+  const cmsFeatures = getArray(projectRecord, "features")
+    .filter(isObject)
+    .map((feature) =>
+      getString(
+        feature,
+        "title",
+        getString(feature, "description"),
+      ),
+    );
+  const currentFeatures = uniqueStrings([
+    ...cmsFeatures,
+    ...fallbackCurrentFeatures,
+  ]).slice(0, 10);
+
+  const cmsResponsibilities = getArray(
+    projectRecord,
+    "responsibilities",
+  )
+    .filter(isObject)
+    .map((responsibility) =>
+      getString(responsibility, "description"),
+    );
+  const plannedFeatures = uniqueStrings([
+    ...cmsResponsibilities,
+    ...fallbackPlannedFeatures,
+  ]).slice(0, 10);
+
   return (
     <main className="min-w-0 overflow-hidden">
       <section className="relative overflow-hidden border-b border-slate-800/80">
@@ -291,7 +466,7 @@ export default function SyedOSCaseStudyPage() {
           <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(148,163,184,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.25)_1px,transparent_1px)] [background-size:48px_48px]" />
         </div>
 
-        <div className="syedos-container relative py-16 sm:py-20 lg:py-28">
+        <div className="syedos-container relative pb-14 pt-6 sm:py-14 lg:py-14 xl:pb-18 xl:pt-8">
           <LinkButton
             href="/projects"
             variant="ghost"
@@ -301,44 +476,53 @@ export default function SyedOSCaseStudyPage() {
             Back to Projects
           </LinkButton>
 
-          <div className="mt-8 grid gap-12 xl:grid-cols-[1.08fr_0.92fr] xl:items-center">
+          <div className="mt-6 grid min-w-0 items-start gap-9 xl:grid-cols-[1.08fr_0.92fr] xl:gap-12">
             <div>
-              <div className="flex flex-wrap gap-3">
-                <Badge variant="warning" dot>
-                  In Development
-                </Badge>
+              <div className="space-y-4">
+                <div className="grid w-full grid-cols-[0.9fr_1fr_1.15fr] items-center gap-1.5 sm:flex sm:flex-wrap sm:gap-2">
+                  <Badge
+                    variant={statusVariant}
+                    dot
+                    className="w-full justify-center whitespace-nowrap px-1.5 py-1 text-[0.6rem] sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm"
+                  >
+                    {statusLabel}
+                  </Badge>
 
-                <Badge variant="primary">
-                  Featured Project
-                </Badge>
+                  <Badge
+                    variant="primary"
+                    className="w-full justify-center whitespace-nowrap px-1.5 py-1 text-[0.6rem] sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm"
+                  >
+                    Featured Project
+                  </Badge>
 
-                <Badge variant="outline">
-                  Full-Stack Platform
-                </Badge>
+                  <Badge
+                    variant="outline"
+                    className="w-full justify-center whitespace-nowrap px-1.5 py-1 text-[0.6rem] sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm"
+                  >
+                    {formatProjectType(projectType)}
+                  </Badge>
+                </div>
+
+                <p className="syedos-code-text text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-cyan-400 sm:text-sm sm:tracking-[0.2em]">
+                  {formatProjectType(projectType)}
+                </p>
               </div>
 
-              <p className="syedos-code-text mt-7 text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400">
-                Intelligent Career Portfolio Platform
-              </p>
-
-              <h1 className="mt-4 text-5xl leading-[1.02] sm:text-6xl lg:text-7xl">
-                SyedOS
+              <h1 className="mt-3 max-w-4xl text-[2rem] font-bold leading-[1.08] tracking-[-0.035em] text-white min-[430px]:text-[2.65rem] sm:text-5xl sm:leading-[1.07] lg:text-6xl">
+                {title}
               </h1>
 
-              <p className="mt-6 max-w-3xl text-base leading-8 text-slate-400 sm:text-lg">
-                A production-oriented career platform designed to
-                combine professional portfolio storytelling, private
-                administration, structured content, analytics, AI
-                assistance, and recruiter-focused experiences.
+              <p className="mt-5 max-w-3xl text-[0.98rem] leading-7 text-slate-400 sm:mt-6 sm:text-lg sm:leading-8">
+                {shortDescription}
               </p>
 
               <div className="mt-8 flex flex-wrap gap-4">
                 <LinkButton
-                  href="https://github.com/syedmohiuddin106-dot"
+                  href={repositoryURL}
                   external
                   leftIcon={<GitBranch size={18} />}
                   rightIcon={<ExternalLink size={14} />}
-                  ariaLabel="Open Syed Mohiuddin's GitHub profile"
+                  ariaLabel={`Open ${title} repository`}
                 >
                   View GitHub
                 </LinkButton>
@@ -376,7 +560,7 @@ export default function SyedOSCaseStudyPage() {
                     </p>
 
                     <h2 className="mt-2 text-xl">
-                      Current development status
+                      Current platform status
                     </h2>
                   </div>
 
@@ -398,7 +582,7 @@ export default function SyedOSCaseStudyPage() {
                   </p>
 
                   <p className="mt-2 font-semibold text-white">
-                    Career Platform
+                    {formatProjectType(projectType)}
                   </p>
                 </div>
 
@@ -408,7 +592,7 @@ export default function SyedOSCaseStudyPage() {
                   </p>
 
                   <p className="mt-2 font-semibold text-white">
-                    Public Portfolio
+                    {statusLabel}
                   </p>
                 </div>
 
@@ -448,9 +632,10 @@ export default function SyedOSCaseStudyPage() {
                       </p>
 
                       <p className="mt-1 text-sm leading-6 text-green-100/65">
-                        The public portfolio experience is currently
-                        being built before CMS, database, AI, and
-                        deployment integration.
+                        The public portfolio, Payload CMS, PostgreSQL database,
+                        Docker environment, and private administration are
+                        active. Current work is focused on completing dynamic
+                        case studies before AI, analytics, testing, and deployment.
                       </p>
                     </div>
                   </div>
@@ -470,7 +655,7 @@ export default function SyedOSCaseStudyPage() {
           />
 
           <div className="mt-10 grid gap-6 xl:grid-cols-[1.08fr_0.92fr]">
-            <Card variant="glass">
+            <Card variant="glass" className="flex h-full flex-col">
               <div className="flex items-center gap-3">
                 <IconContainer
                   variant="warning"
@@ -500,15 +685,46 @@ export default function SyedOSCaseStudyPage() {
                 </p>
 
                 <p>
-                  SyedOS is designed to solve this by becoming an
-                  editable, scalable, secure, and intelligent career
-                  platform that can continue growing beyond
-                  graduation.
+                  {fullDescription}
                 </p>
+              </div>
+
+              <div className="mt-7 grid gap-3 sm:grid-cols-2">
+                {[
+                  {
+                    label: "Content",
+                    value: "Editable through Payload CMS",
+                  },
+                  {
+                    label: "Data",
+                    value: "Structured in PostgreSQL",
+                  },
+                  {
+                    label: "Access",
+                    value: "Protected private administration",
+                  },
+                  {
+                    label: "Growth",
+                    value: "Designed for long-term expansion",
+                  },
+                ].map((item) => (
+                  <div
+                    key={item.label}
+                    className="rounded-xl border border-slate-800 bg-slate-950/45 p-4"
+                  >
+                    <p className="text-xs uppercase tracking-[0.15em] text-slate-500">
+                      {item.label}
+                    </p>
+
+                    <p className="mt-2 text-sm font-medium leading-6 text-white">
+                      {item.value}
+                    </p>
+                  </div>
+                ))}
               </div>
             </Card>
 
-            <Card variant="editorial">
+            <Card variant="editorial" className="h-full">
               <div className="flex items-center gap-3">
                 <IconContainer
                   variant="primary"
@@ -644,8 +860,8 @@ export default function SyedOSCaseStudyPage() {
 
       <section className="border-b border-slate-800/80">
         <div className="syedos-container py-16 sm:py-20 lg:py-24">
-          <div className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
-            <Card variant="glass">
+          <div className="grid items-start gap-6 xl:grid-cols-[1.05fr_0.95fr]">
+            <Card variant="glass" className="h-full">
               <SectionHeading
                 eyebrow="Current Features"
                 title="What has already been completed"
@@ -672,14 +888,14 @@ export default function SyedOSCaseStudyPage() {
               </div>
             </Card>
 
-            <Card variant="editorial">
+            <Card variant="editorial" className="h-full">
               <SectionHeading
                 eyebrow="Planned Features"
                 title="What will be added next"
                 description="The next phases will transform SyedOS from a public portfolio into a complete intelligent career platform."
               />
 
-              <div className="mt-8 grid gap-3">
+              <div className="mt-8 grid gap-3 sm:grid-cols-2">
                 {plannedFeatures.map((feature) => (
                   <div
                     key={feature}
@@ -736,8 +952,8 @@ export default function SyedOSCaseStudyPage() {
 
       <section className="border-b border-slate-800/80">
         <div className="syedos-container py-16 sm:py-20 lg:py-24">
-          <div className="grid gap-6 xl:grid-cols-[0.92fr_1.08fr]">
-            <Card variant="glass">
+          <div className="grid items-start gap-6 xl:grid-cols-[0.92fr_1.08fr]">
+            <Card variant="glass" className="h-full">
               <p className="syedos-code-text text-xs font-semibold uppercase tracking-[0.18em] text-cyan-400">
                 Development Progress
               </p>
@@ -763,7 +979,7 @@ export default function SyedOSCaseStudyPage() {
               </div>
             </Card>
 
-            <Card variant="editorial">
+            <Card variant="editorial" className="h-full">
               <p className="syedos-code-text text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
                 Development Roadmap
               </p>
@@ -772,32 +988,35 @@ export default function SyedOSCaseStudyPage() {
                 Planned implementation phases
               </h2>
 
-              <div className="mt-7 space-y-4">
-                {developmentPhases.map((phase) => (
+              <div className="mt-7 grid gap-4 lg:grid-cols-2">
+                {developmentPhases.map((phase, index) => (
                   <div
                     key={phase.phase}
-                    className="rounded-2xl border border-slate-800 bg-slate-950/45 p-5"
+                    className={`relative rounded-2xl border border-slate-800 bg-slate-950/45 p-5 ${
+                      index === developmentPhases.length - 1
+                        ? "lg:col-span-2"
+                        : ""
+                    }`}
                   >
-                    <div className="flex flex-wrap items-start justify-between gap-3">
-                      <div>
-                        <p className="text-sm font-medium text-cyan-300">
-                          {phase.phase}
-                        </p>
+                    <Badge
+                      variant={phase.statusVariant}
+                      dot
+                      className="absolute right-5 top-5"
+                    >
+                      {phase.status}
+                    </Badge>
 
-                        <h3 className="mt-1 text-lg">
-                          {phase.title}
-                        </h3>
-                      </div>
+                    <div className="pr-28">
+                      <p className="text-sm font-medium text-cyan-300">
+                        {phase.phase}
+                      </p>
 
-                      <Badge
-                        variant={phase.statusVariant}
-                        dot
-                      >
-                        {phase.status}
-                      </Badge>
+                      <h3 className="mt-1 text-lg">
+                        {phase.title}
+                      </h3>
                     </div>
 
-                    <p className="mt-3 text-sm leading-7 text-slate-400">
+                    <p className="mt-4 text-sm leading-7 text-slate-400">
                       {phase.description}
                     </p>
                   </div>
@@ -818,7 +1037,7 @@ export default function SyedOSCaseStudyPage() {
                 </Badge>
 
                 <h2 className="mt-5 text-3xl sm:text-4xl">
-                  SyedOS will continue growing throughout my career.
+                  {title} will continue growing throughout my career.
                 </h2>
 
                 <p className="mt-4 text-sm leading-7 text-slate-300 sm:text-base">
