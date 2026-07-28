@@ -825,10 +825,10 @@ export default async function AboutPage() {
             description="My development journey connects academic learning with practical implementation, real workflows, software security, and modern product architecture."
           />
 
-          <div className="mt-10 grid gap-6 xl:grid-cols-[1.08fr_0.92fr]">
+          <div className="mt-10 grid items-start gap-6 xl:grid-cols-[1.05fr_0.95fr]">
             <Card
               variant="glass"
-              className="h-full"
+              className="self-start"
             >
               <div className="space-y-5 text-sm leading-8 text-slate-400">
                 {biographyParagraphs.length > 0 ? (
@@ -857,7 +857,7 @@ export default async function AboutPage() {
 
             <Card
               variant="editorial"
-              className="h-full"
+              className="self-start"
             >
               <p className="syedos-code-text text-xs font-semibold uppercase tracking-[0.18em] text-cyan-400">
                 Current Progress
